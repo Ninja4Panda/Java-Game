@@ -12,7 +12,6 @@ public class AttackPhase implements GameState {
 
     @Override
     public JSONArray getDisplayData() {
-        game.getPlayers();
     }
 
     @Override
