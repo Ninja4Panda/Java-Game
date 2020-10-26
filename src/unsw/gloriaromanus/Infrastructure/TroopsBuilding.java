@@ -6,23 +6,15 @@ package unsw.gloriaromanus.Infrastructure;
  * Troops Building class to build troops
  */
 public class TroopsBuilding extends Infrastructure {
-    private availableTroops;
-    private int baseTurns;  //Base turns needed for building to upgrade
+//    private availableTroops;
 
     public TroopsBuilding() {
-        super(1);
+        super(1,2);
     }
 
-    @Override
-    public Boolean upgrade() {
-        if(super.upgrade()) {
-
-        }
-    }
-
-    public trainTroops() {
-
-    }
+//    public trainTroops() {
+//
+//    }
 
     public void getTroops() {
 
