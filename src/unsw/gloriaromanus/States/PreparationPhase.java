@@ -1,17 +1,21 @@
 package unsw.gloriaromanus.States;
 
-import org.json.JSONObject;
-import unsw.gloriaromanus.GameSystem;
+import org.json.JSONArray;
+import unsw.gloriaromanus.Game;
 
 public class PreparationPhase implements GameState {
-    private GameSystem game;
+    private Game game;
 
-    public PreparationPhase(GameSystem game) {
+    public PreparationPhase(Game game) {
         this.game = game;
     }
 
     @Override
-    public JSONObject getDisplayData() {
+    public JSONArray getDisplayData() {
+    }
 
+    @Override
+    public void endPhase() {
+        game.setCurState(game.getAttackPhase());
     }
 }

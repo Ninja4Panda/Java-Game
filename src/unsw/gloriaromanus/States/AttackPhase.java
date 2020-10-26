@@ -1,17 +1,24 @@
 package unsw.gloriaromanus.States;
 
-import org.json.JSONObject;
-import unsw.gloriaromanus.GameSystem;
+import org.json.JSONArray;
+import unsw.gloriaromanus.Game;
 
 public class AttackPhase implements GameState {
-    private GameSystem game;
+    private Game game;
 
-    public AttackPhase (GameSystem game) {
+    public AttackPhase (Game game) {
         this.game = game;
     }
 
     @Override
-    public JSONObject getDisplayData() {
-        game.
+    public JSONArray getDisplayData() {
+        game.getPlayers();
+    }
+
+    @Override
+    public void endPhase() {
+        game.setCurState(game.getAttackPhase());
+        //Advance the turn as it is a new turn now
+        game.advanceTurn();
     }
 }
