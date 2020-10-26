@@ -1,6 +1,7 @@
 package unsw.gloriaromanus.region;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import unsw.gloriaromanus.units.*;
@@ -10,10 +11,10 @@ import unsw.gloriaromanus.units.*;
 // should observe the turn counter and when the appropriate 
 // amount of turns passes it will send it into Region
 public class RegionTrainer {
-    private List<Unit> trainingUnits;
+    private Hashtable<Unit, Integer> trainingUnits;
     
     public RegionTrainer() {
-        trainingUnits = new ArrayList<Unit>();
+        trainingUnits = new Hashtable<Unit, Integer>();
     }
 
     public void train(int numTroops, String unit) {
@@ -27,10 +28,10 @@ public class RegionTrainer {
                 break;
         }
 
-        if(newUnit == null) {
+        if(newUnit == null ) {
 
         } else {
-            trainingUnits.add(newUnit);
+            trainingUnits.put( newUnit, newUnit.trainTime() );
         }
 
     }

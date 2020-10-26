@@ -4,7 +4,7 @@ import unsw.gloriaromanus.units.attack.Melee;
 
 public class Swordsman extends BaseUnit {
     public Swordsman(int numTroops) {
-        super(numTroops, 10, 1, 50, new Melee(5), 5, 10, 1, 0, 0);
+        super(numTroops, 10, 1, 50, new Melee(5), 5, 10, 1, 0, 0, 2);
         // Swordsman is a unit with 
         // 10 movementpoints
         // 1 turn build time
