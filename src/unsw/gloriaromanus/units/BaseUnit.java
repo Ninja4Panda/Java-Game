@@ -34,6 +34,12 @@ public class BaseUnit implements Unit{
         return numTroops;
     }
 
+    public String getClassName() {
+        String className = this.getClass().getName();
+        String[] classNameParts = className.split("\\.");
+        return classNameParts[classNameParts.length - 1];
+    }
+
     public void move(String start, String end) {
 
     }
