@@ -13,10 +13,10 @@ public class BaseUnit implements Unit{
     private int range;          // range of the unit
     private int defenseSkill;   // skill to defend in battle. Does not protect from arrows!
     private int shieldDefense;  // a shield
-
+    private int trainTime;
 
     public BaseUnit(int numTroops, int movementPoints, int buildTime, int cost, AttackType attack,
-                int armour, int health, int range, int defenseSkill, int shieldDefense) {
+                int armour, int health, int range, int defenseSkill, int shieldDefense, int trainTime) {
 
         this.numTroops = numTroops;
         this.movementPoints = movementPoints;
@@ -28,6 +28,7 @@ public class BaseUnit implements Unit{
         this.range = range;
         this.defenseSkill = defenseSkill;
         this.shieldDefense = shieldDefense;
+        this.trainTime = trainTime;
     }
 
     public int getNumTroops(){
@@ -38,6 +39,10 @@ public class BaseUnit implements Unit{
         String className = this.getClass().getName();
         String[] classNameParts = className.split("\\.");
         return classNameParts[classNameParts.length - 1];
+    }
+
+    public int trainTime() {
+        return trainTime;
     }
 
     public void move(String start, String end) {
