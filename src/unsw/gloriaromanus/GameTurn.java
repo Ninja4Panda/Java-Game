@@ -17,7 +17,7 @@ public class GameTurn implements Subject {
     }
 
     /**
-     *
+     * Advance to the turn if all players has moved already
      */
     public void nextTurn() {
         subTurns += 1;
