@@ -49,7 +49,9 @@ public class AttackPhase implements GameState {
      */
     public Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) {
         Player curPlayer = game.getCurPlayer();
-        return curPlayer.move(originRegion, troops, targetRegion);
+        Region origin = curPlayer.getRegion(originRegion);
+        Region target = curPlayer.getRegion(targetRegion);
+        return curPlayer.move(origin, troops, target);
     }
 
     /**
@@ -62,9 +64,14 @@ public class AttackPhase implements GameState {
      */
     public Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) {
         Player curPlayer = game.getCurPlayer();
+        Region origin = curPlayer.getRegion(originRegion);
+
+        //Obtain target player object
         Map<String, Player> playersMap = game.getPlayersMap();
         Player targetPlayer = playersMap.get(targetFaction);
+        //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
-        return curPlayer.invade(originRegion, troops, target);
+
+        return curPlayer.invade(origin, troops, target);
     }
 }
