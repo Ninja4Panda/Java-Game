@@ -22,12 +22,13 @@ public class BattleResolver {
         
 
         // will always generate a number that is less than 1
-        double attackingWin = attackingStrength/(attackingStrength + defendingStrength);
-        double defendingWin = defendingStrength/(attackingStrength + defendingStrength);
+        double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
+        double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
 
         // keep fighting with the armies until someone wins if not draw
         Random decider = new Random();
         for( int numCombats = 0; numCombats < 200; numCombats ++) {
+            // System.out.println(attackingWin + " " + defendingWin + " ADS = " + ( attackingStrength + defendingStrength));
             if( decider.nextDouble() <= attackingWin ) {
                 return "Attackers win";
             } else if ( decider.nextDouble() <= defendingWin ) {
