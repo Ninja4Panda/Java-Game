@@ -100,7 +100,7 @@ public class Game {
     }
 
     /**
-     * Wrapper function for front-end to call client request to end a phase
+     * Wrapper function to end a phase
      */
     public void endPhase() {
         curState.endPhase();
@@ -109,7 +109,6 @@ public class Game {
     /**
      * Wrapper function for preforming an action.
      * See GameState for more details.
-     * @return true/false indicating action was successful or not
      */
     public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) {
         return curState.action(originRegion, troops, args);
