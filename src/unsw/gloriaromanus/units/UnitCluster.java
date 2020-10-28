@@ -23,4 +23,14 @@ public class UnitCluster{
     public void minusUnits(int numTroops) {
         this.numTroops -= numTroops;
     }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public int armyStrength() {
+        return numTroops*unit.strength();
+    }
+
+    
 }

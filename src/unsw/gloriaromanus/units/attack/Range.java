@@ -7,4 +7,7 @@ public class Range implements AttackType{
         this.attackValue = attackValue;
         this.range = range;
     }
+    public int getAttackValue() {
+        return attackValue;
+    }
 }
