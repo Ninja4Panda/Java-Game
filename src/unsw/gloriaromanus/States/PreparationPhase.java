@@ -35,7 +35,8 @@ public class PreparationPhase implements GameState {
      */
     public Boolean train(String originRegion, Map<String, Integer> troops) {
         Player curPlayer = game.getCurPlayer();
-        return curPlayer.train(originRegion, troops);
+        Region origin = curPlayer.getRegion(originRegion);
+        return curPlayer.train(origin, troops);
     }
 
 }
