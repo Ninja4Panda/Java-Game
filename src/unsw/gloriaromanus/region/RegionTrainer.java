@@ -11,29 +11,31 @@ import unsw.gloriaromanus.units.*;
 // should observe the turn counter and when the appropriate 
 // amount of turns passes it will send it into Region
 public class RegionTrainer {
-    private Hashtable<Unit, Integer> trainingUnits;
+    private Hashtable<String, Integer> trainingUnits;
+    private Region region;
     
-    public RegionTrainer() {
-        trainingUnits = new Hashtable<Unit, Integer>();
+    public RegionTrainer(Region region) {
+        trainingUnits = new Hashtable<String, Integer>();
+        this.region = region;
     }
 
     public void train(int numTroops, String unit) {
-        Unit newUnit = null;
+        String newUnit = null;
         switch (unit) {
             case "Swordsman":
-                newUnit = new Swordsman(numTroops);
+                newUnit = "Swordsman";
                 break;
             
             default:
                 break;
         }
+        if( newUnit != null ) { trainingUnits.put(newUnit, numTroops ); }
+      
+    }
 
-        if(newUnit == null ) {
-
-        } else {
-            trainingUnits.put( newUnit, newUnit.trainTime() );
-        }
-
+    private void pushUnit(String trained) {
+        int numTrained = trainingUnits.get(trained);
+        region.addUnits(trained, numTrained);
     }
 
 }
