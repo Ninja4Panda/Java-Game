@@ -59,18 +59,25 @@ public class Game {
     }
 
     /**
+     * @return current player
+     */
+    public Player getCurPlayer() {
+        return curPlayer;
+    }
+
+    /**
+     * @return Hashmap of players
+     */
+    public Map<String, Player> getPlayersMap() {
+        return playersMap;
+    }
+
+    /**
      * Set the current state of the game to another state
      * @param nextState next state to be set to
      */
     public void setCurState(GameState nextState) {
         this.curState = nextState;
-    }
-
-    /**
-     * Wrapper function for front-end to call client request to end a phase
-     */
-    public void endPhase() {
-        curState.endPhase();
     }
 
     /**
@@ -93,13 +100,19 @@ public class Game {
     }
 
     /**
-     * Wrapper function for player movement.
-     * Note that this function expects origin region to be current player's region.
-     * @param originRegion
-     * @param targetRegion
-     * @return
+     * Wrapper function for front-end to call client request to end a phase
      */
-    public Boolean move(String originRegion, ,String targetRegion) {
-        return curPlayer.move(originRegion, targetRegion);
+    public void endPhase() {
+        curState.endPhase();
     }
+
+    /**
+     * Wrapper function for preforming an action.
+     * See GameState for more details.
+     * @return true/false indicating action was successful or not
+     */
+    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) {
+        return curState.action(originRegion, troops, args);
+    }
+
 }
