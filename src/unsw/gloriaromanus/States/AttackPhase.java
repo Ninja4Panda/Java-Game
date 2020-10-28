@@ -17,7 +17,7 @@ public class AttackPhase implements GameState {
     @Override
     public void endPhase() {
         game.setCurState(game.getAttackPhase());
-        //Advance the turn as it is a new turn now
-        game.advanceTurn();
+        //Advance to the next player's turn as this is the last phase of a player's turn
+        game.nextPlayerTurn();
     }
 }

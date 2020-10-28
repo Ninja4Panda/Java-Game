@@ -1,19 +1,47 @@
 package unsw.gloriaromanus;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import unsw.gloriaromanus.States.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Game {
-    private List<Player> players;
+    private Player curPlayer;
     private GameState preparationPhase;
     private GameState attackPhase;
     private GameState curState;
     private GameTurn turn;
+    private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
 
-    public Game(int numPlayers) {
+    public Game(String configFile) throws IOException {
+        //Set up the fields
         preparationPhase = new PreparationPhase(this);
         attackPhase = new AttackPhase(this);
         curState = preparationPhase;
-        turn = new GameTurn(numPlayers);
+        playersMap = new LinkedHashMap<>();
+
+        //Read state of game from config file
+        String content = Files.readString(Paths.get(configFile));
+        JSONArray players = new JSONArray(content);
+
+        for(int i = 0; i<players.length(); i++) {
+            JSONObject playerJson = players.getJSONObject(i);
+            String faction = playerJson.getString("Faction");
+
+            //Create new players and set first player as current player
+            Player player = new Player(playerJson);
+            if(i==0) curPlayer = player;
+
+            //Map each faction name to the player Object
+            playersMap.put(faction, player);
+        }
+        turn = new GameTurn(players.length());
     }
 
     /**
@@ -46,13 +74,32 @@ public class Game {
     }
 
     /**
-     * Advance to next turn see GameTurn class for more details
+     * Move on to next player and advance to next game turn.
+     * See GameTurn class for more details
      */
-    public void advanceTurn() {
+    public void nextPlayerTurn() {
+        Iterator<Player> it = playersMap.values().iterator();
+        Player firstPlayer = (Player)playersMap.values().toArray()[0];
+        while (it.hasNext()) {
+            Player player = it.next();
+            //Set current player to next player
+            if(player.equals(curPlayer)) {
+                curPlayer = it.hasNext()? it.next():firstPlayer;
+                break;
+            }
+        }
+
         turn.nextTurn();
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    /**
+     * Wrapper function for player movement.
+     * Note that this function expects origin region to be current player's region.
+     * @param originRegion
+     * @param targetRegion
+     * @return
+     */
+    public Boolean move(String originRegion, ,String targetRegion) {
+        return curPlayer.move(originRegion, targetRegion);
     }
 }
