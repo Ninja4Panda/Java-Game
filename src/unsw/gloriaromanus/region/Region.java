@@ -29,7 +29,7 @@ public class Region {
         }
         return total;
     }
-
+    // public void moveTroops(String troopName, int troopAmount, Region end) <- use this
     // Should only be called by Player class and assume player class already checked if unit has enough movement points
     public void moving(String troopName, String start, String end){
         units.get(0).move(start, end);
