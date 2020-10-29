@@ -9,8 +9,12 @@ import java.util.Map;
 public class Player {
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
     private Faction faction;
+    private int gold;
 
     public Player(JSONObject playerData) {
+        //TODO: set up faction
+        String factionName = playerData.getString("Faction");
+        gold = playerData.getInt("Gold");
         JSONArray regions = playerData.getJSONArray("Regions");
         regionsMap = new HashMap<>();
 
@@ -60,5 +64,23 @@ public class Player {
      */
     public Boolean train(Region origin, Map<String, Integer> troops) {
         return origin.train(troops);
+    }
+
+
+    /**
+     * @return JsonObject according to the save
+     */
+    public JSONObject getSave() {
+        JSONObject save = new JSONObject();
+        save.put("Faction", fraction.toString());
+        save.put("Gold", gold);
+
+        //Construct the region json array
+        JSONArray regionSave = new JSONArray();
+        for (Region region: regionsMap.values()) {
+            regionSave.put(region.getSave());
+        }
+        save.put("Regions", regionsMap);
+
     }
 }

@@ -10,13 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Game {
     private GamePhase preparationPhase;
-    private GamePhase attackPhase;
+    private GamePhase movePhase;
     private GamePhase curPhase;
     private GameTurn gameTurn;
     private Player curPlayer;
@@ -25,7 +28,7 @@ public class Game {
     public Game(String configFile) throws IOException, JSONException {
         //Set up the fields
         preparationPhase = new PreparationPhase(this);
-        attackPhase = new AttackPhase(this);
+        movePhase = new MovePhase(this);
         playersMap = new LinkedHashMap<>();
 
         //Read state of game from config file
@@ -37,8 +40,8 @@ public class Game {
         String state = game.getString("Phase");
         if (preparationPhase.toString().equals(state)) {
             curPhase = preparationPhase;
-        } else if(attackPhase.toString().equals(state)) {
-            curPhase = attackPhase;
+        } else if(movePhase.toString().equals(state)) {
+            curPhase = movePhase;
         } else {
             throw new JSONException("Corrupted save at State");
         }
@@ -68,8 +71,8 @@ public class Game {
     /**
      * @return the AttackPhase object
      */
-    public GamePhase getAttackPhase() {
-        return attackPhase;
+    public GamePhase getMovePhase() {
+        return movePhase;
     }
 
     /**
@@ -135,17 +138,38 @@ public class Game {
         return curPhase.action(originRegion, troops, args);
     }
 
+    /**
+     * Create a game save in saves directory
+     * @throws IOException
+     */
     public void save() throws IOException {
         //Make the saves directory if it doesn't exists
         File dir = new File(".","saves");
         dir.mkdir();
 
-        //Make the new save file
-        File file = new File(dir,".json");
+        //Make the new save file today's date
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Date today = new Date();
+        String filename = df.format(today)+".json";
+        File file = new File(dir, filename);
         FileWriter writer = new FileWriter(file);
 
+        //Construct the game json object
+        JSONObject gameSave = new JSONObject();
+        gameSave.put("Phase", curPhase.toString());
+        gameSave.put("Turn", gameTurn.getTurn());
+        gameSave.put("Subturn", gameTurn.getSubTurn());
 
-        JSONObject save = curPlayer.getSave();
+        //Construct the players json array
+        JSONArray playerSave = new JSONArray();
+        for (Player player: playersMap.values()) {
+            playerSave.put(player.getSave());
+        }
+
+        //Construct the whole json object
+        JSONObject save = new JSONObject();
+        save.put("Game",gameSave);
+        save.put("Players",playerSave);
         writer.write(save.toString(2));
-;    }
+    }
 }
