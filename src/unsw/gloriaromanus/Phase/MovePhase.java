@@ -6,15 +6,20 @@ import unsw.gloriaromanus.Player;
 
 import java.util.Map;
 
-public class AttackPhase implements GamePhase {
+public class MovePhase implements GamePhase {
     private Game game;
 
-    public AttackPhase (Game game) {
+    public MovePhase(Game game) {
         this.game = game;
     }
 
     @Override
     public JSONArray getDisplayData() {
+    }
+
+    @Override
+    public String toString() {
+        return "Move";
     }
 
     @Override

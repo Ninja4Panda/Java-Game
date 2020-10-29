@@ -18,8 +18,13 @@ public class PreparationPhase implements GamePhase {
     }
 
     @Override
+    public String toString() {
+        return "Preparation";
+    }
+
+    @Override
     public void endPhase() {
-        game.setCurPhase(game.getAttackPhase());
+        game.setCurPhase(game.getMovePhase());
     }
 
     @Override
