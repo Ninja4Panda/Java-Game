@@ -1,9 +1,9 @@
 package unsw.gloriaromanus.Phase;
 
-import org.json.JSONArray;
 import unsw.gloriaromanus.Game;
 import unsw.gloriaromanus.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class PreparationPhase implements GamePhase {
@@ -11,10 +11,6 @@ public class PreparationPhase implements GamePhase {
 
     public PreparationPhase(Game game) {
         this.game = game;
-    }
-
-    @Override
-    public JSONArray getDisplayData() {
     }
 
     @Override

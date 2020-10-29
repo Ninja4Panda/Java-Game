@@ -12,10 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Game {
     private GamePhase preparationPhase;
@@ -128,6 +125,17 @@ public class Game {
      */
     public void endPhase() {
         curPhase.endPhase();
+    }
+
+    /**
+     * Wrapper function to display region info
+     * @param region region to view
+     * @return list to display or null to indicate not player's region
+     */
+    public List display(String region) {
+        Region target = curPlayer.getRegion(region);
+        if(target !=null) return curPhase.getDisplayData(target);
+        return null;
     }
 
     /**

@@ -1,15 +1,17 @@
 package unsw.gloriaromanus.Phase;
 
-import org.json.JSONArray;
-
+import java.util.List;
 import java.util.Map;
 
 public interface GamePhase {
     /**
-     * Get the appropriate side-bar data according to the phase
-     * @return JSONObject containing the data
+     * Get the appropriate region data
+     * @param region region object
+     * @return list of units
      */
-    JSONArray getDisplayData();
+    default List<UnitCluster> getDisplayData(Region region) {
+        return region.getUnits();
+    }
 
     /**
      * Ends current phase and move on to the next phase
