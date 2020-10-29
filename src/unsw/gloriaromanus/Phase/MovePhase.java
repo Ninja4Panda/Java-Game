@@ -1,13 +1,20 @@
 package unsw.gloriaromanus.Phase;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import unsw.gloriaromanus.Game;
 import unsw.gloriaromanus.Player;
 import unsw.gloriaromanus.region.Region;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MovePhase implements GamePhase {
     private Game game;
+    private final int MAX_NUM_PATH = 53;
 
     public MovePhase(Game game) {
         this.game = game;
@@ -47,13 +54,16 @@ public class MovePhase implements GamePhase {
      * @param troops hash map of troops moving
      * @param targetRegion target region to move to
      * @return true/false indicating movement was successful or not
+     * @throws IOException
      */
-    private Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) {
+    private Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
 
-        return curPlayer.move(origin, troops, target);
+        ArrayList<String> visitedNode = new ArrayList<>();
+        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
+        return movementPoints < MAX_NUM_PATH && curPlayer.move(movementPoints, origin, troops, target);
     }
 
     /**
@@ -63,8 +73,9 @@ public class MovePhase implements GamePhase {
      * @param targetRegion target region to invade
      * @param targetFaction target faction to invade
      * @return true/false indicating invade was successful or not
+     * @throws IOException
      */
-    private Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) {
+    private Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
 
@@ -74,6 +85,46 @@ public class MovePhase implements GamePhase {
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
-        return curPlayer.invade(origin, troops, target);
+        ArrayList<String> visitedNode = new ArrayList<>();
+        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
+        return movementPoints < MAX_NUM_PATH && curPlayer.invade(movementPoints, origin, troops, target);
+    }
+
+    /**
+     * Find the shortest path between two regions
+     * @param origin origin region
+     * @param target target region
+     * @param visited arraylist of visited nodes
+     * @return amount of movement points needed or 1000 if cannot find shortest path
+     * @throws IOException
+     */
+    private int findShortestPath(String origin, String target, ArrayList<String> visited) throws IOException {
+        String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
+        JSONObject allAdjacencyMatrix = new JSONObject(content);
+
+        //Get the adjacency matrix from origin as a list
+        JSONObject adjacencyMatrix = allAdjacencyMatrix.getJSONObject(origin);
+        JSONArray adjacentList = adjacencyMatrix.names();
+        if(adjacencyMatrix.getBoolean(target)) return 1;
+
+        //Set current node as visited
+        visited.add(origin);
+
+        //Loop to find the neighbour
+        int shortest = MAX_NUM_PATH;
+        for(int i=0; i<adjacentList.length(); i++) {
+            String neighbour = adjacentList.getString(i);
+            Player player = game.getCurPlayer();
+
+            //Check if player owns neighbour region
+            if (!neighbour.equals(target) && player.getRegion(neighbour)==null) continue;
+
+            //Find the shortest path and avoid going back to original node
+            if(!visited.contains(neighbour) && adjacencyMatrix.getBoolean(neighbour)) {
+                int path = 1+findShortestPath(neighbour, target, visited);
+                if(path<shortest) shortest=path;
+            }
+        }
+        return shortest;
     }
 }
