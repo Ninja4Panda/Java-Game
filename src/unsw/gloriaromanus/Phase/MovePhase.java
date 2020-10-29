@@ -2,8 +2,8 @@ package unsw.gloriaromanus.Phase;
 
 import unsw.gloriaromanus.Game;
 import unsw.gloriaromanus.Player;
+import unsw.gloriaromanus.region.Region;
 
-import java.util.List;
 import java.util.Map;
 
 public class MovePhase implements GamePhase {
@@ -52,6 +52,7 @@ public class MovePhase implements GamePhase {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
+
         return curPlayer.move(origin, troops, target);
     }
 
