@@ -9,9 +9,9 @@ public class GameTurn implements Subject {
     private int numPlayers;
     private List<Observer> listObs;
 
-    public GameTurn(int numPlayers) {
-        turn = 0;
-        subTurns = 0;
+    public GameTurn(int turn, int subTurns, int numPlayers) {
+        this.turn = turn;
+        this.subTurns = subTurns;
         this.numPlayers = numPlayers;
         listObs = new ArrayList<>();
     }
@@ -23,7 +23,7 @@ public class GameTurn implements Subject {
         subTurns += 1;
         //One full turn has passed
         if(subTurns == numPlayers) {
-            subTurns = 0;
+            subTurns = 1;
             turn++;
             notifyObservers();
         }

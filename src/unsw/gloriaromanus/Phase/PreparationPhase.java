@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.States;
+package unsw.gloriaromanus.Phase;
 
 import org.json.JSONArray;
 import unsw.gloriaromanus.Game;
@@ -6,7 +6,7 @@ import unsw.gloriaromanus.Player;
 
 import java.util.Map;
 
-public class PreparationPhase implements GameState {
+public class PreparationPhase implements GamePhase {
     private Game game;
 
     public PreparationPhase(Game game) {
@@ -19,7 +19,7 @@ public class PreparationPhase implements GameState {
 
     @Override
     public void endPhase() {
-        game.setCurState(game.getAttackPhase());
+        game.setCurPhase(game.getAttackPhase());
     }
 
     @Override

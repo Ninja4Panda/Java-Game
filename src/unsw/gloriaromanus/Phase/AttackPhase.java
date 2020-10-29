@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.States;
+package unsw.gloriaromanus.Phase;
 
 import org.json.JSONArray;
 import unsw.gloriaromanus.Game;
@@ -6,7 +6,7 @@ import unsw.gloriaromanus.Player;
 
 import java.util.Map;
 
-public class AttackPhase implements GameState {
+public class AttackPhase implements GamePhase {
     private Game game;
 
     public AttackPhase (Game game) {
@@ -21,7 +21,7 @@ public class AttackPhase implements GameState {
     public void endPhase() {
         //Advance to the next player's turn as this is the last phase of a player's turn
         game.nextPlayerTurn();
-        game.setCurState(game.getPreparationPhase());
+        game.setCurPhase(game.getPreparationPhase());
     }
 
     @Override

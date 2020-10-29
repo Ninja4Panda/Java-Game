@@ -1,10 +1,10 @@
-package unsw.gloriaromanus.States;
+package unsw.gloriaromanus.Phase;
 
 import org.json.JSONArray;
 
 import java.util.Map;
 
-public interface GameState {
+public interface GamePhase {
     /**
      * Get the appropriate side-bar data according to the phase
      * @return JSONObject containing the data
