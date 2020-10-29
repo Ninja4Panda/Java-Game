@@ -11,7 +11,13 @@
       "Regions": [
         {
           "Id": "Cyprus",
-          "Troops": [{"Swordsman": 0}, {"Elephants": 0}],
+          "Troops": {
+            "Archerman": 0,
+            "Cavalry": 0,
+            "Slingerman": 0,
+            "Spearman": 0,
+            "Swordsman": 0
+          },
           "Wealth": 20,
           "Trainer": []
         }
@@ -23,7 +29,13 @@
       "Regions": [
         {
           "Id": "Syria",
-          "Troops": [{"Swordman": 0}, {"Elephants": 0}],
+          "Troops": {
+            "Archerman": 0,
+            "Cavalry": 0,
+            "Slingerman": 0,
+            "Spearman": 0,
+            "Swordsman": 0
+          },
           "Wealth": 20,
           "Trainer": []
         }

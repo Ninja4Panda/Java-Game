@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Phase.*;
+import unsw.gloriaromanus.region.Region;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -134,7 +135,7 @@ public class Game {
      */
     public List display(String region) {
         Region target = curPlayer.getRegion(region);
-        if(target !=null) return curPhase.getDisplayData(target);
+        if(target != null) return curPhase.getDisplayData(target);
         return null;
     }
 

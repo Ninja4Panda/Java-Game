@@ -1,7 +1,9 @@
 package unsw.gloriaromanus;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import unsw.gloriaromanus.region.Region;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,7 @@ public class Player {
     private Faction faction;
     private int gold;
 
-    public Player(JSONObject playerData) {
+    public Player(JSONObject playerData) throws JSONException {
         //TODO: set up faction
         String factionName = playerData.getString("Faction");
         gold = playerData.getInt("Gold");
@@ -42,7 +44,7 @@ public class Player {
      * @return true/false indicating movement was successful or not
      */
     public Boolean move(Region origin, Map<String, Integer> troops, Region target) {
-        return origin.move(troops, target);
+        return origin.moveTroops(0, troops, target);
     }
 
     /**
@@ -53,7 +55,7 @@ public class Player {
      * @return true/false indicating invade was successful or not
      */
     public Boolean invade(Region origin, Map<String, Integer> troops, Region target) {
-        return region.invade(troops, target);
+        return origin.invade(troops, target);
     }
 
     /**
@@ -80,7 +82,8 @@ public class Player {
         for (Region region: regionsMap.values()) {
             regionSave.put(region.getSave());
         }
-        save.put("Regions", regionsMap);
+        save.put("Regions", regionSave);
 
+        return save;
     }
 }
