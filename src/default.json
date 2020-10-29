@@ -1,0 +1,40 @@
+{
+  "Game": {
+    "Phase":"Preparation",
+    "Turn": 0,
+    "Subturn": 1
+  },
+  "Players":[
+    {
+      "Faction": "Rome",
+      "Gold": 400,
+      "Regions": [
+        {
+          "Id": "Cyprus",
+          "Troops": [{"Swordsman": 0}, {"Elephants": 0}],
+          "Wealth": 20,
+          "Trainer": []
+        }
+      ]
+    },
+    {
+      "Faction": "Egypt",
+      "Gold": 400,
+      "Regions": [
+        {
+          "Id": "Syria",
+          "Troops": [
+            {
+              "Swordman": 0
+            },
+            {
+              "Elephants": 0
+            }
+          ],
+          "Wealth": 20,
+          "Trainer": []
+        }
+      ]
+    }
+  ]
+}
