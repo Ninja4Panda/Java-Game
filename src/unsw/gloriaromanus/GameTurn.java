@@ -16,10 +16,16 @@ public class GameTurn implements Subject {
         listObs = new ArrayList<>();
     }
 
+    /**
+     * @return current subturn
+     */
     public int getSubTurn() {
         return subTurn;
     }
 
+    /**
+     * @return current turn
+     */
     public int getTurn() {
         return turn;
     }

@@ -52,7 +52,7 @@ public class MovePhase implements GamePhase {
      * @param targetRegion target region to move to
      * @return true/false indicating movement was successful or not
      */
-    public Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) {
+    private Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
@@ -67,7 +67,7 @@ public class MovePhase implements GamePhase {
      * @param targetFaction target faction to invade
      * @return true/false indicating invade was successful or not
      */
-    public Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) {
+    private Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
 
