@@ -38,24 +38,26 @@ public class Player {
 
     /**
      * Move troops from origin to target
+     * @param movementPoints movement points needed to get to target
      * @param origin origin region object initiated the movement
      * @param troops hash map of troops moving
      * @param target target region object to move to
      * @return true/false indicating movement was successful or not
      */
-    public Boolean move(Region origin, Map<String, Integer> troops, Region target) {
-        return origin.moveTroops(0, troops, target);
+    public Boolean move(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+        return origin.moveTroops(movementPoints, troops, target);
     }
 
     /**
      * Invade target region from origin with troops
+     * @param movementPoints movement points needed to get to target
      * @param origin origin region object initiated the invade
      * @param troops hash map of troops invading
      * @param target target region object to invade
      * @return true/false indicating invade was successful or not
      */
-    public Boolean invade(Region origin, Map<String, Integer> troops, Region target) {
-        return origin.invade(troops, target);
+    public Boolean invade(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+        return origin.invade(movementPoints, troops, target);
     }
 
     /**
@@ -74,7 +76,7 @@ public class Player {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        save.put("Faction", fraction.toString());
+        save.put("Faction", faction.toString());
         save.put("Gold", gold);
 
         //Construct the region json array
