@@ -38,7 +38,7 @@ public class PreparationPhase implements GamePhase {
      * @param troops hashmap of troops to train
      * @return true/false indicating training request was successful or not
      */
-    public Boolean train(String originRegion, Map<String, Integer> troops) {
+    private Boolean train(String originRegion, Map<String, Integer> troops) {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         return curPlayer.train(origin, troops);
