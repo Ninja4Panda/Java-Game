@@ -8,7 +8,6 @@ import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Region {
     private String name;
@@ -21,7 +20,7 @@ public class Region {
         this.gameTurn = gameTurn;
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
-        trainer = new RegionTrainer(trainData, this, gameTurn);
+        trainer = new RegionTrainer(trainData, this);
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -42,10 +41,10 @@ public class Region {
 
     /**
      * Forwards method to RegionTrainer.
-     * @param troops hashmap of units
+     * @param troops list of units
      * @return true if the units were put into training.
      */
-    public boolean train(Map<String, Integer> troops) {
+    public String train(List<String> troops) {
         return trainer.train(troops);
     }
 
@@ -62,86 +61,31 @@ public class Region {
     }
 
     /**
+     * Adds a new object of UnitsCluster to the units list
+     * @param type type of unit that needs to be added
+     */
+    public void addUnits(String type) {
+        for(UnitCluster unit: units) {
+            if(unit.getUnitName().equals(type)) unit.addUnits();
+        }
+    }
+
+    /**
      * moves troops to other regions
      * @param movementPoints cost of moving to other region
      * @param troops to move to other region
      * @param end where the troops will end up at
      * @return if the move is succesful
      */
-    public Boolean moveTroops(int movementPoints, Map<String,Integer> troops, Region end) {
-
-        // loop through all the units that need to be moved and move them
-        // it will either remove the troop from the starting region and add
-        // an instance of that same troop but with less movement points to the
-        // new region or reduce the amount in current region and add the desired amount
-        // to the new region, once again the moved units will have less movementpoints.
-        for( String unit : troops.keySet() ) {
-            UnitCluster unitToMove = getLeavingTroops(unit, troops.get(unit) );
-            if(unitToMove == null) {
-                return false;
+    public String moveTroops(int movementPoints, List<String> troops, Region end) {
+        // minusUnits(troopName, troopAmount);
+        // end.addUnits(troopName, troopAmount);
+        for( UnitCluster u : units ) {
+            if( troops.contains(u.getUnitName()) ) {
+                units.remove(u);
             }
-            if(unitToMove.getMovementPoints() < movementPoints ) {
-                return false;
-            }
-            unitToMove.reduceMovementPoints(movementPoints);
-            end.addUnits(unitToMove);
         }
-        return true;
-    }
-
-    /**
-     * Creates a new unit
-     * Should be only called to make another copy of an existing troop in the region
-     * but with less troopamount
-     * @param units type of unit to be made
-     * @param troopAmount amount of the troop needed
-     * @return UnitCluster of the troop
-     */
-    private UnitCluster prepareLeavingTroops(String units, int troopAmount) {
-        UnitCluster leavingUnits = null;
-        switch (units) {
-            case "Swordsman":
-                leavingUnits = new UnitCluster(troopAmount, new Swordsman());
-                break;
-            case "Archerman":
-                leavingUnits = new UnitCluster(troopAmount, new Archerman());
-                break;
-            case "Cavalry":
-                leavingUnits = new UnitCluster(troopAmount, new Cavalry());
-                break;
-            case "Spearman":
-                leavingUnits = new UnitCluster(troopAmount, new Spearman());
-                break;
-            case "Slingerman":
-                leavingUnits = new UnitCluster(troopAmount, new Slingerman());
-                break;
-            default:
-                break;
-        }
-        return leavingUnits;
-    }
-
-    /**
-     *
-     *  it will either remove the troop from the starting region and create
-     *  an instance of that same troop but with less movement points
-     *  or reduce the amount in current region, once again the moved units will have less movementpoints.
-     * @param troops
-     * @param troopAmount
-     * @return
-     */
-    private UnitCluster getLeavingTroops(String troops, int troopAmount) {
-        UnitCluster regionTroops = findUnit(troops);
-        if( regionTroops.size() == troopAmount ) {
-            units.remove(regionTroops);
-            return regionTroops;
-        } else if ( regionTroops.size() > troopAmount ) {
-            regionTroops.minusUnits(troopAmount);
-            UnitCluster leavingTroops = prepareLeavingTroops(troops, troopAmount);
-            return leavingTroops;
-        }
-
-        return null;
+        return "yes";
     }
 
     /**
@@ -183,7 +127,6 @@ public class Region {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        save.put("Id", name);
 
         //Troops json object
         JSONObject troops = new JSONObject();
@@ -198,7 +141,7 @@ public class Region {
         return save;
     }
 
-    public String invade(int movementPoints, Map<String, Integer> troops, Region target) {
+    public String invade(int movementPoints, List<String> troops, Region target) {
         return "Nothing";
     }
 }

@@ -1,9 +1,12 @@
 package unsw.gloriaromanus.units;
 
 public interface Unit {
-    public void move(String start, String end);
-    public int trainTime();
-    public String getClassName();
-    public int getMovementPoints();
-    public void reduceMovementPoints(int movementPoints);
+    void move(String start, String end);
+    int trainTime();
+    void addTrainedUnit();
+    void addUnits(int numTroops);
+    void minusUnits(int numTroops);
+    String getClassName();
+    int getMovementPoints();
+    void reduceMovementPoints(int movementPoints);
 }

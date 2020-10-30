@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MovePhase implements GamePhase {
@@ -33,7 +34,7 @@ public class MovePhase implements GamePhase {
     }
 
     @Override
-    public String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
+    public String action(String originRegion, List<String> troops, String ... args) throws IOException {
         Player curPlayer = game.getCurPlayer();
         //Safe to index as there should be args[0] for both action
         String targetRegion= args[0];
@@ -51,18 +52,18 @@ public class MovePhase implements GamePhase {
      * Wrapper function for player movement.
      * Note that this function expects both origin region & target region to be current player's region.
      * @param originRegion origin region initiated the movement
-     * @param troops hash map of troops moving
+     * @param troops list of troops moving
      * @param targetRegion target region to move to
      * @return msg to display
      * @throws IOException
      */
-    private String move(String originRegion, Map<String, Integer> troops, String targetRegion) throws IOException {
+    private String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
 
 //        ArrayList<String> visitedNode = new ArrayList<>();
-//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);\
+//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
         int movementPoints = 4;
         return curPlayer.move(movementPoints, origin, troops, target);
     }
@@ -70,13 +71,13 @@ public class MovePhase implements GamePhase {
     /**
      * Wrapper function for player invade.
      * @param originRegion origin region initiated the invade
-     * @param troops hash map of troops invading
+     * @param troops list of troops invading
      * @param targetRegion target region to invade
      * @param targetFaction target faction to invade
      * @return msg to display
      * @throws IOException
      */
-    private String invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) throws IOException {
+    private String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
 

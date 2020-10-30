@@ -3,6 +3,7 @@ package unsw.gloriaromanus.units;
 public class UnitCluster{
     private int numTroops;
     private Unit unit;
+
     public UnitCluster(int numTroops, Unit unit) {
         this.numTroops = numTroops;
         this.unit = unit;
@@ -12,8 +13,8 @@ public class UnitCluster{
         return numTroops;
     }
 
-    public void addUnits(int numTroops) {
-        this.numTroops += numTroops;
+    public void addUnits() {
+        unit.addTrainedUnit();
     }
 
     public String getUnitName() {

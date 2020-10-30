@@ -5,7 +5,6 @@ import unsw.gloriaromanus.units.UnitCluster;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public interface GamePhase {
     /**
@@ -29,5 +28,5 @@ public interface GamePhase {
      * @param args string array expecting targetRegion,targetFaction in order when required
      * @return msg to display
      */
-    String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException;
+    String action(String originRegion, List<String> troops, String ... args) throws IOException;
 }
