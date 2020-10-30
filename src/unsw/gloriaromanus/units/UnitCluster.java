@@ -27,4 +27,12 @@ public class UnitCluster{
     public int trainTime() {
         return unit.trainTime();
     }
+
+    public int getMovementPoints() {
+        return unit.getMovementPoints();
+    }
+
+    public void reduceMovementPoints(int movementPoints) {
+        unit.reduceMovementPoints(movementPoints);
+    }
 }
