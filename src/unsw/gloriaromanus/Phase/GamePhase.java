@@ -13,7 +13,7 @@ public interface GamePhase {
      * @param region region object
      * @return list of units
      */
-    default List<UnitCluster> getDisplayData(Region region) {
+    default List<UnitCluster> getRegionData(Region region) {
         return region.getUnits();
     }
 
@@ -27,7 +27,7 @@ public interface GamePhase {
      * @param originRegion origin region initiated the action
      * @param troops hash map of troops
      * @param args string array expecting targetRegion,targetFaction in order when required
-     * @return true/false indicating action was successful or not
+     * @return msg to display
      */
-    Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException;
+    String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException;
 }

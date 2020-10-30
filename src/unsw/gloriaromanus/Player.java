@@ -12,7 +12,7 @@ import java.util.Map;
 public class Player {
     private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
-    private Faction faction;
+    // private Faction faction;
     private int gold;
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
@@ -45,9 +45,9 @@ public class Player {
      * @param origin origin region object initiated the movement
      * @param troops hash map of troops moving
      * @param target target region object to move to
-     * @return true/false indicating movement was successful or not
+     * @return msg to display
      */
-    public Boolean move(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+    public String move(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
         return origin.moveTroops(movementPoints, troops, target);
     }
 
@@ -57,20 +57,21 @@ public class Player {
      * @param origin origin region object initiated the invade
      * @param troops hash map of troops invading
      * @param target target region object to invade
-     * @return true/false indicating invade was successful or not
+     * @return msg to display
      */
-    public Boolean invade(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
-        return origin.invade(movementPoints, troops, target);
+    public String invade(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+         return origin.invade(movementPoints, troops, target);
     }
 
     /**
      * Train troops in region
      * @param origin origin region object initiated the training
      * @param troops hashmap of troops to train
-     * @return true/false indicating training request was successful or not
+     * @return msg to display
      */
-    public Boolean train(Region origin, Map<String, Integer> troops) {
-        return enoughGold(origin, troops) && origin.train(troops);
+    public String train(Region origin, Map<String, Integer> troops) {
+        if(!enoughGold(origin,troops)) return "not enough gold!";
+        return origin.train(troops);
     }
 
     /**
@@ -84,7 +85,7 @@ public class Player {
         for(String name: troops.keySet()) {
             UnitCluster troop = origin.findUnit(name);
             int amount = troops.get(name);
-            cost += amount*troop.getCost();
+            // cost += amount*troop.getCost();
         }
         if(cost>gold) return false;
         return true;
@@ -95,7 +96,7 @@ public class Player {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        save.put("Faction", faction.toString());
+        // save.put("Faction", faction.toString());
         save.put("Gold", gold);
 
         //Construct the region json array

@@ -40,17 +40,17 @@ public class RegionTrainer {
     /**
      * Adds the appropriate unit into the trainingUnits hashtable.
      * @param troops hashmap of units
-     * @return true/false indicating if the unit was put into the training Units Hashtable.
+     * @return msg to display
      */
-    public boolean train(Map<String, Integer> troops) {
-        if(troops.size()+trainingUnits.size()>2) return false;
+    public String train(Map<String, Integer> troops) {
+        if(troops.size()+trainingUnits.size()>2) return "Unsuccessful training too many troops are training already";
         for(String unit: troops.keySet()) {
             int numTroops = troops.get(unit);
             UnitCluster newUnit = getTrainingUnit(numTroops, unit);
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(newUnit, newUnit.trainTime());
         }
-        return true;
+        return "";
     }
 
     /**
