@@ -35,8 +35,7 @@ public class UnitCluster{
         return numTroops*unit.strength();
     }
 
-    
-
+  
     public int trainTime() {
         return unit.trainTime();
     }

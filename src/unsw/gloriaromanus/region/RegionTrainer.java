@@ -23,7 +23,6 @@ public class RegionTrainer {
         trainingUnits = new Hashtable<UnitCluster, Integer>();
         this.region = region;
         this.gameTurn = gameTurn;
-        gameTurn.attach(this);
 
         //Make sure there is only 2 training at a time
         for (int i=0; i<trainData.length() || i>1; i++) {
@@ -134,8 +133,5 @@ public class RegionTrainer {
         return save;
     }
 
-    @Override
-    public void update() {
-
-    }
+    
 }

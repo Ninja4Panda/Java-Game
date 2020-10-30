@@ -10,7 +10,7 @@ import unsw.gloriaromanus.units.UnitCluster;
 public class BattleResolver {
 
     // Pass implementation of battle resolver
-    public String resolve(List<UnitCluster> attackers, Region defending, Region attacking) {
+    public static String resolve(List<UnitCluster> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
         List<UnitCluster> defenders = defending.getUnits();
         for( UnitCluster u : attackers ) {
@@ -57,7 +57,7 @@ public class BattleResolver {
 
         return "Draw";
     }
-    public List<String> unitArrayToString(List<UnitCluster> units) {
+    public static List<String> unitArrayToString(List<UnitCluster> units) {
         List<String> stringArray = new ArrayList<String>();
         for(UnitCluster u : units ) {
             stringArray.add(u.getUnitName());
@@ -94,7 +94,7 @@ public class BattleResolver {
     //     }
         
     // }
-    public void AfterMath(List<UnitCluster> units, double lossPercentage) {
+    public static void AfterMath(List<UnitCluster> units, double lossPercentage) {
         int totalUnits = 0;
         for(UnitCluster u : units) {
             totalUnits += u.size();

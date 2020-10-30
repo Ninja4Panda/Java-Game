@@ -3,22 +3,30 @@ package unsw.gloriaromanus.region;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import unsw.gloriaromanus.BattleResolver;
 import unsw.gloriaromanus.GameTurn;
+import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Region {
+public class Region implements Observer {
     private String name;
     private GameTurn gameTurn;
     private RegionTrainer trainer;
     private List<UnitCluster> units;
+    private int wealth;
+    private int tax;
+
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
         name = regionData.getString("Id");
         this.gameTurn = gameTurn;
+        wealth = regionData.getInt("Wealth");
+        tax = regionData.getInt("Tax");
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
         trainer = new RegionTrainer(trainData, this, gameTurn);
@@ -32,7 +40,13 @@ public class Region {
         units.add( new UnitCluster(troops.getInt("Spearman"), new Spearman()));
         units.add( new UnitCluster(troops.getInt("Swordsman"), new Swordsman()));
     }
+    public void setWealth(int wealth) {
+        this.wealth = wealth;
+    } 
 
+    public int calcGold() {
+        return wealth*tax;
+    }
     /**
      * @return all units object in the region
      */
@@ -140,7 +154,38 @@ public class Region {
         return save;
     }
 
-    public String invade(int movementPoints, Map<String, Integer> troops, Region target) {
-        return "Nothing";
+    public String invade(int movementPoints, List<String> troops, Region target) {
+        List<UnitCluster> attackers = new ArrayList<UnitCluster>();
+        return BattleResolver.resolve(attackers, target, this);
+    }
+
+    @Override
+    public void update() {
+        updateWealth();
+        updateMovementPoints();
+        trainer.pushUnits();
+    }
+
+    private void updateMovementPoints() {
+        for(UnitCluster u : units) {
+            u.setMovementPoints( u.getMaxMovementSpeed() );
+        }
+    }
+
+    private void updateWealth() {
+        switch (wealth) {
+            case 10:    
+                wealth += 10;
+                break;
+            case 15: 
+                break;
+            case 20:
+                wealth -= 10;
+                break;
+            case 25:
+                wealth -= 30;     
+            default:
+                break;
+        }
     }
 }
