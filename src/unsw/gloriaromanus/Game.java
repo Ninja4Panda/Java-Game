@@ -56,7 +56,7 @@ public class Game {
             String faction = playerJson.getString("Faction");
 
             //Create new players
-            Player player = new Player(playerJson);
+            Player player = new Player(playerJson, gameTurn);
             //Set current player
             if(subTurn == i+1) curPlayer = player;
 
