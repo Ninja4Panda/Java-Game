@@ -1,16 +1,18 @@
 package unsw.gloriaromanus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javafx.scene.layout.Region;
+import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.UnitCluster;
 
 public class BattleResolver {
 
     // Pass implementation of battle resolver
-    public String resolve(List<UnitCluster> attackers, List<UnitCluster> defenders) {
+    public String resolve(List<UnitCluster> attackers, Region defending, Region Attacking) {
         int attackingStrength = 0;
+        List<UnitCluster> defenders = defending.getUnits();
         for( UnitCluster u : attackers ) {
             attackingStrength += u.armyStrength();
         }
@@ -30,8 +32,22 @@ public class BattleResolver {
         for( int numCombats = 0; numCombats < 200; numCombats ++) {
             // System.out.println(attackingWin + " " + defendingWin + " ADS = " + ( attackingStrength + defendingStrength));
             if( decider.nextDouble() <= attackingWin ) {
+
+                int randomExtraUnitsLoss = decider.nextInt(100- (int) attackingWin);
+                double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
+                DefendersAfterMath(defending.getUnits(), losersLoss);
+
+                double winnersLoss = decider.nextDouble();
+                AttackersAfterMath(Attacking, attackers, winnersLoss);
+
                 return "Attackers win";
             } else if ( decider.nextDouble() <= defendingWin ) {
+                double winnersLoss = decider.nextDouble();
+                DefendersAfterMath(defending.getUnits(), winnersLoss);
+
+                int randomExtraUnitsLoss = decider.nextInt(100- (int) defendingWin);
+                double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
+                AttackersAfterMath(Attacking, attackers, losersLoss);
                 return "Defenders win";
             }
 
@@ -39,6 +55,61 @@ public class BattleResolver {
 
         return "Draw";
     }
+    public void DefendersAfterMath(List<UnitCluster> units, double percentage) {
+        AfterMath(units, percentage);
+    }
+    public void AttackersAfterMath(Region attackers, List<UnitCluster> units, double percentage) {
+
+        // Make region only have the units that attacked
+        List<UnitCluster> attackersUnits = attackers.getUnits();
+        List<UnitCluster> didntAttack = new ArrayList<UnitCluster>();
+        for(UnitCluster u : attackersUnits ) {
+            if(!attackersUnits.contains(u)) {
+                didntAttack.add(u);
+                attackers.minusUnits(u.getUnitName(), u.size());
+            }
+        }
+        for(UnitCluster u : attackersUnits ) {
+            UnitCluster unitInRegion = attackers.findUnit(u.getUnitName());
+            if(unitInRegion.size() != u.size() ) {
+                unitInRegion.minusUnits( unitInRegion.size() - u.size() );
+            }
+        }
+
+        // Remove units that died
+        AfterMath(attackersUnits, percentage);
+
+        // Add back units that didnt attack
+        for(UnitCluster u : didntAttack ) {
+            attackers.addUnits(u.getUnitName(), u.size());
+        }
+        
+    }
+    public void AfterMath(List<UnitCluster> units, double lossPercentage) {
+        int totalUnits = 0;
+        for(UnitCluster u : units) {
+            totalUnits += u.size();
+        }
+        
+        // get how many units need to be killed off
+        double exactUnitsLost = (double) totalUnits *lossPercentage;
+        int unitsLost = (int) Math.ceil(exactUnitsLost);
+
+        Random russianRoulette = new Random();
+
+        // kill off a random unit one by one until the target is reached
+        int unitsRemoved = 0;
+        while(unitsRemoved < unitsLost) {
+            UnitCluster unitGone = units.get( russianRoulette.nextInt( units.size() - 1 ) );
+            if(unitGone.size() != 0 ) {
+                unitGone.minusUnits(1);
+                unitsRemoved ++;
+            }
+
+        }
+        
+    }
+
 
 
 }

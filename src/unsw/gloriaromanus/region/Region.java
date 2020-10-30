@@ -62,8 +62,7 @@ public class Region {
     }
 
     public Boolean moveTroops(int movementPoints, Map<String,Integer> troops, Region end) {
-        minusUnits(troopName, troopAmount);
-        end.addUnits(troopName, troopAmount);
+       return true;
     }
 
     /**
