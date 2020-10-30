@@ -10,7 +10,7 @@ import unsw.gloriaromanus.units.UnitCluster;
 public class BattleResolver {
 
     // Pass implementation of battle resolver
-    public String resolve(List<UnitCluster> attackers, Region defending, Region Attacking) {
+    public String resolve(List<UnitCluster> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
         List<UnitCluster> defenders = defending.getUnits();
         for( UnitCluster u : attackers ) {
@@ -35,19 +35,21 @@ public class BattleResolver {
 
                 int randomExtraUnitsLoss = decider.nextInt(100- (int) attackingWin * 100);
                 double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
-                DefendersAfterMath(defending.getUnits(), losersLoss);
+                AfterMath(defending.getUnits(), losersLoss);
 
                 double winnersLoss = decider.nextDouble();
-                AttackersAfterMath(Attacking, attackers, winnersLoss);
+                AfterMath( attackers, winnersLoss);
 
+                attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
+                
                 return "Attackers win";
             } else if ( decider.nextDouble() <= defendingWin ) {
                 double winnersLoss = decider.nextDouble();
-                DefendersAfterMath(defending.getUnits(), winnersLoss);
+                AfterMath(defending.getUnits(), winnersLoss);
 
                 int randomExtraUnitsLoss = decider.nextInt(100- (int) defendingWin);
                 double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
-                AttackersAfterMath(Attacking, attackers, losersLoss);
+                AfterMath( attackers, losersLoss);
                 return "Defenders win";
             }
 
@@ -55,37 +57,43 @@ public class BattleResolver {
 
         return "Draw";
     }
-    public void DefendersAfterMath(List<UnitCluster> units, double percentage) {
-        AfterMath(units, percentage);
+    public List<String> unitArrayToString(List<UnitCluster> units) {
+        List<String> stringArray = new ArrayList<String>();
+        for(UnitCluster u : units ) {
+            stringArray.add(u.getUnitName());
+        }
+        return stringArray;
     }
-    public void AttackersAfterMath(Region attackers, List<UnitCluster> units, double percentage) {
+    // public void DefendersAfterMath(List<UnitCluster> units, double percentage) {
+    //     AfterMath(units, percentage);
+    // }
+    // public void AttackersAfterMath(Region attackers, List<UnitCluster> units, double percentage) {
 
-        // Make region only have the units that attacked
-        List<UnitCluster> attackersUnits = attackers.getUnits();
-        List<UnitCluster> didntAttack = new ArrayList<UnitCluster>();
-        for(UnitCluster u : attackersUnits ) {
-            if(!attackersUnits.contains(u)) {
-                didntAttack.add(u);
-                attackers.minusUnits(u.getUnitName(), u.size());
-            }
-        }
-        for(UnitCluster u : attackersUnits ) {
-            UnitCluster unitInRegion = attackers.findUnit(u.getUnitName());
-            if(unitInRegion.size() != u.size() ) {
-                unitInRegion.minusUnits( unitInRegion.size() - u.size() );
-            }
-        }
+    //     // Make region only have the units that attacked
+    //     List<UnitCluster> attackersUnits = attackers.getUnits();
+    //     List<UnitCluster> didntAttack = new ArrayList<UnitCluster>();
+    //     for(UnitCluster u : attackersUnits ) {
+    //         if(!attackersUnits.contains(u)) {
+    //             didntAttack.add(u);
+    //             attackers.minusUnits(u.getUnitName(), u.size());
+    //         }
+    //     }
+    //     for(UnitCluster u : attackersUnits ) {
+    //         UnitCluster unitInRegion = attackers.findUnit(u.getUnitName());
+    //         if(unitInRegion.size() != u.size() ) {
+    //             unitInRegion.minusUnits( unitInRegion.size() - u.size() );
+    //         }
+    //     }
 
-        // Remove units that died
-        AfterMath(attackersUnits, percentage);
+    //     // Remove units that died
+    //     AfterMath(attackersUnits, percentage);
 
-        // Add back units that didnt attack
-        for(UnitCluster u : didntAttack ) {
-            attackers.addUnits(u.getUnitName(), u.size());
-        }
+    //     // Add back units that didnt attack
+    //     for(UnitCluster u : didntAttack ) {
+    //         attackers.addUnits(u.getUnitName(), u.size());
+    //     }
         
-    }
-
+    // }
     public void AfterMath(List<UnitCluster> units, double lossPercentage) {
         int totalUnits = 0;
         for(UnitCluster u : units) {
