@@ -158,7 +158,7 @@ public class Game {
      * Wrapper function for preforming an action.
      * See GameState for more details.
      */
-    public String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
+    public String action(String originRegion, List<String> troops, String ... args) throws IOException {
         return curPhase.action(originRegion, troops, args);
     }
 

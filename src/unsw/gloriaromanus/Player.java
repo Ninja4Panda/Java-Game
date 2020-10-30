@@ -7,6 +7,7 @@ import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.UnitCluster;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Player {
@@ -43,11 +44,11 @@ public class Player {
      * Move troops from origin to target
      * @param movementPoints movement points needed to get to target
      * @param origin origin region object initiated the movement
-     * @param troops hash map of troops moving
+     * @param troops list of troops moving
      * @param target target region object to move to
      * @return msg to display
      */
-    public String move(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+    public String move(int movementPoints, Region origin, List<String> troops, Region target) {
         return origin.moveTroops(movementPoints, troops, target);
     }
 
@@ -55,21 +56,21 @@ public class Player {
      * Invade target region from origin with troops
      * @param movementPoints movement points needed to get to target
      * @param origin origin region object initiated the invade
-     * @param troops hash map of troops invading
+     * @param troops list of troops invading
      * @param target target region object to invade
      * @return msg to display
      */
-    public String invade(int movementPoints, Region origin, Map<String, Integer> troops, Region target) {
+    public String invade(int movementPoints, Region origin, List<String> troops, Region target) {
          return origin.invade(movementPoints, troops, target);
     }
 
     /**
      * Train troops in region
      * @param origin origin region object initiated the training
-     * @param troops hashmap of troops to train
+     * @param troops list of troops to train
      * @return msg to display
      */
-    public String train(Region origin, Map<String, Integer> troops) {
+    public String train(Region origin, List<String> troops) {
         if(!enoughGold(origin,troops)) return "not enough gold!";
         return origin.train(troops);
     }
@@ -77,14 +78,14 @@ public class Player {
     /**
      * Check if player has enough gold to train units
      * @param origin origin region
-     * @param troops hashmap of troops to train
+     * @param troops list of troops to train
      * @return true/false to indicate enough gold or not
      */
-    private Boolean enoughGold(Region origin, Map<String, Integer> troops) {
+    private Boolean enoughGold(Region origin, List<String> troops) {
         int cost = 0;
-        for(String name: troops.keySet()) {
+        for(String name: troops) {
             UnitCluster troop = origin.findUnit(name);
-            int amount = troops.get(name);
+            int amount = troops.getBatch();
             // cost += amount*troop.getCost();
         }
         if(cost>gold) return false;
