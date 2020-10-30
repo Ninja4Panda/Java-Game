@@ -33,7 +33,7 @@ public class MovePhase implements GamePhase {
     }
 
     @Override
-    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
+    public String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
         Player curPlayer = game.getCurPlayer();
         //Safe to index as there should be args[0] for both action
         String targetRegion= args[0];
@@ -53,17 +53,18 @@ public class MovePhase implements GamePhase {
      * @param originRegion origin region initiated the movement
      * @param troops hash map of troops moving
      * @param targetRegion target region to move to
-     * @return true/false indicating movement was successful or not
+     * @return msg to display
      * @throws IOException
      */
-    private Boolean move(String originRegion, Map<String, Integer> troops, String targetRegion) throws IOException {
+    private String move(String originRegion, Map<String, Integer> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
 
-        ArrayList<String> visitedNode = new ArrayList<>();
-        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
-        return movementPoints < MAX_NUM_PATH && curPlayer.move(movementPoints, origin, troops, target);
+//        ArrayList<String> visitedNode = new ArrayList<>();
+//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);\
+        int movementPoints = 4;
+        return curPlayer.move(movementPoints, origin, troops, target);
     }
 
     /**
@@ -72,10 +73,10 @@ public class MovePhase implements GamePhase {
      * @param troops hash map of troops invading
      * @param targetRegion target region to invade
      * @param targetFaction target faction to invade
-     * @return true/false indicating invade was successful or not
+     * @return msg to display
      * @throws IOException
      */
-    private Boolean invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) throws IOException {
+    private String invade(String originRegion, Map<String, Integer> troops, String targetRegion, String targetFaction) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
 
@@ -85,9 +86,10 @@ public class MovePhase implements GamePhase {
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
-        ArrayList<String> visitedNode = new ArrayList<>();
-        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
-        return movementPoints < MAX_NUM_PATH && curPlayer.invade(movementPoints, origin, troops, target);
+//        ArrayList<String> visitedNode = new ArrayList<>();
+//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
+        int movementPoints = 4;
+        return curPlayer.invade(movementPoints, origin, troops, target);
     }
 
     /**
