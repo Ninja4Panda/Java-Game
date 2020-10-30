@@ -1,11 +1,12 @@
 package unsw.gloriaromanus.region;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
-
 
 // train the proper units and put it in the list
 // should observe the turn counter and when the appropriate 
@@ -14,52 +15,65 @@ public class RegionTrainer implements Observer {
     private Hashtable<UnitCluster, Integer> trainingUnits;
     private Region region;
     
-    public RegionTrainer(JSONArray trainData, Region region) {
+    public RegionTrainer(JSONArray trainData, Region region) throws JSONException {
         trainingUnits = new Hashtable<UnitCluster, Integer>();
         this.region = region;
 
         //Make sure there is only 2 training at a time
         for (int i=0; i<trainData.length() || i>1; i++) {
             String type = trainData.getJSONObject(i).getString("Type");
-            if(region.findUnit(type)==null) throw new JSONException("Corrupted config file: invalid unit type");
+            int turns = trainData.getJSONObject(i).getInt("Turns");
             int amount = trainData.getJSONObject(i).getInt("Amount");
-
-            trainingUnits.put(type, amount);
+            UnitCluster troop = getTrainingUnit(amount, type);
+            if(troop==null) throw new JSONException("Corrupted config file: invalid unit type");
+            trainingUnits.put(troop, turns);
         }
     }
 
+    /**
+     * Adds the appropriate unit into the trainingUnits hashtable.
+     * @param troops hashmap of units
+     * @return true/false indicating if the unit was put into the training Units Hashtable.
+     */
+    public boolean train(Map<String, Integer> troops) {
+        if(troops.size()+trainingUnits.size()>2) return false;
+        for(String unit: troops.keySet()) {
+            int numTroops = troops.get(unit);
+            UnitCluster newUnit = getTrainingUnit(numTroops, unit);
+            //Check of the amount currently training unit & valid unit type
+            if(newUnit != null) trainingUnits.put(newUnit, newUnit.trainTime());
+        }
+        return true;
+    }
 
     /**
-     * Adds the appropriate unit into the trainingUnits hashtable and sets the
-     * amount of turns that unit needs to be trained for.
-     * @param numTroops number of units that are being trained.
-     * @param unit String that indicates type of unit.
-     * @return true/false indicating if the unit was put into the traininngUnits Hashtable.
+     * Get the target unit object based on the the unit name.
+     * @param numTroops amount of troops
+     * @param unit unit name
+     * @return unit object
      */
-    public boolean train(int numTroops, String unit) {
+    private UnitCluster getTrainingUnit(int numTroops, String unit) {
         UnitCluster newUnit = null;
         switch (unit) {
             case "Swordsman":
                 newUnit = new UnitCluster(numTroops, new Swordsman());
                 break;
             case "Archerman":
-                newUnit = new UnitCluster(numTroops, new Archerman() );
+                newUnit = new UnitCluster(numTroops, new Archerman());
                 break;
             case "Cavalry":
-                newUnit = new UnitCluster(numTroops, new Cavalry() );
+                newUnit = new UnitCluster(numTroops, new Cavalry());
                 break;
             case "Spearman":
-                newUnit = new UnitCluster(numTroops, new Spearman() ) ;
+                newUnit = new UnitCluster(numTroops, new Spearman());
+                break;
+            case "Slingerman":
+                newUnit = new UnitCluster(numTroops, new Slingerman());
                 break;
             default:
                 break;
         }
-        if( newUnit != null ) {
-            trainingUnits.put(newUnit, newUnit.trainTime() );
-            return true;
-        }
-        return false;
-      
+        return newUnit;
     }
 
     /**

@@ -37,12 +37,11 @@ public class Region {
 
     /**
      * Forwards method to RegionTrainer.
-     * @param numTroops amount of units put into training.
-     * @param unit type of unit trained.
+     * @param troops hashmap of units
      * @return true if the units were put into training.
      */
-    public boolean train(int numTroops, String unit) {
-        return trainer.train(numTroops, unit);
+    public boolean train(Map<String, Integer> troops) {
+        return trainer.train(troops);
     }
 
     /**
@@ -56,7 +55,6 @@ public class Region {
         }
         return total;
     }
-
 
     public Boolean moveTroops(int movementPoints, Map<String,Integer> troops, Region end) {
         minusUnits(troopName, troopAmount);
@@ -109,6 +107,8 @@ public class Region {
         for (UnitCluster unit: units) {
             troops.put(unit.getUnitName(), unit.size());
         }
+
+        //TODO:Wealth?
         save.put("Trainer", trainer.getSave());
         save.put("Troops", troops);
         return save;
