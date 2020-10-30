@@ -1,15 +1,20 @@
 package test;
 import unsw.gloriaromanus.units.Unit;
+<<<<<<< HEAD
 import unsw.gloriaromanus.units.UnitCluster;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import unsw.gloriaromanus.BattleResolver;
+=======
+import unsw.gloriaromanus.region.Region;
+>>>>>>> skeleton
 import unsw.gloriaromanus.units.Swordsman;
 
 public class Testing {
     public static void main(String[] args) {
+<<<<<<< HEAD
         Swordsman s = new Swordsman();
         Swordsman s1 = new Swordsman();
         Swordsman s2 = new Swordsman();
@@ -35,5 +40,10 @@ public class Testing {
 
 
         System.out.println(result);
+=======
+        
+
+
+>>>>>>> skeleton
     }
 }

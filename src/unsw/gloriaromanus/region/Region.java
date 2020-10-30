@@ -1,39 +1,58 @@
 package unsw.gloriaromanus.region;
 
-import unsw.gloriaromanus.units.Archerman;
-import unsw.gloriaromanus.units.BaseUnit;
-import unsw.gloriaromanus.units.Cavalry;
-import unsw.gloriaromanus.units.Spearman;
-import unsw.gloriaromanus.units.Swordsman;
-import unsw.gloriaromanus.units.Unit;
-import unsw.gloriaromanus.units.UnitCluster;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import unsw.gloriaromanus.GameTurn;
+import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Region {
-    // private List<infrastructure> infrastructures; uncomment when made
-    private List<UnitCluster> units;
-    // private Road road; use this to determine troop movement, uncomment when made, for now will be replaced with int
-    private int movementCost;
-    private RegionTrainer trainer;
     private String name;
+    private GameTurn gameTurn;
+    private RegionTrainer trainer;
+    private List<UnitCluster> units;
 
-    public Region(int movementCost, String name) {
-        this.movementCost = movementCost;
-        this.name = name;
-        this.trainer = new RegionTrainer(this);
-        this.units = new ArrayList<UnitCluster>(); 
-        this.units.add( new UnitCluster( 0, new Swordsman() ) );
-        this.units.add( new UnitCluster(0, new Archerman() ) );
-        this.units.add( new UnitCluster(0, new Cavalry() ) );
-        this.units.add( new UnitCluster(0, new Spearman() ) );
-        this.units.add( new UnitCluster(0, new Swordsman() ) );
+    public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
+        name = regionData.getString("Id");
+        this.gameTurn = gameTurn;
+        //Set up region trainer
+        JSONArray trainData = regionData.getJSONArray("Trainer");
+        trainer = new RegionTrainer(trainData, this, gameTurn);
+
+        //Set up the units according to config
+        units = new ArrayList<>();
+        JSONObject troops = regionData.getJSONObject("Troops");
+        units.add( new UnitCluster(troops.getInt("Archerman"), new Archerman()));
+        units.add( new UnitCluster(troops.getInt("Cavalry"), new Cavalry()));
+        units.add( new UnitCluster(troops.getInt("Slingerman"), new Slingerman()));
+        units.add( new UnitCluster(troops.getInt("Spearman"), new Spearman()));
+        units.add( new UnitCluster(troops.getInt("Swordsman"), new Swordsman()));
     }
 
+    /**
+     * @return all units object in the region
+     */
+    public List<UnitCluster> getUnits() {
+        return units;
+    }
 
- 
-    
+    /**
+     * Forwards method to RegionTrainer.
+     * @param troops hashmap of units
+     * @return true if the units were put into training.
+     */
+    public boolean train(Map<String, Integer> troops) {
+        return trainer.train(troops);
+    }
+
+    /**
+     * Gets the total amount of troops in the region
+     * @return total amount of troops in the region
+     */
     public int getTotalUnits() {
         int total = 0;
         for(UnitCluster unit : units) {
@@ -41,13 +60,17 @@ public class Region {
         }
         return total;
     }
-    // public void moveTroops(String troopName, int troopAmount, Region end) <- use this
-    // Should only be called by Player class and assume player class already checked if unit has enough movement points
-    public void moveTroops(String troopName, int troopAmount, Region end) {
+
+    public Boolean moveTroops(int movementPoints, Map<String,Integer> troops, Region end) {
         minusUnits(troopName, troopAmount);
         end.addUnits(troopName, troopAmount);
     }
 
+    /**
+     * Finds a unit based on its name
+     * @param unit name of unit that needs to be found
+     * @return UnitCluster of that unit
+     */
     public UnitCluster findUnit(String unit) {
         for( UnitCluster u : units ) {
             if( u.getUnitName().compareTo(unit) == 0 ) {
@@ -57,14 +80,42 @@ public class Region {
         return null;
     }
 
+    /**
+     * Reduces the number of troops of a chosen UnitCluster, selected by its name
+     * @param unit is the unit that is going to have it's number of troops reduced
+     * @param numTroops is the amount of troops reduced
+     */
     public void minusUnits(String unit, int numTroops) {
         UnitCluster u = findUnit(unit);
         u.minusUnits(numTroops);
     }
 
+    /**
+     * Increases the number of troops of a chosen UnitCluster, selected by its name
+     * @param unit is the unit that is going to have it's number of troops increased
+     * @param numTroops is the amount of troops increased
+     */
     public void addUnits(String unit, int numTroops) {
         UnitCluster u = findUnit(unit);
         u.addUnits(numTroops);
     }
 
+    /**
+     * @return the current state of region
+     */
+    public JSONObject getSave() {
+        JSONObject save = new JSONObject();
+        save.put("Id", name);
+
+        //Troops json object
+        JSONObject troops = new JSONObject();
+        for (UnitCluster unit: units) {
+            troops.put(unit.getUnitName(), unit.size());
+        }
+
+        //TODO:Wealth?
+        save.put("Trainer", trainer.getSave());
+        save.put("Troops", troops);
+        return save;
+    }
 }

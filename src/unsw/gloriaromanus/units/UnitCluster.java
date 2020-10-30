@@ -24,6 +24,7 @@ public class UnitCluster{
         this.numTroops -= numTroops;
     }
 
+<<<<<<< HEAD
     public Unit getUnit() {
         return unit;
     }
@@ -33,4 +34,9 @@ public class UnitCluster{
     }
 
     
+=======
+    public int trainTime() {
+        return unit.trainTime();
+    }
+>>>>>>> skeleton
 }
