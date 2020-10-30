@@ -41,7 +41,7 @@ public class Game {
         } else if(movePhase.toString().equals(state)) {
             curPhase = movePhase;
         } else {
-            throw new JSONException("Corrupted save at State");
+            throw new JSONException("Corrupted config: Invalid State");
         }
 
         //Set up the players & turn
@@ -63,7 +63,7 @@ public class Game {
             //Map each faction name to the player Object
             playersMap.put(faction, player);
         }
-        if(curPlayer == null) throw new JSONException("Corrupted save at Subturn");
+        if(curPlayer == null) throw new JSONException("Corrupted config: Invalid Subturn");
     }
 
     /**
@@ -88,10 +88,17 @@ public class Game {
     }
 
     /**
-     * @return Hashmap of players
+     * @return hashmap of players
      */
     public Map<String, Player> getPlayersMap() {
         return playersMap;
+    }
+
+    /**
+     * @return game turn object
+     */
+    public GameTurn getGameTurn() {
+        return gameTurn;
     }
 
     /**
@@ -143,7 +150,7 @@ public class Game {
      * Wrapper function for preforming an action.
      * See GameState for more details.
      */
-    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) {
+    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
         return curPhase.action(originRegion, troops, args);
     }
 

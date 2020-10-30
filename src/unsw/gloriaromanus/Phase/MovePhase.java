@@ -33,7 +33,7 @@ public class MovePhase implements GamePhase {
     }
 
     @Override
-    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) {
+    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
         Player curPlayer = game.getCurPlayer();
         //Safe to index as there should be args[0] for both action
         String targetRegion= args[0];

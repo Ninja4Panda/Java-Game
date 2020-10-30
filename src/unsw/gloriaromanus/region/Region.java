@@ -5,8 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.units.*;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,10 @@ public class Region {
 
     public Region(JSONObject regionData) throws JSONException {
         name = regionData.getString("Id");
-        trainer = new RegionTrainer(this);
+
+        //Set up region trainer
+        JSONArray trainData = regionData.getJSONArray("Trainer");
+        trainer = new RegionTrainer(trainData, this);
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -43,10 +44,6 @@ public class Region {
     }
 
     public Boolean moveTroops(int movementPoints, Map<String,Integer> troops, Region end) {
-        for () {
-            UnitCluster unit = findUnit()
-        }
-
         minusUnits(troopName, troopAmount);
         end.addUnits(troopName, troopAmount);
     }
@@ -68,5 +65,22 @@ public class Region {
     public void addUnits(String unit, int numTroops) {
         UnitCluster u = findUnit(unit);
         u.addUnits(numTroops);
+    }
+
+    /**
+     * @return the current state of region
+     */
+    public JSONObject getSave() {
+        JSONObject save = new JSONObject();
+        save.put("Id", name);
+
+        //Troops json object
+        JSONObject troops = new JSONObject();
+        for (UnitCluster unit: units) {
+            troops.put(unit.getUnitName(), unit.size());
+        }
+        save.put("Trainer", trainer.getSave());
+        save.put("Troops", troops);
+        return save;
     }
 }
