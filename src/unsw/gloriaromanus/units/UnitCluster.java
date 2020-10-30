@@ -35,6 +35,9 @@ public class UnitCluster{
         return numTroops*unit.strength();
     }
 
+    public int getMaxMovementSpeed() {
+        return unit.getMaxMovementSpeed();
+    }
   
     public int trainTime() {
         return unit.trainTime();

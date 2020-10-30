@@ -8,4 +8,5 @@ public interface Unit {
     public void reduceMovementPoints(int movementPoints);
     public void setMovementSpeed(int movementPoints);
     public int strength();
+    public int getMaxMovementSpeed();
 }
