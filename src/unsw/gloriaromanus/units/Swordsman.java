@@ -4,9 +4,10 @@ import unsw.gloriaromanus.units.attack.Melee;
 
 public class Swordsman extends BaseUnit {
     public Swordsman() {
-        super(10, 1, 50, 10, 0, new Melee(5, 1), 5, 10, 10, 0, 0);
+        super(10, 10, 1, 50, 10, 0, new Melee(5, 1), 5, 10, 10, 0, 0);
         // Swordsman is a unit with 
         // 10 movement points
+        // 10 max movement points
         // 1 turn build time
         // 50 gold cost
         // 10 train amount

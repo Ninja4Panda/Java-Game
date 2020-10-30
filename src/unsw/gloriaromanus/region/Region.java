@@ -3,21 +3,39 @@ package unsw.gloriaromanus.region;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import unsw.gloriaromanus.BattleResolver;
 import unsw.gloriaromanus.GameTurn;
+import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Region {
+public class Region implements Observer {
     private String name;
     private GameTurn gameTurn;
     private RegionTrainer trainer;
     private List<UnitCluster> units;
+    private int wealth;
+    private int tax;
+
+    public Region(String name, GameTurn gameTurn, RegionTrainer regionTrainer,
+                List<UnitCluster> units, int wealth, int tax) {
+        this.name = name;
+        this.gameTurn = gameTurn;
+        trainer = regionTrainer;
+        this.units = units;
+        this.wealth = wealth;
+        this.tax = tax;
+    }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
+        gameTurn.attach(this);
         name = regionData.getString("Id");
         this.gameTurn = gameTurn;
+        wealth = regionData.getInt("Wealth");
+        tax = regionData.getInt("Tax");
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
         trainer = new RegionTrainer(trainData, this);
@@ -31,7 +49,13 @@ public class Region {
         units.add( new UnitCluster(troops.getInt("Spearman"), new Spearman()));
         units.add( new UnitCluster(troops.getInt("Swordsman"), new Swordsman()));
     }
+    public void setWealth(int wealth) {
+        this.wealth = wealth;
+    }
 
+    public int calcGold() {
+        return wealth*tax;
+    }
     /**
      * @return all units object in the region
      */
@@ -78,14 +102,19 @@ public class Region {
      * @return if the move is succesful
      */
     public String moveTroops(int movementPoints, List<String> troops, Region end) {
-        // minusUnits(troopName, troopAmount);
-        // end.addUnits(troopName, troopAmount);
+
+        
         for( UnitCluster u : units ) {
             if( troops.contains(u.getUnitName()) ) {
                 units.remove(u);
+                UnitCluster compareTo = end.findUnit(u.getUnitName());
+                if(compareTo.getMovementPoints() > u.getMovementPoints() ) {
+                    compareTo.setMovementPoints(u.getMovementPoints());
+                }
+                compareTo.addUnits(u.size());
             }
         }
-        return "yes";
+        return "Troops moved";
     }
 
     /**
@@ -142,6 +171,37 @@ public class Region {
     }
 
     public String invade(int movementPoints, List<String> troops, Region target) {
-        return "Nothing";
+        List<UnitCluster> attackers = new ArrayList<UnitCluster>();
+        return BattleResolver.resolve(attackers, target, this);
+    }
+
+    @Override
+    public void update() {
+        updateWealth();
+        updateMovementPoints();
+        trainer.pushUnits();
+    }
+
+    private void updateMovementPoints() {
+        for(UnitCluster u : units) {
+            u.setMovementPoints( u.getMaxMovementSpeed() );
+        }
+    }
+
+    private void updateWealth() {
+        switch (wealth) {
+            case 10:
+                wealth += 10;
+                break;
+            case 15:
+                break;
+            case 20:
+                wealth -= 10;
+                break;
+            case 25:
+                wealth -= 30;
+            default:
+                break;
+        }
     }
 }
