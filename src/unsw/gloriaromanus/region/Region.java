@@ -21,8 +21,18 @@ public class Region implements Observer {
     private int wealth;
     private int tax;
 
+    public Region(String name, GameTurn gameTurn, RegionTrainer regionTrainer, 
+                List<UnitCluster> units, int wealth, int tax) {
+        this.name = name;
+        this.gameTurn = gameTurn;
+        trainer = regionTrainer;
+        this.units = units;
+        this.wealth = wealth;
+        this.tax = tax;
+    }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
+        gameTurn.attach(this);
         name = regionData.getString("Id");
         this.gameTurn = gameTurn;
         wealth = regionData.getInt("Wealth");
