@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.region.Region;
+import unsw.gloriaromanus.units.UnitCluster;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,11 +65,27 @@ public class Player {
      * Train troops in region
      * @param origin origin region object initiated the training
      * @param troops hashmap of troops to train
-     * @param gameTurn game turn object
      * @return true/false indicating training request was successful or not
      */
-    public Boolean train(Region origin, Map<String, Integer> troops, GameTurn gameTurn) {
-        return origin.train(troops, gameTurn);
+    public Boolean train(Region origin, Map<String, Integer> troops) {
+        return enoughGold(origin, troops) && origin.train(troops);
+    }
+
+    /**
+     * Check if player has enough gold to train units
+     * @param origin origin region
+     * @param troops hashmap of troops to train
+     * @return true/false to indicate enough gold or not
+     */
+    private Boolean enoughGold(Region origin, Map<String, Integer> troops) {
+        int cost = 0;
+        for(String name: troops.keySet()) {
+            UnitCluster troop = origin.findUnit(name);
+            int amount = troops.get(name);
+            cost += amount*troop.getCost();
+        }
+        if(cost>gold) return false;
+        return true;
     }
 
     /**
