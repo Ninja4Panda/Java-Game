@@ -14,7 +14,7 @@ import unsw.gloriaromanus.units.*;
 // train the proper units and put it in the list
 // should observe the turn counter and when the appropriate 
 // amount of turns passes it will send it into Region
-public class RegionTrainer implements Observer {
+public class RegionTrainer {
     private Hashtable<UnitCluster, Integer> trainingUnits;
     private Region region;
     private GameTurn gameTurn;
