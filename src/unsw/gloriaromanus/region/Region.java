@@ -74,10 +74,15 @@ public class Region {
         for( UnitCluster u : units ) {
             if( troops.contains(u.getUnitName()) ) {
                 units.remove(u);
+                UnitCluster compareTo = end.findUnit(u.getUnitName());
+                if(compareTo.getMovementPoints() > u.getMovementPoints() ) {
+                    compareTo.setMovementPoints(u.getMovementPoints());
+                } 
+                compareTo.addUnits(u.size());
             }
             
         }
-        return "yes";
+        return "Troops moved";
     }
     
 

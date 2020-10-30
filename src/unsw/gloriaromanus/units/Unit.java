@@ -6,4 +6,5 @@ public interface Unit {
     public String getClassName();
     public int getMovementPoints();
     public void reduceMovementPoints(int movementPoints);
+    public void setMovementSpeed(int movementPoints);
 }
