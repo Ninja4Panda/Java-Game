@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class MovePhase implements GamePhase {
     private Game game;
-    private final int MAX_NUM_PATH = 53;
+    private final int MAX_NUM_PATH = 53*4;
 
     public MovePhase(Game game) {
         this.game = game;
@@ -105,7 +105,7 @@ public class MovePhase implements GamePhase {
         //Get the adjacency matrix from origin as a list
         JSONObject adjacencyMatrix = allAdjacencyMatrix.getJSONObject(origin);
         JSONArray adjacentList = adjacencyMatrix.names();
-        if(adjacencyMatrix.getBoolean(target)) return 1;
+        if(adjacencyMatrix.getBoolean(target)) return 4;
 
         //Set current node as visited
         visited.add(origin);
@@ -121,7 +121,7 @@ public class MovePhase implements GamePhase {
 
             //Find the shortest path and avoid going back to original node
             if(!visited.contains(neighbour) && adjacencyMatrix.getBoolean(neighbour)) {
-                int path = 1+findShortestPath(neighbour, target, visited);
+                int path = 4+findShortestPath(neighbour, target, visited);
                 if(path<shortest) shortest=path;
             }
         }
