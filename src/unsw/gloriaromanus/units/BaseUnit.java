@@ -4,6 +4,7 @@ import unsw.gloriaromanus.units.attack.AttackType;
 
 public class BaseUnit implements Unit{
     private int movementPoints; // capability for the unit to move
+    private int maxMovementPoints;
     private int buildTime;      // how many turns it will take the unit to appear on the map
     private int cost;           // how much money is needed to make the unit
     private AttackType attack;  // has an int attackValue which will help determine how much damage the other unit takes
@@ -13,10 +14,11 @@ public class BaseUnit implements Unit{
     private int defenseSkill;   // skill to defend in battle. Does not protect from arrows!
     private int shieldDefense;  // a shield
 
-    public BaseUnit( int movementPoints, int buildTime, int cost, AttackType attack,
+    public BaseUnit( int movementPoints, int maxMovementPoints, int buildTime, int cost, AttackType attack,
                 int armour, int health, int maxHealth, int defenseSkill, int shieldDefense) {
 
         this.movementPoints = movementPoints;
+        this.maxMovementPoints = maxMovementPoints;
         this.buildTime = buildTime; 
         this.cost = cost;
         this.attack = attack;
@@ -27,6 +29,9 @@ public class BaseUnit implements Unit{
         this.shieldDefense = shieldDefense;
     }
 
+    public int getMaxMovementSpeed() {
+        return maxMovementPoints;
+    }
     
     public void setMovementSpeed(int movementPoints) {
         this.movementPoints = movementPoints;

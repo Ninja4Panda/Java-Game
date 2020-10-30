@@ -4,7 +4,7 @@ import unsw.gloriaromanus.units.attack.Melee;
 
 public class Cavalry extends BaseUnit{
     public Cavalry() {
-        super(20, 2, 100, new Melee(7, 2), 5, 15, 15, 0, 1);
+        super(20, 20 ,2, 100, new Melee(7, 2), 5, 15, 15, 0, 1);
         // Cavalry is a unit with 
         // 20 movementpoints
         // 2 turn build time
