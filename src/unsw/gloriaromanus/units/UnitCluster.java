@@ -9,6 +9,9 @@ public class UnitCluster{
         this.unit = unit;
     }
 
+    public void setMovementPoints(int movementPoints) {
+        unit.setMovementSpeed(movementPoints);
+    }
     public int size() {
         return numTroops;
     }
@@ -25,9 +28,22 @@ public class UnitCluster{
         this.numTroops -= numTroops;
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public int armyStrength() {
+        return numTroops*unit.strength();
+    }
+
+    public int getMaxMovementSpeed() {
+        return unit.getMaxMovementSpeed();
+    }
+  
     public int trainTime() {
         return unit.trainTime();
     }
+
 
     public int getMovementPoints() {
         return unit.getMovementPoints();
@@ -36,4 +52,5 @@ public class UnitCluster{
     public void reduceMovementPoints(int movementPoints) {
         unit.reduceMovementPoints(movementPoints);
     }
+
 }

@@ -34,7 +34,7 @@ public class RegionTrainer {
 
     /**
      * Adds the appropriate unit into the trainingUnits hashtable.
-     * @param troops hashmap of units
+     * @param troops list of units
      * @return msg to display
      */
     public String train(List<String> troops) {
@@ -82,8 +82,4 @@ public class RegionTrainer {
         return save;
     }
 
-    @Override
-    public void update() {
-
-    }
 }
