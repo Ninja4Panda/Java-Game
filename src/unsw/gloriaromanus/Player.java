@@ -10,21 +10,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
+    private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
     private Faction faction;
     private int gold;
 
-    public Player(JSONObject playerData) throws JSONException {
+    public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
+        this.gameTurn = gameTurn;
+        JSONArray regions = playerData.getJSONArray("Regions");
         //TODO: set up faction
         String factionName = playerData.getString("Faction");
         gold = playerData.getInt("Gold");
-        JSONArray regions = playerData.getJSONArray("Regions");
         regionsMap = new HashMap<>();
 
         for (int i = 0; i<regions.length(); i++) {
             JSONObject regionJson = regions.getJSONObject(i);
             String name = regionJson.getString("Id");
-            Region region = new Region(regionJson);
+            Region region = new Region(regionJson, gameTurn);
             regionsMap.put(name, region);
         }
     }

@@ -3,6 +3,7 @@ package unsw.gloriaromanus.region;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import unsw.gloriaromanus.GameTurn;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
@@ -11,15 +12,16 @@ import java.util.Map;
 
 public class Region {
     private String name;
+    private GameTurn gameTurn;
     private RegionTrainer trainer;
     private List<UnitCluster> units;
 
-    public Region(JSONObject regionData) throws JSONException {
+    public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
         name = regionData.getString("Id");
-
+        this.gameTurn = gameTurn;
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
-        trainer = new RegionTrainer(trainData, this);
+        trainer = new RegionTrainer(trainData, this, gameTurn);
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -31,6 +33,9 @@ public class Region {
         units.add( new UnitCluster(troops.getInt("Swordsman"), new Swordsman()));
     }
 
+    /**
+     * @return all units object in the region
+     */
     public List<UnitCluster> getUnits() {
         return units;
     }

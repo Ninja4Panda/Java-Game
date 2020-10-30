@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import unsw.gloriaromanus.GameTurn;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
@@ -16,10 +17,13 @@ import unsw.gloriaromanus.units.*;
 public class RegionTrainer implements Observer {
     private Hashtable<UnitCluster, Integer> trainingUnits;
     private Region region;
-    
-    public RegionTrainer(JSONArray trainData, Region region) throws JSONException {
+    private GameTurn gameTurn;
+
+    public RegionTrainer(JSONArray trainData, Region region, GameTurn gameTurn) throws JSONException {
         trainingUnits = new Hashtable<UnitCluster, Integer>();
         this.region = region;
+        this.gameTurn = gameTurn;
+        gameTurn.attach(this);
 
         //Make sure there is only 2 training at a time
         for (int i=0; i<trainData.length() || i>1; i++) {
