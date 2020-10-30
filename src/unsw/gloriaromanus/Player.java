@@ -89,7 +89,7 @@ public class Player {
     }
 
     /**
-     * @return JsonObject according to the save
+     * @return the current state of player
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();

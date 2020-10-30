@@ -1,10 +1,12 @@
 package unsw.gloriaromanus.region;
 
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
@@ -21,9 +23,10 @@ public class RegionTrainer implements Observer {
 
         //Make sure there is only 2 training at a time
         for (int i=0; i<trainData.length() || i>1; i++) {
-            String type = trainData.getJSONObject(i).getString("Type");
-            int turns = trainData.getJSONObject(i).getInt("Turns");
-            int amount = trainData.getJSONObject(i).getInt("Amount");
+            JSONObject unitObject = trainData.getJSONObject(i);
+            String type = unitObject.getString("Type");
+            int turns = unitObject.getInt("TurnLeft");
+            int amount = unitObject.getInt("Amount");
             UnitCluster troop = getTrainingUnit(amount, type);
             if(troop==null) throw new JSONException("Corrupted config file: invalid unit type");
             trainingUnits.put(troop, turns);
@@ -109,8 +112,22 @@ public class RegionTrainer implements Observer {
         return unitsPushed;
     }
 
+    /**
+     * @return the current state of region trainer
+     */
     public JSONArray getSave() {
-
+        JSONArray save = new JSONArray();
+        Iterator<Map.Entry<UnitCluster, Integer>> it = trainingUnits.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<UnitCluster, Integer> entry = it.next();
+            JSONObject unitJson = new JSONObject();
+            UnitCluster unit = entry.getKey();
+            unitJson.put("Type", unit.getUnitName());
+            unitJson.put("TurnLeft", entry.getValue());
+            unitJson.put("Amount", unit.size());
+            save.put(unitJson);
+        }
+        return save;
     }
 
     @Override
