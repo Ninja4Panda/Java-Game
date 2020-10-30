@@ -27,7 +27,12 @@ public class BaseUnit implements Unit{
         this.shieldDefense = shieldDefense;
     }
 
-
+    public int getMovementPoints() {
+        return movementPoints;
+    }
+    public void reduceMovementPoints(int movementPoints) {
+        this.movementPoints -= movementPoints;
+    }
     public String getClassName() {
         String className = this.getClass().getName();
         String[] classNameParts = className.split("\\.");
