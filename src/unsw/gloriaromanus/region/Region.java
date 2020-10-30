@@ -45,7 +45,7 @@ public class Region {
      * @param troops hashmap of units
      * @return true if the units were put into training.
      */
-    public boolean train(Map<String, Integer> troops) {
+    public String train(Map<String, Integer> troops) {
         return trainer.train(troops);
     }
 
@@ -59,14 +59,6 @@ public class Region {
             total += unit.size();
         }
         return total;
-    }
-
-    /**
-     * Adds a new object of UnitsCluster to the units list
-     * @param newUnit that needs to be added
-     */
-    public void addUnits(UnitCluster newUnit ) {
-        units.add(newUnit);
     }
 
     /**
@@ -85,7 +77,7 @@ public class Region {
             }
             
         }
-        return true;
+        return "yes";
     }
     
 
@@ -129,7 +121,6 @@ public class Region {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        save.put("Id", name);
 
         //Troops json object
         JSONObject troops = new JSONObject();
@@ -140,6 +131,11 @@ public class Region {
         //TODO:Wealth?
         save.put("Trainer", trainer.getSave());
         save.put("Troops", troops);
+        save.put("Id", name);
         return save;
+    }
+
+    public String invade(int movementPoints, Map<String, Integer> troops, Region target) {
+        return "Nothing";
     }
 }

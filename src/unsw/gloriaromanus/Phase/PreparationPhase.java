@@ -24,7 +24,7 @@ public class PreparationPhase implements GamePhase {
     }
 
     @Override
-    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) {
+    public String action(String originRegion, Map<String, Integer> troops, String ... args) {
         return train(originRegion, troops);
     }
 
@@ -32,9 +32,9 @@ public class PreparationPhase implements GamePhase {
      * Wrapper function for troops training
      * @param originRegion origin region initiated the training
      * @param troops hashmap of troops to train
-     * @return true/false indicating training request was successful or not
+     * @return msg to display
      */
-    private Boolean train(String originRegion, Map<String, Integer> troops) {
+    private String train(String originRegion, Map<String, Integer> troops) {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         return curPlayer.train(origin, troops);

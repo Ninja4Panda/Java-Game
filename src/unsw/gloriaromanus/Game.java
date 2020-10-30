@@ -5,11 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Phase.*;
 import unsw.gloriaromanus.region.Region;
+import unsw.gloriaromanus.units.UnitCluster;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,6 @@ public class Game {
         String content = Files.readString(Paths.get(configFile));
         JSONObject config = new JSONObject(content);
         JSONObject game = config.getJSONObject("Game");
-
         //Set up current phase
         String state = game.getString("Phase");
         if (preparationPhase.toString().equals(state)) {
@@ -78,6 +79,13 @@ public class Game {
      */
     public GamePhase getPreparationPhase() {
         return preparationPhase;
+    }
+
+    /**
+     * @return current phase
+     */
+    public GamePhase getCurPhase() {
+        return curPhase;
     }
 
     /**
@@ -140,9 +148,9 @@ public class Game {
      * @param region region to view
      * @return list to display or null to indicate not player's region
      */
-    public List display(String region) {
+    public List<UnitCluster> displayRegion(String region) {
         Region target = curPlayer.getRegion(region);
-        if(target != null) return curPhase.getDisplayData(target);
+        if(target != null) return curPhase.getRegionData(target);
         return null;
     }
 
@@ -150,7 +158,7 @@ public class Game {
      * Wrapper function for preforming an action.
      * See GameState for more details.
      */
-    public Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
+    public String action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException {
         return curPhase.action(originRegion, troops, args);
     }
 
@@ -164,7 +172,7 @@ public class Game {
         dir.mkdir();
 
         //Make the new save file today's date
-        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
         Date today = new Date();
         String filename = df.format(today)+".json";
         File file = new File(dir, filename);
@@ -187,5 +195,6 @@ public class Game {
         save.put("Game",gameSave);
         save.put("Players",playerSave);
         writer.write(save.toString(2));
+        writer.close();
     }
 }
