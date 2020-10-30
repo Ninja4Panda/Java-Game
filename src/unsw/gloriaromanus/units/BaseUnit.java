@@ -51,4 +51,8 @@ public class BaseUnit implements Unit{
     public void move(String start, String end) {
 
     }
+
+    public int strength() {
+        return armour*attack.getAttackValue();
+    }
 }

@@ -9,7 +9,10 @@ public class Melee implements AttackType {
         this.attackValue = attackValue;
         this.range = range;
     }
-
+    
+    public int getAttackValue() {
+        return attackValue;
+    }
     public void attackUnit(Unit victim) {
         // do some calcs with victim
         

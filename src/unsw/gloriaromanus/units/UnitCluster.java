@@ -27,9 +27,20 @@ public class UnitCluster{
         this.numTroops -= numTroops;
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public int armyStrength() {
+        return numTroops*unit.strength();
+    }
+
+    
+
     public int trainTime() {
         return unit.trainTime();
     }
+
 
     public int getMovementPoints() {
         return unit.getMovementPoints();
@@ -38,4 +49,5 @@ public class UnitCluster{
     public void reduceMovementPoints(int movementPoints) {
         unit.reduceMovementPoints(movementPoints);
     }
+
 }

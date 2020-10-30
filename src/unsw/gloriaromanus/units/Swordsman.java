@@ -10,7 +10,7 @@ public class Swordsman extends BaseUnit {
         // 1 turn build time
         // 50 gold cost
         // 5 attack value and armour
-        // 10 health and maxhealth
+        // 15 health and maxhealth
         // 1 range
         // 0 defense skill and shieldDefense
     }
