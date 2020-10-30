@@ -8,6 +8,9 @@ public class UnitCluster{
         this.unit = unit;
     }
 
+    public void setMovementPoints(int movementPoints) {
+        unit.setMovementSpeed(movementPoints);
+    }
     public int size() {
         return numTroops;
     }

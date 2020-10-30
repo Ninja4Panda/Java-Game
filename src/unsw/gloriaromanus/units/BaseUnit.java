@@ -27,6 +27,11 @@ public class BaseUnit implements Unit{
         this.shieldDefense = shieldDefense;
     }
 
+    
+    public void setMovementSpeed(int movementPoints) {
+        this.movementPoints = movementPoints;
+    }
+
     public int getMovementPoints() {
         return movementPoints;
     }
