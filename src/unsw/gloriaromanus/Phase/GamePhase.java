@@ -3,6 +3,7 @@ package unsw.gloriaromanus.Phase;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.UnitCluster;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,5 @@ public interface GamePhase {
      * @param args string array expecting targetRegion,targetFaction in order when required
      * @return true/false indicating action was successful or not
      */
-    Boolean action(String originRegion, Map<String, Integer> troops, String ... args);
+    Boolean action(String originRegion, Map<String, Integer> troops, String ... args) throws IOException;
 }

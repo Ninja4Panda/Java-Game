@@ -64,12 +64,12 @@ public class Player {
      * Train troops in region
      * @param origin origin region object initiated the training
      * @param troops hashmap of troops to train
+     * @param gameTurn game turn object
      * @return true/false indicating training request was successful or not
      */
-    public Boolean train(Region origin, Map<String, Integer> troops) {
-        return origin.train(troops);
+    public Boolean train(Region origin, Map<String, Integer> troops, GameTurn gameTurn) {
+        return origin.train(troops, gameTurn);
     }
-
 
     /**
      * @return JsonObject according to the save
