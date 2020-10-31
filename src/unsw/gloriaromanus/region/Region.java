@@ -16,39 +16,59 @@ public class Region implements Observer {
     private String name;
     private GameTurn gameTurn;
     private RegionTrainer trainer;
-    private List<UnitCluster> units;
+    private List<Unit> units;
     private int wealth;
     private int tax;
 
-    public Region(String name, GameTurn gameTurn, RegionTrainer regionTrainer,
-                List<UnitCluster> units, int wealth, int tax) {
+    public Region(String name, GameTurn gameTurn, RegionTrainer trainer, List<Unit> units, int wealth, int tax) {
         this.name = name;
         this.gameTurn = gameTurn;
-        trainer = regionTrainer;
+        gameTurn.attach(this);
+        this.trainer = trainer;
         this.units = units;
         this.wealth = wealth;
         this.tax = tax;
     }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
-        gameTurn.attach(this);
         name = regionData.getString("Id");
-        this.gameTurn = gameTurn;
         wealth = regionData.getInt("Wealth");
         tax = regionData.getInt("Tax");
+
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
-        trainer = new RegionTrainer(trainData, this);
+        trainer = new RegionTrainer(trainData,this);
 
         //Set up the units according to config
         units = new ArrayList<>();
         JSONObject troops = regionData.getJSONObject("Troops");
-        units.add( new UnitCluster(troops.getInt("Archerman"), new Archerman()));
-        units.add( new UnitCluster(troops.getInt("Cavalry"), new Cavalry()));
-        units.add( new UnitCluster(troops.getInt("Slingerman"), new Slingerman()));
-        units.add( new UnitCluster(troops.getInt("Spearman"), new Spearman()));
-        units.add( new UnitCluster(troops.getInt("Swordsman"), new Swordsman()));
+
+        JSONObject archerman = troops.getJSONObject("Archerman");
+        int movementPoint = archerman.getInt("Movement");
+        int amount = archerman.getInt("Amount");
+        units.add(new Archerman(movementPoint, amount));
+
+        JSONObject cavalry = troops.getJSONObject("Cavalry");
+        movementPoint = cavalry.getInt("Movement");
+        amount = cavalry.getInt("Amount");
+        units.add(new Cavalry(movementPoint, amount));
+
+        JSONObject slingerman = troops.getJSONObject("Slingerman");
+        movementPoint = slingerman.getInt("Movement");
+        amount = slingerman.getInt("Amount");
+        units.add(new Slingerman(movementPoint, amount));
+
+        JSONObject spearman = troops.getJSONObject("Spearman");
+        movementPoint = spearman.getInt("Movement");
+        amount = spearman.getInt("Amount");
+        units.add(new Spearman(movementPoint, amount));
+
+        JSONObject swordsman = troops.getJSONObject("Swordsman");
+        movementPoint = swordsman.getInt("Movement");
+        amount = swordsman.getInt("Amount");
+        units.add(new Swordsman(movementPoint, amount));
     }
+
     public void setWealth(int wealth) {
         this.wealth = wealth;
     }
@@ -59,7 +79,7 @@ public class Region implements Observer {
     /**
      * @return all units object in the region
      */
-    public List<UnitCluster> getUnits() {
+    public List<Unit> getUnits() {
         return units;
     }
 
@@ -78,19 +98,19 @@ public class Region implements Observer {
      */
     public int getTotalUnits() {
         int total = 0;
-        for(UnitCluster unit : units) {
-            total += unit.size();
+        for(Unit unit : units) {
+            total += unit.getCurAmount();
         }
         return total;
     }
 
     /**
-     * Adds a new object of UnitsCluster to the units list
+     * Adds the number of trained unit to the unit object in this region
      * @param type type of unit that needs to be added
      */
     public void addUnits(String type) {
-        for(UnitCluster unit: units) {
-            if(unit.getUnitName().equals(type)) unit.addUnits();
+        for(Unit unit: units) {
+            if(unit.getClassName().equals(type)) unit.addTrainedUnit();
         }
     }
 
@@ -99,19 +119,17 @@ public class Region implements Observer {
      * @param movementPoints cost of moving to other region
      * @param troops to move to other region
      * @param end where the troops will end up at
-     * @return if the move is succesful
+     * @return msg to display
      */
     public String moveTroops(int movementPoints, List<String> troops, Region end) {
-
-        
-        for( UnitCluster u : units ) {
-            if( troops.contains(u.getUnitName()) ) {
-                units.remove(u);
-                UnitCluster compareTo = end.findUnit(u.getUnitName());
-                if(compareTo.getMovementPoints() > u.getMovementPoints() ) {
-                    compareTo.setMovementPoints(u.getMovementPoints());
+        for(Unit u : units) {
+            if(troops.contains(u.getClassName())) {
+                u.minusUnits(u.getCurAmount());
+                Unit compareTo = end.findUnit(u.getClassName());
+                if(compareTo.getCurMovementPoints() > u.getCurMovementPoints() ) {
+                    compareTo.setCurMovementPoints(u.getCurMovementPoints());
                 }
-                compareTo.addUnits(u.size());
+                compareTo.addUnits(u.getCurAmount());
             }
         }
         return "Troops moved";
@@ -120,11 +138,11 @@ public class Region implements Observer {
     /**
      * Finds a unit based on its name
      * @param unit name of unit that needs to be found
-     * @return UnitCluster of that unit
+     * @return unit
      */
-    public UnitCluster findUnit(String unit) {
-        for( UnitCluster u : units ) {
-            if( u.getUnitName().compareTo(unit) == 0 ) {
+    public Unit findUnit(String unit) {
+        for(Unit u : units) {
+            if(u.getClassName().compareTo(unit) == 0 ) {
                 return u;
             }
         }
@@ -137,7 +155,7 @@ public class Region implements Observer {
      * @param numTroops is the amount of troops reduced
      */
     public void minusUnits(String unit, int numTroops) {
-        UnitCluster u = findUnit(unit);
+        Unit u = findUnit(unit);
         u.minusUnits(numTroops);
     }
 
@@ -147,7 +165,7 @@ public class Region implements Observer {
      * @param numTroops is the amount of troops increased
      */
     public void addUnits(String unit, int numTroops) {
-        UnitCluster u = findUnit(unit);
+        Unit u = findUnit(unit);
         u.addUnits(numTroops);
     }
 
@@ -159,8 +177,8 @@ public class Region implements Observer {
 
         //Troops json object
         JSONObject troops = new JSONObject();
-        for (UnitCluster unit: units) {
-            troops.put(unit.getUnitName(), unit.size());
+        for (Unit unit: units) {
+            troops.put(unit.getClassName(), unit.getCurAmount());
         }
 
         //TODO:Wealth?
@@ -171,7 +189,7 @@ public class Region implements Observer {
     }
 
     public String invade(int movementPoints, List<String> troops, Region target) {
-        List<UnitCluster> attackers = new ArrayList<UnitCluster>();
+        List<Unit> attackers = new ArrayList<>();
         return BattleResolver.resolve(attackers, target, this);
     }
 
@@ -183,8 +201,8 @@ public class Region implements Observer {
     }
 
     private void updateMovementPoints() {
-        for(UnitCluster u : units) {
-            u.setMovementPoints( u.getMaxMovementSpeed() );
+        for(Unit u : units) {
+            u.setCurMovementPoints(u.getMaxMovementPoints());
         }
     }
 

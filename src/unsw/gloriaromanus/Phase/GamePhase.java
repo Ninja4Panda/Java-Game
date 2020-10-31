@@ -1,7 +1,7 @@
 package unsw.gloriaromanus.Phase;
 
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.units.UnitCluster;
+import unsw.gloriaromanus.units.Unit;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ public interface GamePhase {
      * @param region region object
      * @return list of units
      */
-    default List<UnitCluster> getRegionData(Region region) {
+    default List<Unit> getRegionData(Region region) {
         return region.getUnits();
     }
 

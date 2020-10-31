@@ -5,21 +5,21 @@ import java.util.List;
 import java.util.Random;
 
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.units.UnitCluster;
+import unsw.gloriaromanus.units.Unit;
 
 public class BattleResolver {
 
     // Pass implementation of battle resolver
-    public static String resolve(List<UnitCluster> attackers, Region defending, Region attacking) {
+    public static String resolve(List<Unit> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
-        List<UnitCluster> defenders = defending.getUnits();
-        for( UnitCluster u : attackers ) {
-            attackingStrength += u.armyStrength();
+        List<Unit> defenders = defending.getUnits();
+        for(Unit u : attackers) {
+            attackingStrength += u.strength();
         }
 
         int defendingStrength = 0;
-        for( UnitCluster u : defenders ) {
-            defendingStrength += u.armyStrength();
+        for(Unit u : defenders ) {
+            defendingStrength += u.strength();
         }
         
 
@@ -38,7 +38,7 @@ public class BattleResolver {
                 AfterMath(defending.getUnits(), losersLoss);
 
                 double winnersLoss = decider.nextDouble();
-                AfterMath( attackers, winnersLoss);
+                AfterMath(attackers, winnersLoss);
 
                 attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
                 
@@ -57,10 +57,10 @@ public class BattleResolver {
 
         return "Draw";
     }
-    public static List<String> unitArrayToString(List<UnitCluster> units) {
-        List<String> stringArray = new ArrayList<String>();
-        for(UnitCluster u : units ) {
-            stringArray.add(u.getUnitName());
+    public static List<String> unitArrayToString(List<Unit> units) {
+        List<String> stringArray = new ArrayList<>();
+        for(Unit u : units) {
+            stringArray.add(u.getClassName());
         }
         return stringArray;
     }
@@ -94,10 +94,10 @@ public class BattleResolver {
     //     }
         
     // }
-    public static void AfterMath(List<UnitCluster> units, double lossPercentage) {
+    public static void AfterMath(List<Unit> units, double lossPercentage) {
         int totalUnits = 0;
-        for(UnitCluster u : units) {
-            totalUnits += u.size();
+        for(Unit u : units) {
+            totalUnits += u.getCurAmount();
         }
         
         // get how many units need to be killed off
@@ -109,8 +109,8 @@ public class BattleResolver {
         // kill off a random unit one by one until the target is reached
         int unitsRemoved = 0;
         while(unitsRemoved < unitsLost) {
-            UnitCluster unitGone = units.get( russianRoulette.nextInt( units.size() - 1 ) );
-            if(unitGone.size() != 0 ) {
+            Unit unitGone = units.get(russianRoulette.nextInt( units.size() - 1 ));
+            if(unitGone.getCurAmount() != 0 ) {
                 unitGone.minusUnits(1);
                 unitsRemoved ++;
             }

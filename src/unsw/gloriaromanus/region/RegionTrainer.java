@@ -26,7 +26,7 @@ public class RegionTrainer {
             JSONObject unitObject = trainData.getJSONObject(i);
             String type = unitObject.getString("Type");
             int turns = unitObject.getInt("TurnLeft");
-            UnitCluster troop = region.findUnit(type);
+            Unit troop = region.findUnit(type);
             if(troop==null) throw new JSONException("Corrupted config file: invalid unit type");
             trainingUnits.put(type, turns);
         }
@@ -40,7 +40,7 @@ public class RegionTrainer {
     public String train(List<String> troops) {
         if(troops.size()+trainingUnits.size()>2) return "Unsuccessful training too many troops are training already";
         for(String unit: troops) {
-            UnitCluster newUnit = region.findUnit(unit);
+            Unit newUnit = region.findUnit(unit);
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.trainTime());
         }
@@ -71,9 +71,7 @@ public class RegionTrainer {
      */
     public JSONArray getSave() {
         JSONArray save = new JSONArray();
-        Iterator<Map.Entry<String, Integer>> it = trainingUnits.entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry<String, Integer> entry = it.next();
+        for (Map.Entry<String, Integer> entry : trainingUnits.entrySet()) {
             JSONObject unitJson = new JSONObject();
             unitJson.put("Type", entry.getKey());
             unitJson.put("TurnLeft", entry.getValue());

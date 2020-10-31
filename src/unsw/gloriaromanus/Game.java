@@ -5,13 +5,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Phase.*;
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.units.UnitCluster;
+import unsw.gloriaromanus.units.Unit;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -148,7 +147,7 @@ public class Game {
      * @param region region to view
      * @return list to display or null to indicate not player's region
      */
-    public List<UnitCluster> displayRegion(String region) {
+    public List<Unit> displayRegion(String region) {
         Region target = curPlayer.getRegion(region);
         if(target != null) return curPhase.getRegionData(target);
         return null;
@@ -164,7 +163,7 @@ public class Game {
 
     /**
      * Create a game save in saves directory
-     * @throws IOException
+     * @throws IOException throws IOException when file couldn't be created
      */
     public void save() throws IOException {
         //Make the saves directory if it doesn't exists

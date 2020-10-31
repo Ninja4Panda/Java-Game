@@ -7,9 +7,11 @@ public interface Unit {
     void addUnits(int numTroops);
     void minusUnits(int numTroops);
     String getClassName();
-    int getMovementPoints();
-    public int getMaxMovementSpeed();
-    public void setMovementSpeed(int movementPoints);
+    int getCurMovementPoints();
+    int getMaxMovementPoints();
+    void setCurMovementPoints(int curMovementPoints);
     void reduceMovementPoints(int movementPoints);
     int strength();
+    int getCurAmount();
+    int getTrainAmount();
 }

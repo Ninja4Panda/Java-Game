@@ -3,7 +3,7 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.AttackType;
 
 public class BaseUnit implements Unit{
-    private int movementPoints; // capability for the unit to move
+    private int curMovementPoints; // capability for the unit to move
     private int maxMovementPoints;
     private int buildTime;      // how many turns it will take the unit to appear on the map
     private int trainAmount;    // how many troops it trains
@@ -16,10 +16,10 @@ public class BaseUnit implements Unit{
     private int defenseSkill;   // skill to defend in battle. Does not protect from arrows!
     private int shieldDefense;  // a shield
 
-    public BaseUnit( int movementPoints, int maxMovementPoints, int buildTime, int cost, int trainAmount, int curAmount, AttackType attack,
+    public BaseUnit( int curMovementPoints, int maxMovementPoints, int buildTime, int cost, int trainAmount, int curAmount, AttackType attack,
                 int armour, int health, int maxHealth, int defenseSkill, int shieldDefense) {
 
-        this.movementPoints = movementPoints;
+        this.curMovementPoints = curMovementPoints;
         this.maxMovementPoints = maxMovementPoints;
         this.buildTime = buildTime;
         this.cost = cost;
@@ -33,22 +33,34 @@ public class BaseUnit implements Unit{
         this.shieldDefense = shieldDefense;
     }
 
-    public int getMaxMovementSpeed() {
+    @Override
+    public int getMaxMovementPoints() {
         return maxMovementPoints;
     }
 
-    public void setMovementSpeed(int movementPoints) {
-        this.movementPoints = movementPoints;
+    @Override
+    public void setCurMovementPoints(int curMovementPoints) {
+        this.curMovementPoints = curMovementPoints;
     }
 
     @Override
-    public int getMovementPoints() {
-        return movementPoints;
+    public int getCurMovementPoints() {
+        return curMovementPoints;
     }
 
     @Override
     public void reduceMovementPoints(int movementPoints) {
-        this.movementPoints -= movementPoints;
+        this.curMovementPoints -= movementPoints;
+    }
+
+    @Override
+    public int getCurAmount() {
+        return curAmount;
+    }
+
+    @Override
+    public int getTrainAmount() {
+        return trainAmount;
     }
 
     @Override
@@ -56,6 +68,11 @@ public class BaseUnit implements Unit{
         String className = this.getClass().getName();
         String[] classNameParts = className.split("\\.");
         return classNameParts[classNameParts.length - 1];
+    }
+
+    @Override
+    public void move(String start, String end) {
+
     }
 
     @Override
@@ -72,10 +89,12 @@ public class BaseUnit implements Unit{
         curAmount+=numTroops;
     }
 
-    public void minusUnit(int num) {
+    @Override
+    public void minusUnits(int num) {
         curAmount -= num;
     }
 
+    @Override
     public int strength() {
         return armour * attack.getAttackValue();
     }

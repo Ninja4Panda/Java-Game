@@ -3,8 +3,8 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.Range;
 
 public class Slingerman extends BaseUnit {
-    public Slingerman() {
-        super(15, 15, 3, 85, 7, 0, new Range(5, 4), 5, 5, 5, 5, 5);
+    public Slingerman(int curMovementPoint, int curAmount) {
+        super(curMovementPoint, 15, 3, 85, 7, curAmount, new Range(5, 4), 5, 5, 5, 5, 5);
         // Slingerman is a unit with 
         // 15 movementpoints
         // 15 max movementpoints
