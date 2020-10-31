@@ -13,6 +13,7 @@ import java.util.Map;
 public class Player {
     private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
+    private Region recentlyConquered;
     private String faction;
     private int gold;
 
@@ -103,7 +104,7 @@ public class Player {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-         save.put("Faction", faction);
+        save.put("Faction", faction);
         save.put("Gold", gold);
 
         //Construct the region json array

@@ -1,11 +1,11 @@
 package test;
-import unsw.gloriaromanus.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import unsw.gloriaromanus.BattleResolver;
 import unsw.gloriaromanus.units.Swordsman;
+import unsw.gloriaromanus.units.Unit;
 
 public class Testing {
     public static void main(String[] args) {
