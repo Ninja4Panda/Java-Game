@@ -104,14 +104,14 @@ public class MovePhase implements GamePhase {
      * @return amount of movement points needed or 1000 if cannot find shortest path
      * @throws IOException
      */
-    private List<String> findShortestPath(String origin, String target )throws IOException {
+    public List<String> findShortestPath(String origin, String target )throws IOException {
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
         JSONObject allAdjacencyMatrix = new JSONObject(content);
 
         
         List<Dinode> visited = new ArrayList<Dinode>();
         List<Dinode> opened = new ArrayList<Dinode>();
-        Player player = game.getCurPlayer();
+        //Player player = game.getCurPlayer();
 
         Dinode start = new Dinode(origin, null, 0);
         opened.add(start);
@@ -127,6 +127,11 @@ public class MovePhase implements GamePhase {
             if(adjacencyMatrix.getBoolean(target)) {
                 Dinode finish = new Dinode(target, curRegion, curRegion.getCost() + 4);
                 visited.add(finish);
+                // List<String> temp = new ArrayList<String>();
+                // for(Dinode d: visited) {
+                //     temp.add(d.getId());
+                // }
+                // return temp;
                 return shortestPath(visited, origin, target);
             }
 
@@ -134,9 +139,11 @@ public class MovePhase implements GamePhase {
             // loop through neighbours
             for( int i = 0; i < adjacentList.length(); i ++) {
                 Dinode neighbour = new Dinode(adjacentList.getString(i), curRegion, curRegion.getCost() + 4);
-               
+               if( !adjacencyMatrix.getBoolean(neighbour.getId()) ) {
+                   continue;
+               }
                 // Check if player owns region
-                if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null) continue;
+                //if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null) continue;
                 // add to opened if never visited and never opened 
                 // or if visited and not in opened then see if we found a shorter way
                 if( findDinode(opened, neighbour.getId()) == null && findDinode(visited, neighbour.getId()) == null) {
@@ -161,16 +168,19 @@ public class MovePhase implements GamePhase {
     private List<String> shortestPath(List<Dinode> Dipath, String origin, String target) {
         String currRegion = target;
         List<String> shortestPath = new ArrayList<String>();
-        for(int i = 0; i < Dipath.size(); i ++) {
-            if(Dipath.get(i).getId().compareTo(origin) == 0) {
-                shortestPath.add(Dipath.get(i).getId());
+        int i = 0;
+        while(i < Dipath.size() ) {
+            if(currRegion.compareTo(origin) == 0 ){
+                shortestPath.add(currRegion);
                 Collections.reverse(shortestPath);
                 return shortestPath;                
             }
             if(Dipath.get(i).getId().compareTo(currRegion) == 0) {
                 shortestPath.add(Dipath.get(i).getId());
                 currRegion = Dipath.get(i).getParentID();
+                i = 0;
             }
+            i++;
         }
         return null;
     }

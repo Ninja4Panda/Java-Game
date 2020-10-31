@@ -85,27 +85,27 @@ public class Unit {
         return maxMovementPoints;
     }
 
-    
+
     public void setCurMovementPoints(int curMovementPoints) {
         this.curMovementPoints = curMovementPoints;
     }
 
-    
+
     public int getCurMovementPoints() {
         return curMovementPoints;
     }
 
-   
+
     public void reduceMovementPoints(int movementPoints) {
         this.curMovementPoints -= movementPoints;
     }
 
-    
+
     public int getCurAmount() {
         return curAmount;
     }
 
-  
+
     public int getTrainAmount() {
         return trainAmount;
     }
@@ -117,7 +117,7 @@ public class Unit {
         return classNameParts[classNameParts.length - 1];
     }
 
- 
+
 
 
     public int trainTime() {
@@ -132,7 +132,7 @@ public class Unit {
         curAmount+=numTroops;
     }
 
-  
+
     public void minusUnits(int num) {
         curAmount -= num;
     }

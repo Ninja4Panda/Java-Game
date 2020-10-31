@@ -44,7 +44,7 @@ public class UnitTest{
         assertEquals(10,          archer.getTrainAmount());
 
     }
-    
+
     @Test
     public void RegionMoveTest(){
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -89,6 +89,7 @@ public class UnitTest{
         assertEquals(sydney.findUnit("Spearman").getCurAmount(), 0);
         assertEquals(246, melbourne.findUnit("Spearman").getCurAmount());
     }
+
     @Test
     public void regionTrainTest(){
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -116,7 +117,7 @@ public class UnitTest{
         trainUnits.add(cavlry);
 
         assertEquals("Success", sydney.train(trainUnits));
-        
+
         sydney.update();
         assertEquals(0, sydney.findUnit("Cavalry").getCurAmount());
         assertEquals(0, sydney.findUnit("Slingerman").getCurAmount());
@@ -129,6 +130,7 @@ public class UnitTest{
         assertEquals(5, sydney.findUnit("Cavalry").getCurAmount());
         assertEquals(7, sydney.findUnit("Slingerman").getCurAmount());
     }
+
     @Test
     public void excessiveTrainTest() {
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -145,10 +147,11 @@ public class UnitTest{
         assertEquals("Unsuccessful training too many troops are training already", sydney.train(trainUnits));
 
         trainUnits.remove(0);
-        
+
         sydney.train(trainUnits);
         assertEquals("Unsuccessful training too many troops are training already", sydney.train(trainUnits));
     }
+
     @Test
     public void noDefenceTest() {
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -220,66 +223,36 @@ public class UnitTest{
         assertEquals(sydney.findUnit("Spearman").getMaxMovementPoints(), sydney.findUnit("Spearman").getCurMovementPoints());
         
     }
+
     @Test
     public void loadSaveTest() {
         try {
-            Game game = new Game("src/test/resources/default.json");
+            Game game = new Game("src/test/resources/moveTest.json");
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Archerman");
+            troops.add("Spearman");
+            game.action("Cyprus", troops, "Lusitania");
             game.save();
 
-            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
             File dir = new File("saves");
             dir.mkdir();
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
             Date today = new Date();
             String filename = df.format(today)+".json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
-
-            //test if the output save is the same as config input
             assertArrayEquals(f1, f2);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void saveAfterChangeTest() {
-        try {
-            Game game = new Game("src/test/resources/default.json");
-            //Preparation phase
-            ArrayList<String> troops = new ArrayList<>();
-            troops.add("Archerman");
-            troops.add("Spearman");
-            game.action("Cyprus", troops);
-            game.endPhase();
+    public void saveAfterInvadeTest() {
 
-            //Move phase
-            game.endPhase();
-
-            game.endPhase();
-            game.endPhase();
-            game.endPhase();
-
-            System.out.println(troops);
-            System.out.println(game.action("Cyprus", troops, "Syria", "Egypt"));
-            game.save();
-
-            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
-            File dir = new File("saves");
-            dir.mkdir();
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
-            Date today = new Date();
-            String filename = df.format(today)+".json";
-            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
-
-            //test if the output save is the same as config input
-            assertArrayEquals(f1, f2);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
     }
+
 }
 
