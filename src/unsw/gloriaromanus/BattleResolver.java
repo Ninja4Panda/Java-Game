@@ -74,7 +74,9 @@ public class BattleResolver implements Subject {
         }
 
         if(defendingStrength == 0) {
-            attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
+            System.out.println("HERE");
+            System.out.println(attackers);
+            attacking.moveTroops(4, unitArrayToString(attackers), defending) ;
             BattleResolver resolver = getINSTANCE();
             resolver.setDefender(defending);
             resolver.notifyObservers();

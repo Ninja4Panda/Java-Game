@@ -6,7 +6,7 @@
   },
   "Players": [
     {
-      "Gold": 400,
+      "Gold": 401,
       "Regions": [{
         "Troops": {
           "Spearman": {
@@ -41,7 +41,7 @@
       "Faction": "Rome"
     },
     {
-      "Gold": 400,
+      "Gold": 401,
       "Regions": [{
         "Troops": {
           "Spearman": {

@@ -149,9 +149,13 @@ public class Region implements Observer {
      * @return msg to display
      */
     public String moveTroops(int movementPoints, List<String> troops, Region end) {
+        System.out.println(troops);
+
         for(Unit u : units) {
             if(troops.contains(u.getClassName())) {
                 Unit compareTo = end.findUnit(u.getClassName());
+                System.out.println(u.getClassName());
+                System.out.println(u.getCurAmount());
                 if(compareTo.getCurMovementPoints() > u.getCurMovementPoints()) {
                     compareTo.setCurMovementPoints(u.getCurMovementPoints());
                 }
@@ -221,6 +225,9 @@ public class Region implements Observer {
 
     public String invade(int movementPoints, List<String> troops, Region target) {
         List<Unit> attackers = new ArrayList<>();
+        for (Unit unit: units) {
+            if(troops.contains(unit.getClassName())) attackers.add(unit);
+        }
         return BattleResolver.resolve(attackers, target, this);
     }
 
