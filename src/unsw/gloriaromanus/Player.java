@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,4 +125,14 @@ public class Player implements Observer{
             gold += regionsMap.get(regionName).calcGold();
         }
     }
+
+    public List<Region> getAllRegions() {
+        List<Region> playerRegions = new ArrayList<Region>();
+        for(String regionName : regionsMap.keySet()) {
+            playerRegions.add(regionsMap.get(regionName));
+        }
+        return playerRegions;
+    }
+
+    
 }
