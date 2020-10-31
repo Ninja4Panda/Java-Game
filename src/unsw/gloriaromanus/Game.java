@@ -222,7 +222,6 @@ public class Game implements Observer {
     private void changeOwnership() {
         BattleResolver resolver = BattleResolver.getINSTANCE();
         Region defeated = resolver.getDefender();
-        System.out.println(defeated.getName());
         for(Player player: playersMap.values()) {
             if(player.removeRegion(defeated)) break;
         }
