@@ -235,7 +235,54 @@ public class UnitTest{
     }
 
     @Test
-    public void saveAfterMoveTest() {
+    public void wealthTest() {
+        List<Unit> SydUnits = new ArrayList<Unit>();
+        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
+        assertEquals(1, sydney.calcGold());
+    }
+    @Test
+    public void wealthIncrementTest() {
+        List<Unit> SydUnits = new ArrayList<Unit>();
+        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
+        assertEquals(10, sydney.getWealth());
+        
+        sydney.update();
+        assertEquals(20, sydney.getWealth());
+
+        sydney.setTax(15);
+        sydney.update();
+        assertEquals(20, sydney.getWealth());
+
+        sydney.setTax(20);
+        sydney.update();
+        assertEquals(10, sydney.getWealth());
+
+        sydney.setTax(25);
+        sydney.setWealth(50);
+        sydney.update();
+        assertEquals(20, sydney.getWealth());
+    }
+    @Test
+    public void resetMovementPointTest() {
+        List<Unit> SydUnits = new ArrayList<Unit>();
+        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
+        assertEquals(1, sydney.findUnit("Archerman").getCurMovementPoints());
+        assertEquals(1, sydney.findUnit("Cavalry").getCurMovementPoints());
+        assertEquals(1, sydney.findUnit("Slingerman").getCurMovementPoints());
+        assertEquals(1, sydney.findUnit("Swordsman").getCurMovementPoints());
+        assertEquals(1, sydney.findUnit("Spearman").getCurMovementPoints());
+
+        sydney.update();
+        assertEquals(sydney.findUnit("Archerman").getMaxMovementPoints(), sydney.findUnit("Archerman").getCurMovementPoints());
+        assertEquals(sydney.findUnit("Cavalry").getMaxMovementPoints(), sydney.findUnit("Cavalry").getCurMovementPoints());
+        assertEquals(sydney.findUnit("Slingerman").getMaxMovementPoints(), sydney.findUnit("Slingerman").getCurMovementPoints());
+        assertEquals(sydney.findUnit("Swordsman").getMaxMovementPoints(), sydney.findUnit("Swordsman").getCurMovementPoints());
+        assertEquals(sydney.findUnit("Spearman").getMaxMovementPoints(), sydney.findUnit("Spearman").getCurMovementPoints());
+        
+    }
+
+    @Test
+    public void loadSaveTest() {
         try {
             Game game = new Game("src/test/resources/moveTest.json");
             ArrayList<String> troops = new ArrayList<>();
