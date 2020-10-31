@@ -13,7 +13,7 @@ import java.util.Map;
 public class Player {
     private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
-    // private Faction faction;
+    private String faction;
     private int gold;
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
@@ -21,6 +21,7 @@ public class Player {
         JSONArray regions = playerData.getJSONArray("Regions");
         //TODO: set up faction
         String factionName = playerData.getString("Faction");
+        faction = factionName;
         gold = playerData.getInt("Gold");
         regionsMap = new HashMap<>();
 
@@ -102,7 +103,7 @@ public class Player {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        // save.put("Faction", faction.toString());
+         save.put("Faction", faction);
         save.put("Gold", gold);
 
         //Construct the region json array

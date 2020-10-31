@@ -21,11 +21,13 @@ public class BattleResolver {
         for(Unit u : defenders ) {
             defendingStrength += u.strength();
         }
-        
 
         // will always generate a number that is less than 1
         double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
         double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
+
+        System.out.println(attackingWin);
+        System.out.println(defendingWin);
 
         // keep fighting with the armies until someone wins if not draw
         Random decider = new Random();

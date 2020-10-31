@@ -36,6 +36,7 @@ public class MovePhase implements GamePhase {
     @Override
     public String action(String originRegion, List<String> troops, String ... args) throws IOException {
         Player curPlayer = game.getCurPlayer();
+
         //Safe to index as there should be args[0] for both action
         String targetRegion= args[0];
 
@@ -45,7 +46,7 @@ public class MovePhase implements GamePhase {
 
         //Safe to index as there should be args[1] for invade
         String targetFaction = args[1];
-        return invade(originRegion, troops, targetFaction, targetRegion);
+        return invade(originRegion, troops, targetRegion, targetFaction);
     }
 
     /**
