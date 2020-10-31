@@ -9,60 +9,62 @@
       "Gold": 400,
       "Regions": [
         {
-        "Troops": {
-          "Spearman": {
-            "Movement": 10,
-            "Amount": 0
+          "Troops": {
+            "Spearman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 10,
+              "Amount": 0
+            }
           },
-          "Slingerman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Swordsman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Archerman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Cavalry": {
-            "Movement": 10,
-            "Amount": 0
-          }
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Cyprus",
+          "Wealth": 20
         },
-        "Trainer": [],
-        "Tax": 10,
-        "Id": "Cyprus",
-        "Wealth": 20
-      },{
-        "Troops": {
-          "Spearman": {
-            "Movement": 10,
-            "Amount": 10
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 10,
+              "Amount": 10
+            },
+            "Slingerman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 10,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 10,
+              "Amount": 0
+            }
           },
-          "Slingerman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Swordsman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Archerman": {
-            "Movement": 10,
-            "Amount": 0
-          },
-          "Cavalry": {
-            "Movement": 10,
-            "Amount": 0
-          }
-        },
-        "Trainer": [],
-        "Tax": 10,
-        "Id": "Cilicia",
-        "Wealth": 20
-      }],
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Cilicia",
+          "Wealth": 20
+        }
+      ],
       "Faction": "Rome"
     },
     {
