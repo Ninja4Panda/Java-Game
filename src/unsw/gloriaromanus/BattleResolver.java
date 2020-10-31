@@ -10,9 +10,18 @@ import unsw.gloriaromanus.units.Unit;
 public class BattleResolver implements Subject {
     private static final BattleResolver INSTANCE = new BattleResolver();
     private List<Observer> listObs = new ArrayList<>();
+    private Region defender;
 
     public static BattleResolver getINSTANCE() {
         return INSTANCE;
+    }
+
+    public Region getDefender() {
+        return defender;
+    }
+
+    public void setDefender(Region defender) {
+        this.defender = defender;
     }
 
     // For Testing
@@ -70,6 +79,7 @@ public class BattleResolver implements Subject {
         if(defendingWin == 0) {
             attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
             BattleResolver resolver = getINSTANCE();
+            resolver.setDefender(defending);
             resolver.notifyObservers();
             return "Attackers win";
         }
@@ -94,6 +104,7 @@ public class BattleResolver implements Subject {
 
                 //Notify game to change ownership
                 BattleResolver resolver = getINSTANCE();
+                resolver.setDefender(defending);
                 resolver.notifyObservers();
                 return "Attackers win";
             } else if ( decider.nextDouble() <= defendingWin ) {

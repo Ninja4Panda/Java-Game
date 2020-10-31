@@ -50,6 +50,23 @@ public class Player {
     }
 
     /**
+     * Removes a region from the player
+     * @param defeated region that needs to be removed
+     * @return true/false to indicate if the region has been removed
+     */
+    public Boolean removeRegion(Region defeated) {
+        return regionsMap.remove(defeated.getName())!=null;
+    }
+
+    /**
+     * Add a region to the player
+     * @param defeated region that needs to be added
+     */
+    public void addRegion(Region defeated) {
+        regionsMap.put(defeated.getName(), defeated);
+    }
+
+    /**
      * Move troops from origin to target
      * @param movementPoints movement points needed to get to target
      * @param origin origin region object initiated the movement
@@ -94,7 +111,7 @@ public class Player {
         int cost = 0;
         for(String name: troops) {
             Unit troop = origin.findUnit(name);
-            // cost += troop.getCost();
+             cost += troop.getCost();
         }
         return cost <= gold;
     }
@@ -116,4 +133,6 @@ public class Player {
 
         return save;
     }
+
+
 }
