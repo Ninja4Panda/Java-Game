@@ -2,9 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -26,19 +31,50 @@ public class UnitTest{
     }
 
     @Test
-    public void loadDefaultFileTest() {
+    public void loadSaveTest() {
         try {
             Game game = new Game("src/test/resources/default.json");
-            assertEquals(game.getCurPhase().toString(), "Preparation");
-            assertEquals(game.getGameTurn().getTurn(), 0);
-            assertEquals(game.getGameTurn().getSubTurn(), 1);
-//            assertEquals(game.getMovePhase().toString(), );
             game.save();
+
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
+            File dir = new File("saves");
+            dir.mkdir();
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
+            Date today = new Date();
+            String filename = df.format(today)+".json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+
+            //test if the output save is the same as config input
+            Arrays.equals(f1,f2);
         } catch(JSONException e) {
-            System.out.println("JSON Error");
+            e.printStackTrace();
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
+
+//    @Test
+//    public void saveAfterChange() {
+//        try {
+//            Game game = new Game("src/test/resources/default.json");
+//
+//            game.save();
+//
+//            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
+//            File dir = new File("saves");
+//            dir.mkdir();
+//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
+//            Date today = new Date();
+//            String filename = df.format(today)+".json";
+//            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+//
+//            //test if the output save is the same as config input
+//            Arrays.equals(f1,f2);
+//        } catch(JSONException e) {
+//            e.printStackTrace();
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
