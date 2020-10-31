@@ -200,6 +200,19 @@ public class Game implements Observer {
 
     @Override
     public void update() {
-        curPhase.changeOwnership()
+        changeOwnership();
     }
+
+    /**
+     * Change the ownership of a region
+     */
+    private void changeOwnership() {
+        BattleResolver resolver = BattleResolver.getINSTANCE();
+        Region defeated = resolver.getDefender();
+        for(Player player: playersMap.values()) {
+            if(player.removeRegion(defeated)) break;
+        }
+        curPlayer.addRegion(defeated);
+    }
+
 }

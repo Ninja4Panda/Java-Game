@@ -6,11 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+
 import java.util.List;
 
 import org.json.JSONException;
@@ -240,6 +237,7 @@ public class UnitTest{
         Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
         assertEquals(1, sydney.calcGold());
     }
+
     @Test
     public void wealthIncrementTest() {
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -262,6 +260,7 @@ public class UnitTest{
         sydney.update();
         assertEquals(20, sydney.getWealth());
     }
+
     @Test
     public void resetMovementPointTest() {
         List<Unit> SydUnits = new ArrayList<Unit>();
@@ -282,7 +281,7 @@ public class UnitTest{
     }
 
     @Test
-    public void loadSaveTest() {
+    public void saveAfterMoveTest() {
         try {
             Game game = new Game("src/test/resources/moveTest.json");
             ArrayList<String> troops = new ArrayList<>();
@@ -308,13 +307,10 @@ public class UnitTest{
     public void saveAfterInvadeTest() {
         try {
             Game game = new Game("src/test/resources/invadeTest.json");
-            ArrayList<String> troops = new ArrayList<>();
-            troops.add("Archerman");
-            troops.add("Spearman");
-            game.action("Cyprus", troops, "Lusitania");
+
             game.save("invadeOutput");
 
-            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/invadeExpected.json"));
             File dir = new File("saves");
             dir.mkdir();
             String filename = "invadeOutput.json";

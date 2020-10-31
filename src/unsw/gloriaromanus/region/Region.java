@@ -80,6 +80,10 @@ public class Region implements Observer {
         units.add(new Swordsman(movementPoint, amount));
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setTax(int tax) {
         this.tax = tax;
     }
@@ -98,6 +102,7 @@ public class Region implements Observer {
     public int calcGold() {
         return (int) (wealth* (double) tax/100);
     }
+
     /**
      * @return all units object in the region
      */
