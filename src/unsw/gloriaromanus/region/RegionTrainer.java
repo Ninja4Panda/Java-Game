@@ -31,6 +31,11 @@ public class RegionTrainer {
         }
     }
 
+    public RegionTrainer(Region region) {
+        trainingUnits = new Hashtable<String, Integer>();
+        this.region = region;
+    }
+
     /**
      * Adds the appropriate unit into the trainingUnits hashtable.
      * @param troops list of units
@@ -43,7 +48,7 @@ public class RegionTrainer {
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.trainTime());
         }
-        return "";
+        return "Units Training!";
     }
 
     /**
@@ -61,6 +66,7 @@ public class RegionTrainer {
                 trainingUnits.remove(type);
                 unitsPushed++;
             }
+            //trainingUnits.replace(type, trainingUnits.get(type) - 1); // decrement training time
         }
         return unitsPushed;
     }
