@@ -54,7 +54,7 @@ public class UnitTest{
     }
 
     @Test
-    public void saveAfterChangeTest() {
+    public void saveAfterTrainTest() {
         try {
             Game game = new Game("src/test/resources/default.json");
             //Preparation phase
@@ -63,16 +63,18 @@ public class UnitTest{
             troops.add("Spearman");
             game.action("Cyprus", troops);
             game.endPhase();
-
             //Move phase
             game.endPhase();
 
+            //Player2 turn training troops
+            troops = new ArrayList<>();
+            troops.add("Cavalry");
+            troops.add("Swordsman");
+            game.action("Syria", troops);
             game.endPhase();
+            //Move phase
             game.endPhase();
-            game.endPhase();
-
-            System.out.println(troops);
-            System.out.println(game.action("Cyprus", troops, "Syria", "Egypt"));
+            //Player1 preparation turn
             game.save();
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));

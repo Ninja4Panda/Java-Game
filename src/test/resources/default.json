@@ -1,0 +1,73 @@
+{
+  "Game": {
+    "Phase": "Preparation",
+    "Turn": 0,
+    "Subturn": 0
+  },
+  "Players": [
+    {
+      "Gold": 400,
+      "Regions": [{
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Slingerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 10,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Cyprus",
+        "Wealth": 20
+      }],
+      "Faction": "Rome"
+    },
+    {
+      "Gold": 400,
+      "Regions": [{
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Slingerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 10,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Syria",
+        "Wealth": 20
+      }],
+      "Faction": "Egypt"
+    }
+  ]
+}
