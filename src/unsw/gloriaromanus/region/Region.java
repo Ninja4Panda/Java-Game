@@ -20,14 +20,23 @@ public class Region implements Observer {
     private int wealth;
     private int tax;
 
-    public Region(String name, GameTurn gameTurn, RegionTrainer trainer, List<Unit> units, int wealth, int tax) {
+    public Region(String name, GameTurn gameTurn,  List<Unit> units, int wealth, int tax) {
         this.name = name;
         this.gameTurn = gameTurn;
         gameTurn.attach(this);
-        this.trainer = trainer;
-        this.units = units;
+        trainer = new RegionTrainer(this);
         this.wealth = wealth;
         this.tax = tax;
+        this.units = new ArrayList<Unit>();
+        this.units.add(new Archerman(1, 0));
+        this.units.add(new Cavalry(1, 0));
+        this.units.add(new Slingerman(1, 0));
+        this.units.add(new Spearman(1, 0));
+        this.units.add(new Swordsman(1, 0));
+        for( Unit u : units) {
+            findUnit(u.getClassName()).addUnits(u.getCurAmount());
+            findUnit(u.getClassName()).setCurMovementPoints(u.getCurMovementPoints());
+        }
     }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
@@ -126,12 +135,12 @@ public class Region implements Observer {
     public String moveTroops(int movementPoints, List<String> troops, Region end) {
         for(Unit u : units) {
             if(troops.contains(u.getClassName())) {
-                u.minusUnits(u.getCurAmount());
                 Unit compareTo = end.findUnit(u.getClassName());
                 if(compareTo.getCurMovementPoints() > u.getCurMovementPoints()) {
                     compareTo.setCurMovementPoints(u.getCurMovementPoints());
                 }
                 compareTo.addUnits(u.getCurAmount());
+                u.minusUnits(u.getCurAmount());
             }
         }
         return "Troops moved";

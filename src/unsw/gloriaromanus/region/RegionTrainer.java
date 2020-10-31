@@ -32,6 +32,11 @@ public class RegionTrainer {
         }
     }
 
+    public RegionTrainer(Region region) {
+        trainingUnits = new Hashtable<String, Integer>();
+        this.region = region;
+    }
+
     /**
      * Adds the appropriate unit into the trainingUnits hashtable.
      * @param troops list of units
