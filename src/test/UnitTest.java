@@ -307,6 +307,9 @@ public class UnitTest{
     public void saveAfterInvadeTest() {
         try {
             Game game = new Game("src/test/resources/invadeTest.json");
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Spearman");
+            System.out.println("abc+"+game.action("Cyprus", troops, "Cilicia", "Egypt"));
 
             game.save("invadeOutput");
 
