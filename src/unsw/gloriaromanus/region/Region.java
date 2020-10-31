@@ -178,10 +178,14 @@ public class Region implements Observer {
         //Troops json object
         JSONObject troops = new JSONObject();
         for (Unit unit: units) {
-            troops.put(unit.getClassName(), unit.getCurAmount());
+            JSONObject troop = new JSONObject();
+            troop.put("Movement",unit.getCurMovementPoints());
+            troop.put("Amount",unit.getCurAmount());
+            troops.put(unit.getClassName(), troop);
         }
 
-        //TODO:Wealth?
+        save.put("Wealth", wealth);
+        save.put("Tax",tax);
         save.put("Trainer", trainer.getSave());
         save.put("Troops", troops);
         save.put("Id", name);
