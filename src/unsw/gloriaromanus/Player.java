@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+public class Player implements Observer{
     private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
     private Region recentlyConquered;
@@ -18,6 +18,7 @@ public class Player {
     private int gold;
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
+        gameTurn.attach(this);
         this.gameTurn = gameTurn;
         JSONArray regions = playerData.getJSONArray("Regions");
         //TODO: set up faction
@@ -115,5 +116,12 @@ public class Player {
         save.put("Regions", regionSave);
 
         return save;
+    }
+    
+    @Override
+    public void update() {
+        for(String regionName : regionsMap.keySet()) {
+            gold += regionsMap.get(regionName).calcGold();
+        }
     }
 }
