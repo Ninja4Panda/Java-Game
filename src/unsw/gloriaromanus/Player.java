@@ -21,8 +21,8 @@ public class Player implements Observer {
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
         gameTurn.attach(this);
         this.gameTurn = gameTurn;
+        recentlyConquered = new ArrayList<>();
         JSONArray regions = playerData.getJSONArray("Regions");
-        //TODO: set up faction
         String factionName = playerData.getString("Faction");
         faction = factionName;
         gold = playerData.getInt("Gold");
