@@ -7,7 +7,13 @@ import java.util.Random;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
-public class BattleResolver {
+public class BattleResolver implements Subject {
+    private static final BattleResolver INSTANCE = new BattleResolver();
+    private List<Observer> listObs = new ArrayList<>();
+
+    public static BattleResolver getINSTANCE() {
+        return INSTANCE;
+    }
 
     // For Testing
     public static double getAttackingWin(List<Unit> attackers, Region defending, Region attacking){
@@ -27,6 +33,7 @@ public class BattleResolver {
         return attackingWin;
 
     }
+
     public static double getDefendingWin(List<Unit> attackers, Region defending, Region attacking){
         int attackingStrength = 0;
         List<Unit> defenders = defending.getUnits();
@@ -42,8 +49,8 @@ public class BattleResolver {
         // will always generate a number that is less than 1
         double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
         return defendingWin;
-
     }
+
     // Pass implementation of battle resolver
     public static String resolve(List<Unit> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
@@ -59,9 +66,11 @@ public class BattleResolver {
 
         // will always generate a number that is less than 1
         double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
-        double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
+        double defendingWin = (double)defendingStrength/(attackingStrength + defendingStrength);
         if(defendingWin == 0) {
             attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
+            BattleResolver resolver = getINSTANCE();
+            resolver.notifyObservers();
             return "Attackers win";
         }
 
@@ -82,7 +91,10 @@ public class BattleResolver {
                 AfterMath(attackers, winnersLoss);
 
                 attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
-                
+
+                //Notify game to change ownership
+                BattleResolver resolver = getINSTANCE();
+                resolver.notifyObservers();
                 return "Attackers win";
             } else if ( decider.nextDouble() <= defendingWin ) {
                 double winnersLoss = decider.nextDouble();
@@ -94,10 +106,11 @@ public class BattleResolver {
                 return "Defenders win";
             }
 
-        } 
+        }
 
         return "Draw";
     }
+
     public static List<String> unitArrayToString(List<Unit> units) {
         List<String> stringArray = new ArrayList<>();
         for(Unit u : units) {
@@ -135,6 +148,7 @@ public class BattleResolver {
     //     }
         
     // }
+
     public static void AfterMath(List<Unit> units, double lossPercentage) {
         int totalUnits = 0;
         for(Unit u : units) {
@@ -155,11 +169,23 @@ public class BattleResolver {
                 unitGone.minusUnits(1);
                 unitsRemoved ++;
             }
-
         }
-        
     }
 
+    @Override
+    public void attach(Observer obs) {
+        listObs.add(obs);
+    }
 
+    @Override
+    public void detach(Observer obs) {
+        listObs.remove(obs);
+    }
 
+    @Override
+    public void notifyObservers() {
+        for(Observer obs: listObs) {
+            obs.update();
+        }
+    }
 }

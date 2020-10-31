@@ -42,7 +42,6 @@ public class UnitTest{
         assertEquals(5,           archer.getRange());
         assertEquals(0,           archer.getShieldDefense());
         assertEquals(10,          archer.getTrainAmount());
-
     }
 
     @Test
@@ -169,14 +168,72 @@ public class UnitTest{
         List<Unit> MelUnits = new ArrayList<Unit>();
         Region melbourne = new Region("Melbourne", new GameTurn(4, 4, 4), MelUnits, 10, 10);
 
-
         assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
         assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
         assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
         assertEquals(145, melbourne.getTotalUnits());
         assertEquals(0, sydney.getTotalUnits());
-
     }
+
+    @Test
+    public void loadSaveTest() {
+        try {
+            Game game = new Game("src/test/resources/default.json");
+            game.save("defaultOutput");
+
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
+            File dir = new File("saves");
+            dir.mkdir();
+            String filename = "defaultOutput.json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+
+            //test if the output save is the same as config input
+            assertArrayEquals(f1, f2);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void saveAfterTrainTest() {
+        try {
+            Game game = new Game("src/test/resources/trainTest.json");
+            //Player1 training Archerman & Spearman
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Archerman");
+            troops.add("Spearman");
+            game.action("Cyprus", troops);
+            game.endPhase();
+            game.endPhase();
+
+            //Player2 training cavalry & swordsman
+            troops = new ArrayList<>();
+            troops.add("Cavalry");
+            troops.add("Swordsman");
+            game.action("Syria", troops);
+            game.endPhase();
+            game.endPhase();
+
+            //Player1 preparation turn
+            game.save("trainOutput");
+
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/trainExpected.json"));
+            File dir = new File("saves");
+            dir.mkdir();
+            String filename = "trainOutput.json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+
+            //test if the output save is the same as config input
+            assertArrayEquals(f1, f2);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void saveAfterMoveTest() {
         try {
@@ -185,14 +242,12 @@ public class UnitTest{
             troops.add("Archerman");
             troops.add("Spearman");
             game.action("Cyprus", troops, "Lusitania");
-            game.save();
+            game.save("moveOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
             File dir = new File("saves");
             dir.mkdir();
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
-            Date today = new Date();
-            String filename = df.format(today)+".json";
+            String filename = "moveOutput.json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
             assertArrayEquals(f1, f2);
         } catch (JSONException e) {
@@ -204,7 +259,25 @@ public class UnitTest{
 
     @Test
     public void saveAfterInvadeTest() {
+        try {
+            Game game = new Game("src/test/resources/invadeTest.json");
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Archerman");
+            troops.add("Spearman");
+            game.action("Cyprus", troops, "Lusitania");
+            game.save("invadeOutput");
 
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
+            File dir = new File("saves");
+            dir.mkdir();
+            String filename = "invadeOutput.json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+            assertArrayEquals(f1, f2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
