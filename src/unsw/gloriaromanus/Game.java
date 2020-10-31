@@ -140,6 +140,19 @@ public class Game {
      */
     public void endPhase() {
         curPhase.endPhase();
+        checkPlayerStatus();
+    }
+
+    private void checkPlayerStatus() {
+        HashMap<String, String> playerStatus = WinCond.check(playersMap);
+        for(String playerFaction : playerStatus.keySet()) {
+            if(playerStatus.get(playerFaction).compareTo("You Lose") == 0) {
+                gameTurn.removePlayer();
+                playersMap.remove(playerFaction);
+            } else if (playerStatus.get(playerFaction).compareTo("You Win") == 0) {
+                // end game?
+            }
+        }
     }
 
     /**

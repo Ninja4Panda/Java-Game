@@ -16,6 +16,11 @@ public class GameTurn implements Subject {
         listObs = new ArrayList<>();
     }
 
+    public void removePlayer() {
+        subTurn -=1;
+        numPlayers -=1;
+    }
+
     /**
      * @return current subturn
      */
