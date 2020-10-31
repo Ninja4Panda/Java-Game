@@ -10,4 +10,7 @@ public class Range implements AttackType{
     public int getAttackValue() {
         return attackValue;
     }
+    public int getRange() {
+        return range;
+    }
 }

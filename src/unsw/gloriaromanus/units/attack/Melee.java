@@ -1,6 +1,5 @@
 package unsw.gloriaromanus.units.attack;
 
-import unsw.gloriaromanus.units.Unit;
 
 public class Melee implements AttackType {
     private int attackValue;
@@ -13,8 +12,9 @@ public class Melee implements AttackType {
     public int getAttackValue() {
         return attackValue;
     }
-    public void attackUnit(Unit victim) {
-        // do some calcs with victim
-        
+
+    public int getRange() {
+        return range;
     }
+ 
 }
