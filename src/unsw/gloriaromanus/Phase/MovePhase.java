@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,33 +104,84 @@ public class MovePhase implements GamePhase {
      * @return amount of movement points needed or 1000 if cannot find shortest path
      * @throws IOException
      */
-    private int findShortestPath(String origin, String target, ArrayList<String> visited) throws IOException {
+    private List<String> findShortestPath(String origin, String target )throws IOException {
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
         JSONObject allAdjacencyMatrix = new JSONObject(content);
 
-        //Get the adjacency matrix from origin as a list
-        JSONObject adjacencyMatrix = allAdjacencyMatrix.getJSONObject(origin);
-        JSONArray adjacentList = adjacencyMatrix.names();
-        if(adjacencyMatrix.getBoolean(target)) return 4;
+        
+        List<Dinode> visited = new ArrayList<Dinode>();
+        List<Dinode> opened = new ArrayList<Dinode>();
+        Player player = game.getCurPlayer();
 
-        //Set current node as visited
-        visited.add(origin);
+        Dinode start = new Dinode(origin, null, 0);
+        opened.add(start);
 
-        //Loop to find the neighbour
-        int shortest = MAX_NUM_PATH;
-        for(int i=0; i<adjacentList.length(); i++) {
-            String neighbour = adjacentList.getString(i);
-            Player player = game.getCurPlayer();
+        while(opened.size() > 0) {
+            Dinode curRegion = opened.get(0);
+            visited.add(curRegion);
+            //Get the adjacency matrix from curRegion as a list
+            JSONObject adjacencyMatrix = allAdjacencyMatrix.getJSONObject(curRegion.getId());
+            JSONArray adjacentList = adjacencyMatrix.names();
 
-            //Check if player owns neighbour region
-            if (!neighbour.equals(target) && player.getRegion(neighbour)==null) continue;
+            // If the target was found return the shortest path
+            if(adjacencyMatrix.getBoolean(target)) {
+                Dinode finish = new Dinode(target, curRegion, curRegion.getCost() + 4);
+                visited.add(finish);
+                return shortestPath(visited, origin, target);
+            }
 
-            //Find the shortest path and avoid going back to original node
-            if(!visited.contains(neighbour) && adjacencyMatrix.getBoolean(neighbour)) {
-                int path = 4+findShortestPath(neighbour, target, visited);
-                if(path<shortest) shortest=path;
+
+            // loop through neighbours
+            for( int i = 0; i < adjacentList.length(); i ++) {
+                Dinode neighbour = new Dinode(adjacentList.getString(i), curRegion, curRegion.getCost() + 4);
+               
+                // Check if player owns region
+                if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null) continue;
+                // add to opened if never visited and never opened 
+                // or if visited and not in opened then see if we found a shorter way
+                if( findDinode(opened, neighbour.getId()) == null && findDinode(visited, neighbour.getId()) == null) {
+                    opened.add(neighbour);
+                }else if( findDinode(opened, neighbour.getId()) == null && findDinode(visited, neighbour.getId()) != null) {
+                    Dinode toCheck = findDinode(visited, neighbour.getId());
+                    if(toCheck.getCost() > neighbour.getCost()) {
+                        toCheck.setCost(neighbour.getCost());
+                        toCheck.setParent(curRegion);
+                    }
+                }
+            }
+
+            opened.remove(curRegion);
+
+
+        }
+     
+        return null;
+    }
+
+    private List<String> shortestPath(List<Dinode> Dipath, String origin, String target) {
+        String currRegion = target;
+        List<String> shortestPath = new ArrayList<String>();
+        for(int i = 0; i < Dipath.size(); i ++) {
+            if(Dipath.get(i).getId().compareTo(origin) == 0) {
+                shortestPath.add(Dipath.get(i).getId());
+                Collections.reverse(shortestPath);
+                return shortestPath;                
+            }
+            if(Dipath.get(i).getId().compareTo(currRegion) == 0) {
+                shortestPath.add(Dipath.get(i).getId());
+                currRegion = Dipath.get(i).getParentID();
             }
         }
-        return shortest;
+        return null;
     }
+
+    public Dinode findDinode(List<Dinode> diList, String target) {
+        for(Dinode node : diList) {
+            if( node.getId().compareTo(target) == 0 ) {
+                return node;
+            }
+        }
+        return null;
+    }
+ 
 }
