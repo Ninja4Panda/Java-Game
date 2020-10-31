@@ -18,7 +18,7 @@ public class Testing {
         try {
             Game game = new Game("src/test/resources/moveTest.json");
             MovePhase test = new MovePhase(game);
-            List<String> path = test.findShortestPath("Lusitania", "V");
+            List<String> path = test.findShortestPath("Lusitania", "Lusitania");
             for(String p : path) {
                 System.out.println(p);
             }
