@@ -12,11 +12,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Game {
+public class Game implements Observer {
     private GamePhase preparationPhase;
     private GamePhase movePhase;
     private GamePhase curPhase;
@@ -25,6 +23,10 @@ public class Game {
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
 
     public Game(String configFile) throws IOException, JSONException {
+        //Attach the subject
+        BattleResolver resolver = BattleResolver.getINSTANCE();
+        resolver.attach(this);
+
         //Set up the fields
         preparationPhase = new PreparationPhase(this);
         movePhase = new MovePhase(this);
@@ -163,17 +165,16 @@ public class Game {
 
     /**
      * Create a game save in saves directory
+     * @param name filename
      * @throws IOException throws IOException when file couldn't be created
      */
-    public void save() throws IOException {
+    public void save(String name) throws IOException {
         //Make the saves directory if it doesn't exists
         File dir = new File(".","saves");
         dir.mkdir();
 
-        //Make the new save file today's date
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
-        Date today = new Date();
-        String filename = df.format(today)+".json";
+        //Make the new save file
+        String filename = name+".json";
         File file = new File(dir, filename);
         FileWriter writer = new FileWriter(file);
 
@@ -195,5 +196,10 @@ public class Game {
         save.put("Players",playerSave);
         writer.write(save.toString(2));
         writer.close();
+    }
+
+    @Override
+    public void update() {
+        curPhase.changeOwnership()
     }
 }
