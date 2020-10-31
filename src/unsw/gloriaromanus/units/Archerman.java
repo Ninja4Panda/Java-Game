@@ -2,7 +2,7 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Range;
 
-public class Archerman extends BaseUnit {
+public class Archerman extends Unit {
     public Archerman(int curMovementPoint, int curAmount) {
         super(curMovementPoint, 10,1, 75, 10, curAmount, new Range(3, 5), 5, 10, 10, 0, 0);
         // ArcherMan is a unit with 

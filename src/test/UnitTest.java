@@ -30,68 +30,97 @@ public class UnitTest{
 //        assertEquals(u.getNumTroops(), 50);
     }
 
+//    @Test
+//    public void loadSaveTest() {
+//        try {
+//            Game game = new Game("src/test/resources/default.json");
+//            game.save();
+//
+//            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
+//            File dir = new File("saves");
+//            dir.mkdir();
+//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
+//            Date today = new Date();
+//            String filename = df.format(today)+".json";
+//            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+//
+//            //test if the output save is the same as config input
+//            assertArrayEquals(f1, f2);
+//        } catch(JSONException e) {
+//            e.printStackTrace();
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//    @Test
+//    public void saveAfterTrainTest() {
+//        try {
+//            Game game = new Game("src/test/resources/default.json");
+//            //Player1 training Archerman & Spearman
+//            ArrayList<String> troops = new ArrayList<>();
+//            troops.add("Archerman");
+//            troops.add("Spearman");
+//            game.action("Cyprus", troops);
+//            game.endPhase();
+//            game.endPhase();
+//
+//            //Player2 training cavalry & swordsman
+//            troops = new ArrayList<>();
+//            troops.add("Cavalry");
+//            troops.add("Swordsman");
+//            game.action("Syria", troops);
+//            game.endPhase();
+//            game.endPhase();
+//
+//            //Player1 preparation turn
+//            game.save();
+//
+//            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/trainExpected.json"));
+//            File dir = new File("saves");
+//            dir.mkdir();
+//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
+//            Date today = new Date();
+//            String filename = df.format(today)+".json";
+//            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+//
+//            //test if the output save is the same as config input
+//            assertArrayEquals(f1, f2);
+//        } catch(JSONException e) {
+//            e.printStackTrace();
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @Test
-    public void loadSaveTest() {
+    public void saveAfterMoveTest() {
         try {
-            Game game = new Game("src/test/resources/default.json");
-            game.save();
-
-            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
-            File dir = new File("saves");
-            dir.mkdir();
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
-            Date today = new Date();
-            String filename = df.format(today)+".json";
-            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
-
-            //test if the output save is the same as config input
-            assertArrayEquals(f1, f2);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void saveAfterTrainTest() {
-        try {
-            Game game = new Game("src/test/resources/default.json");
-            //Preparation phase
+            Game game = new Game("src/test/resources/moveTest.json");
             ArrayList<String> troops = new ArrayList<>();
-            troops.add("Archerman");
             troops.add("Spearman");
-            game.action("Cyprus", troops);
-            game.endPhase();
-            //Move phase
-            game.endPhase();
-
-            //Player2 turn training troops
-            troops = new ArrayList<>();
-            troops.add("Cavalry");
-            troops.add("Swordsman");
-            game.action("Syria", troops);
-            game.endPhase();
-            //Move phase
-            game.endPhase();
-            //Player1 preparation turn
+            game.action("Cyprus", troops, "Lusitania");
             game.save();
 
-            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
             File dir = new File("saves");
             dir.mkdir();
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
             Date today = new Date();
             String filename = df.format(today)+".json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
-
-            //test if the output save is the same as config input
             assertArrayEquals(f1, f2);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void saveAfterInvadeTest() {
+
+    }
+
 }
 

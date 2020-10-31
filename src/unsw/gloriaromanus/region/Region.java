@@ -128,7 +128,7 @@ public class Region implements Observer {
             if(troops.contains(u.getClassName())) {
                 u.minusUnits(u.getCurAmount());
                 Unit compareTo = end.findUnit(u.getClassName());
-                if(compareTo.getCurMovementPoints() > u.getCurMovementPoints() ) {
+                if(compareTo.getCurMovementPoints() > u.getCurMovementPoints()) {
                     compareTo.setCurMovementPoints(u.getCurMovementPoints());
                 }
                 compareTo.addUnits(u.getCurAmount());
