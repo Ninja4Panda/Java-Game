@@ -11,13 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MovePhase implements GamePhase {
     private Game game;
-    private final int MAX_NUM_PATH = 53*4;
 
     public MovePhase(Game game) {
         this.game = game;
