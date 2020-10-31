@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,23 +110,113 @@ public class UnitTest{
         assertEquals(145, sydney.getTotalUnits());
 
         List<String> trainUnits = new ArrayList<String>();
-        String sling = "Slinger";
+        String sling = "Slingerman";
         String cavlry = "Cavalry";
         trainUnits.add(sling);
         trainUnits.add(cavlry);
 
-        assertEquals("Units Training!", sydney.train(trainUnits));
+        assertEquals("Success", sydney.train(trainUnits));
         
         sydney.update();
-        sydney.update();
-        sydney.update();
+        assertEquals(0, sydney.findUnit("Cavalry").getCurAmount());
+        assertEquals(0, sydney.findUnit("Slingerman").getCurAmount());
 
+        sydney.update();
+        assertEquals(5, sydney.findUnit("Cavalry").getCurAmount());
+        assertEquals(0, sydney.findUnit("Slingerman").getCurAmount());
+
+        sydney.update();
+        assertEquals(5, sydney.findUnit("Cavalry").getCurAmount());
+        assertEquals(7, sydney.findUnit("Slingerman").getCurAmount());
+    }
+    @Test
+    public void excessiveTrainTest() {
+        List<Unit> SydUnits = new ArrayList<Unit>();
+        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
+
+        List<String> trainUnits = new ArrayList<String>();
+        String sling = "Slingerman";
+        String cavlry = "Cavalry";
+        String swordsman = "Swordsman";
+        trainUnits.add(sling);
+        trainUnits.add(cavlry);
+        trainUnits.add(swordsman);
+
+        assertEquals("Unsuccessful training too many troops are training already", sydney.train(trainUnits));
+
+        trainUnits.remove(0);
+        
+        sydney.train(trainUnits);
+        assertEquals("Unsuccessful training too many troops are training already", sydney.train(trainUnits));
+    }
+    @Test
+    public void noDefenceTest() {
+        List<Unit> SydUnits = new ArrayList<Unit>();
+
+        Unit SydArcher = new Archerman(12, 12);
+        Unit SydSwordsMan = new Swordsman(10, 10);
+        Unit SydSpearman = new Spearman(9, 123);
+
+        SydUnits.add(SydArcher);
+        SydUnits.add(SydSpearman);
+        SydUnits.add(SydSwordsMan);
+
+        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
+
+        List<Unit> MelUnits = new ArrayList<Unit>();
+        Region melbourne = new Region("Melbourne", new GameTurn(4, 4, 4), MelUnits, 10, 10);
+
+
+        assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
+        assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
+        assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
+        assertEquals(145, melbourne.getTotalUnits());
+        assertEquals(0, sydney.getTotalUnits());
 
     }
     @Test
     public void loadSaveTest() {
         try {
             Game game = new Game("src/test/resources/default.json");
+            game.save();
+
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
+            File dir = new File("saves");
+            dir.mkdir();
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
+            Date today = new Date();
+            String filename = df.format(today)+".json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+
+            //test if the output save is the same as config input
+            assertArrayEquals(f1, f2);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void saveAfterChangeTest() {
+        try {
+            Game game = new Game("src/test/resources/default.json");
+            //Preparation phase
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Archerman");
+            troops.add("Spearman");
+            game.action("Cyprus", troops);
+            game.endPhase();
+
+            //Move phase
+            game.endPhase();
+
+            game.endPhase();
+            game.endPhase();
+            game.endPhase();
+
+            System.out.println(troops);
+            System.out.println(game.action("Cyprus", troops, "Syria", "Egypt"));
             game.save();
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
@@ -138,36 +228,12 @@ public class UnitTest{
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
 
             //test if the output save is the same as config input
-            Arrays.equals(f1,f2);
+            assertArrayEquals(f1, f2);
         } catch(JSONException e) {
             e.printStackTrace();
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
-
-//    @Test
-//    public void saveAfterChange() {
-//        try {
-//            Game game = new Game("src/test/resources/default.json");
-//
-//            game.save();
-//
-//            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/saveAfterChange.json"));
-//            File dir = new File("saves");
-//            dir.mkdir();
-//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy(HH:mm:ss)");
-//            Date today = new Date();
-//            String filename = df.format(today)+".json";
-//            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
-//
-//            //test if the output save is the same as config input
-//            Arrays.equals(f1,f2);
-//        } catch(JSONException e) {
-//            e.printStackTrace();
-//        } catch(IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
 

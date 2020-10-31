@@ -27,9 +27,6 @@ public class Testing {
 
         // BattleResolver battle = new BattleResolver();
 
-        Unit spearDudes = new Spearman(12, 12);
-        System.out.println(spearDudes.getClassName());
-
 
     }
 }

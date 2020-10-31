@@ -40,6 +40,8 @@ public class Region implements Observer {
     }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
+        this.gameTurn = gameTurn;
+        gameTurn.attach(this);
         name = regionData.getString("Id");
         wealth = regionData.getInt("Wealth");
         tax = regionData.getInt("Tax");
