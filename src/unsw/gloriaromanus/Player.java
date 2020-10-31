@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.units.UnitCluster;
+import unsw.gloriaromanus.units.Unit;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,12 +84,10 @@ public class Player {
     private Boolean enoughGold(Region origin, List<String> troops) {
         int cost = 0;
         for(String name: troops) {
-            UnitCluster troop = origin.findUnit(name);
-            int amount = troops.getBatch();
-            // cost += amount*troop.getCost();
+            Unit troop = origin.findUnit(name);
+            // cost += troop.getCost();
         }
-        if(cost>gold) return false;
-        return true;
+        return cost <= gold;
     }
 
     /**

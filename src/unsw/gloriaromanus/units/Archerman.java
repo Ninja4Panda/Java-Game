@@ -3,10 +3,11 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.Range;
 
 public class Archerman extends BaseUnit {
-    public Archerman() {
-        super(10, 1, 75, 10, 0, new Range(3, 5), 5, 10, 10, 0, 0);
+    public Archerman(int curMovementPoint, int curAmount) {
+        super(curMovementPoint, 10,1, 75, 10, curAmount, new Range(3, 5), 5, 10, 10, 0, 0);
         // ArcherMan is a unit with 
-        // 10 movementpoints
+        // 10 initial movement points
+        // 10 max movement points
         // 1 turn build time
         // 75 gold cost
         // 10 train amount
