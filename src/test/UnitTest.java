@@ -324,9 +324,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/invadeTest.json");
             List<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            System.out.println("=============================");
-            System.out.println(troops);
-            System.out.println("abc+"+game.action("Cyprus", troops, "Cilicia", "Egypt"));
+            game.action("Cyprus", troops, "Cilicia", "Egypt");
 
             game.save("invadeOutput");
 

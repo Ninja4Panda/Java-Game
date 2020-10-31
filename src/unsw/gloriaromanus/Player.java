@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Player implements Observer{
+public class Player implements Observer {
     private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
-    private Region recentlyConquered;
+    private List<Region> recentlyConquered;
     private String faction;
     private int gold;
 
@@ -66,6 +66,7 @@ public class Player implements Observer{
      */
     public void addRegion(Region defeated) {
         regionsMap.put(defeated.getName(), defeated);
+        recentlyConquered.add(defeated);
     }
 
     /**
@@ -138,6 +139,21 @@ public class Player implements Observer{
 
     @Override
     public void update() {
+        updateGold();
+        updateRecent();
+    }
+
+    /**
+     * Update the recently conquered list
+     */
+    private void updateRecent() {
+        recentlyConquered.clear();
+    }
+
+    /**
+     * Update the gold amount
+     */
+    private void updateGold(){
         for(String regionName : regionsMap.keySet()) {
             gold += regionsMap.get(regionName).calcGold();
         }
