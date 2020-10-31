@@ -33,6 +33,13 @@ public class Player {
     }
 
     /**
+     * @return amount of gold player owns
+     */
+    public int getGold() {
+        return gold;
+    }
+
+    /**
      * @param targetRegion region name
      * @return region object based on the targetRegion, null if doesn't exists
      */
