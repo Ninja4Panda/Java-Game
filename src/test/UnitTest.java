@@ -223,6 +223,21 @@ public class UnitTest{
         assertEquals(sydney.findUnit("Spearman").getMaxMovementPoints(), sydney.findUnit("Spearman").getCurMovementPoints());
         
     }
+    @Test
+    public void playerMoneyGainTest(){
+        try {
+            Game game = new Game("src/test/resources/default.json");
+            assertEquals(400, game.getCurPlayer().getGold());
+            game.getCurPlayer().update();
+            assertEquals(402, game.getCurPlayer().getGold());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
 
     @Test
     public void loadSaveTest() {
