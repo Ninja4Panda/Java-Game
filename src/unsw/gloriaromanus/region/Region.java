@@ -80,12 +80,23 @@ public class Region implements Observer {
         units.add(new Swordsman(movementPoint, amount));
     }
 
+    public void setTax(int tax) {
+        this.tax = tax;
+    }
+
+    public int getTax() {
+        return tax;
+    }
+
     public void setWealth(int wealth) {
         this.wealth = wealth;
     }
+    public int getWealth() {
+        return wealth;
+    }
 
     public int calcGold() {
-        return wealth*tax;
+        return (int) (wealth* (double) tax/100);
     }
     /**
      * @return all units object in the region
@@ -222,7 +233,7 @@ public class Region implements Observer {
     }
 
     private void updateWealth() {
-        switch (wealth) {
+        switch (tax) {
             case 10:
                 wealth += 10;
                 break;
