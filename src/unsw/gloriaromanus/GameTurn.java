@@ -37,7 +37,7 @@ public class GameTurn implements Subject {
         subTurn += 1;
         //One full turn has passed
         if(subTurn == numPlayers) {
-            subTurn = 1;
+            subTurn = 0;
             turn++;
             notifyObservers();
         }

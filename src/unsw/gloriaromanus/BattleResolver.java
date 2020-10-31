@@ -9,6 +9,41 @@ import unsw.gloriaromanus.units.Unit;
 
 public class BattleResolver {
 
+    // For Testing
+    public static double getAttackingWin(List<Unit> attackers, Region defending, Region attacking){
+        int attackingStrength = 0;
+        List<Unit> defenders = defending.getUnits();
+        for(Unit u : attackers) {
+            attackingStrength += u.strength();
+        }
+
+        int defendingStrength = 0;
+        for(Unit u : defenders ) {
+            defendingStrength += u.strength();
+        }
+
+        // will always generate a number that is less than 1
+        double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
+        return attackingWin;
+
+    }
+    public static double getDefendingWin(List<Unit> attackers, Region defending, Region attacking){
+        int attackingStrength = 0;
+        List<Unit> defenders = defending.getUnits();
+        for(Unit u : attackers) {
+            attackingStrength += u.strength();
+        }
+
+        int defendingStrength = 0;
+        for(Unit u : defenders ) {
+            defendingStrength += u.strength();
+        }
+
+        // will always generate a number that is less than 1
+        double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
+        return defendingWin;
+
+    }
     // Pass implementation of battle resolver
     public static String resolve(List<Unit> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
@@ -21,11 +56,17 @@ public class BattleResolver {
         for(Unit u : defenders ) {
             defendingStrength += u.strength();
         }
-        
 
         // will always generate a number that is less than 1
         double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
         double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
+        if(defendingWin == 0) {
+            attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
+            return "Attackers win";
+        }
+
+        System.out.println(attackingWin);
+        System.out.println(defendingWin);
 
         // keep fighting with the armies until someone wins if not draw
         Random decider = new Random();
@@ -33,7 +74,7 @@ public class BattleResolver {
             // System.out.println(attackingWin + " " + defendingWin + " ADS = " + ( attackingStrength + defendingStrength));
             if( decider.nextDouble() <= attackingWin ) {
 
-                int randomExtraUnitsLoss = decider.nextInt(100- (int) attackingWin * 100);
+                int randomExtraUnitsLoss = decider.nextInt(100  - (int) attackingWin * 100);
                 double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
                 AfterMath(defending.getUnits(), losersLoss);
 

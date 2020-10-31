@@ -139,6 +139,6 @@ public class Unit {
 
 
     public int strength() {
-        return armour * attack.getAttackValue();
+        return armour * attack.getAttackValue() * getCurAmount();
     }
 }

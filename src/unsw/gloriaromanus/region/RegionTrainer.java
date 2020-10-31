@@ -1,6 +1,7 @@
 package unsw.gloriaromanus.region;
 
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class RegionTrainer {
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.trainTime());
         }
-        return "Units Training!";
+        return "Success";
     }
 
     /**
@@ -60,13 +61,14 @@ public class RegionTrainer {
      */
     public int pushUnits() {
         int unitsPushed = 0;
-        for (String type: trainingUnits.keySet()) {
-            if(trainingUnits.get(type)==0) {
-                region.addUnits(type);
-                trainingUnits.remove(type);
-                unitsPushed++;
+        Iterator <Map.Entry<String,Integer>> it = trainingUnits.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<String,Integer> entry = it.next();
+            entry.setValue(entry.getValue()-1);
+            if(entry.getValue() == 0) {
+                region.addUnits(entry.getKey());
+                it.remove();
             }
-            //trainingUnits.replace(type, trainingUnits.get(type) - 1); // decrement training time
         }
         return unitsPushed;
     }

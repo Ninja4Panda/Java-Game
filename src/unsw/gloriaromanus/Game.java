@@ -58,7 +58,7 @@ public class Game {
             //Create new players
             Player player = new Player(playerJson, gameTurn);
             //Set current player
-            if(subTurn == i+1) curPlayer = player;
+            if(subTurn == i) curPlayer = player;
 
             //Map each faction name to the player Object
             playersMap.put(faction, player);
