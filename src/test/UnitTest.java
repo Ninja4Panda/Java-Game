@@ -335,18 +335,22 @@ public class UnitTest{
 
 
 
+
     @Test
-    public void conquestWinTest() {
+    public void wealthWinTest() {
         try {
-            Game game = new Game("src/test/resources/treasuryWin.json");
+            Game game = new Game("src/test/resources/wealthWin.json");
+
             game.endPhase();
-            game.save("WealthWinActualOut");
+            game.endPhase();
+            game.save("wealthWinOut.json");
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch(JSONException e) {
             e.printStackTrace();
         }
-        
+
 
     }
 }

@@ -47,20 +47,20 @@ public class Game implements Observer {
 
 
         // Make or Load the CampaignWinCond
-        if(game.getString("CampaignWinCond").compareTo("null") == 0) {
-            WinCond conquest = new ConquestCond();
-            WinCond treasury = new TreasuryCond();
-            WinCond wealth = new WealthCond();
-
-            List<WinCond> campaignVictory = new ArrayList<WinCond>();
-            campaignVictory.add(conquest);
-            campaignVictory.add(treasury);
-            campaignVictory.add(wealth);
-            campaignWinCond = new Check(campaignVictory);
-        } else {
+//        if(game.getString("CampaignWinCond").compareTo("null") == 0) {
+//            WinCond conquest = new ConquestCond();
+//            WinCond treasury = new TreasuryCond();
+//            WinCond wealth = new WealthCond();
+//
+//            List<WinCond> campaignVictory = new ArrayList<WinCond>();
+//            campaignVictory.add(conquest);
+//            campaignVictory.add(treasury);
+//            campaignVictory.add(wealth);
+//            campaignWinCond = new Check(campaignVictory);
+//        } else {
             JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
             campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
-        }
+//        }
 
         //Set up current phase
         String state = game.getString("Phase");
@@ -169,6 +169,7 @@ public class Game implements Observer {
     public void endPhase() {
         checkPlayerStatus();
         curPhase.endPhase();
+        checkPlayerStatus();
     }
 
     private void checkPlayerStatus() {

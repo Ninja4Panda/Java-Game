@@ -23,8 +23,8 @@
   },
   "Players": [
     {
-      "Gold": 400,
-      "Regions":"null",
+      "Gold": 40000000,
+      "Regions":[],
       "Faction": "Rome"
     },
     {
