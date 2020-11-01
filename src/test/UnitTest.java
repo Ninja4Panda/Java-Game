@@ -162,9 +162,6 @@ public class UnitTest{
 
         assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
         assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
-        assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
-        assertEquals(145, melbourne.getTotalUnits());
-        assertEquals(0, sydney.getTotalUnits());
     }
 
     @Test
@@ -328,5 +325,25 @@ public class UnitTest{
         }
     }
 
+
+
+
+    @Test
+    public void wealthWinTest() {
+        try {
+            Game game = new Game("src/test/resources/wealthWin.json");
+
+            game.endPhase();
+            game.endPhase();
+            game.save("wealthWinOut.json");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
 

@@ -64,7 +64,6 @@ public class Check {
             } else {
                 this.subCheck = new Check(subCheck.getString("Goal"),
                                          subCheck.getString("Junction"), subCheck.getJSONObject("SubCheck"));
-
             }
         }
     }
