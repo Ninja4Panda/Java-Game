@@ -174,8 +174,6 @@ public class UnitTest{
             game.save("defaultOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/default.json"));
-            File dir = new File("saves");
-            dir.mkdir();
             String filename = "defaultOutput.json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
 
@@ -212,8 +210,6 @@ public class UnitTest{
             game.save("trainOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/trainExpected.json"));
-            File dir = new File("saves");
-            dir.mkdir();
             String filename = "trainOutput.json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
 
@@ -301,8 +297,6 @@ public class UnitTest{
             game.save("moveOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
-            File dir = new File("saves");
-            dir.mkdir();
             String filename = "moveOutput.json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
             assertArrayEquals(f1, f2);
@@ -324,8 +318,6 @@ public class UnitTest{
             game.save("invadeOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/invadeExpected.json"));
-            File dir = new File("saves");
-            dir.mkdir();
             String filename = "invadeOutput.json";
             byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
             assertArrayEquals(f1, f2);
