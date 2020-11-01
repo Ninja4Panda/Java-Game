@@ -18,6 +18,16 @@ public class Player implements Observer {
     private String faction;
     private int gold;
 
+    public Player(Map<String, Region> regionsMap, String faction, GameTurn gameTurn) {
+        this.gameTurn = gameTurn;
+        gameTurn.attach(this);
+
+        this.regionsMap = regionsMap;
+        recentlyConquered = new ArrayList<>();
+        this.faction = faction;
+        this.gold = 1000;
+    }
+
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
         this.gameTurn = gameTurn;
         gameTurn.attach(this);

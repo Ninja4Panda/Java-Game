@@ -2,7 +2,24 @@
   "Game": {
     "Phase": "Preparation",
     "Turn": 0,
-    "Subturn": 0
+    "Subturn": 0,
+    "CampaignWinCond": {
+      "Goal": "WealthCond",
+      "Junction": "OrCheck",
+      "SubCheck": {
+        "Goal": "TreasuryCond",
+        "Junction": "OrCheck",
+        "SubCheck": {
+          "Goal": "ConquestCond",
+          "Junction": "AndCheck",
+          "SubCheck": {
+            "Goal": "null",
+            "Junction": "null",
+            "SubCheck": "null"
+          }
+        }
+      }
+    }
   },
   "Players": [
     {

@@ -21,7 +21,7 @@ public class Region implements Observer {
     private int wealth;
     private int tax;
 
-    public Region(String name, GameTurn gameTurn,  List<Unit> units, int wealth, int tax) {
+    public Region(String name, GameTurn gameTurn, int wealth, int tax) {
         this.name = name;
         this.gameTurn = gameTurn;
         gameTurn.attach(this);
@@ -34,6 +34,11 @@ public class Region implements Observer {
         this.units.add(new Slingerman(1, 0));
         this.units.add(new Spearman(1, 0));
         this.units.add(new Swordsman(1, 0));
+    }
+
+    //Testing
+    public Region(String name, GameTurn gameTurn,  List<Unit> units, int wealth, int tax) {
+        this(name, gameTurn, wealth, tax);
         for( Unit u : units) {
             findUnit(u.getClassName()).addUnits(u.getCurAmount());
             findUnit(u.getClassName()).setCurMovementPoints(u.getCurMovementPoints());
@@ -96,6 +101,7 @@ public class Region implements Observer {
     public void setWealth(int wealth) {
         this.wealth = wealth;
     }
+
     public int getWealth() {
         return wealth;
     }
