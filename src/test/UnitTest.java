@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import unsw.gloriaromanus.*;
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.region.RegionTrainer;
 import unsw.gloriaromanus.units.Archerman;
 import unsw.gloriaromanus.units.Spearman;
 import unsw.gloriaromanus.units.Swordsman;
@@ -42,7 +41,7 @@ public class UnitTest{
     }
 
     @Test
-    public void RegionMoveTest(){
+    public void moveTroopsTest(){
         List<Unit> SydUnits = new ArrayList<Unit>();
 
         Unit SydArcher = new Archerman(12, 12);
@@ -75,11 +74,7 @@ public class UnitTest{
         assertEquals(10, melbourne.findUnit("Swordsman").getCurAmount());
         assertEquals(145, melbourne.getTotalUnits());
 
-        List<String> moveSpears = new ArrayList<String>();
-        String unit = "Spearman";
-        moveSpears.add(unit);
-
-        sydney.moveTroops(4, moveSpears, melbourne);
+        sydney.moveTroops(sydney.findUnit("Spearman"), melbourne);
         assertEquals(22, sydney.getTotalUnits());
         assertEquals(268, melbourne.getTotalUnits());
         assertEquals(sydney.findUnit("Spearman").getCurAmount(), 0);
@@ -168,8 +163,6 @@ public class UnitTest{
         assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
         assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
         assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
-        assertEquals(145, melbourne.getTotalUnits());
-        assertEquals(0, sydney.getTotalUnits());
     }
 
     @Test
