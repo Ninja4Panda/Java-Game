@@ -98,6 +98,7 @@ public class Unit {
 
     public void reduceMovementPoints(int movementPoints) {
         this.curMovementPoints -= movementPoints;
+        if(this.curMovementPoints<0) this.curMovementPoints = 0;
     }
 
 

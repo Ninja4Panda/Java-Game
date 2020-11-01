@@ -40,7 +40,6 @@ public class BattleResolver implements Subject {
         // will always generate a number that is less than 1
         double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
         return attackingWin;
-
     }
 
     public static double getDefendingWin(List<Unit> attackers, Region defending, Region attacking){
@@ -56,7 +55,7 @@ public class BattleResolver implements Subject {
         }
 
         // will always generate a number that is less than 1
-        double defendingWin = (double )defendingStrength/(attackingStrength + defendingStrength);
+        double defendingWin = (double)defendingStrength/(attackingStrength + defendingStrength);
         return defendingWin;
     }
 
@@ -74,7 +73,9 @@ public class BattleResolver implements Subject {
         }
 
         if(defendingStrength == 0) {
-            attacking.moveTroops(4, unitArrayToString(attackers), defending) ;
+            for(Unit unit: attackers) {
+                attacking.moveTroops(unit, defending) ;
+            }
             BattleResolver resolver = getINSTANCE();
             resolver.setDefender(defending);
             resolver.notifyObservers();
@@ -98,8 +99,9 @@ public class BattleResolver implements Subject {
                 double winnersLoss = decider.nextDouble();
                 AfterMath(attackers, winnersLoss);
 
-                attacking.moveTroops(  4, unitArrayToString(attackers),   defending) ;
-
+                for(Unit unit: attackers) {
+                    attacking.moveTroops(unit, defending) ;
+                }
                 //Notify game to change ownership
                 BattleResolver resolver = getINSTANCE();
                 resolver.setDefender(defending);
@@ -118,14 +120,6 @@ public class BattleResolver implements Subject {
         }
 
         return "Draw";
-    }
-
-    public static List<String> unitArrayToString(List<Unit> units) {
-        List<String> stringArray = new ArrayList<>();
-        for(Unit u : units) {
-            stringArray.add(u.getClassName());
-        }
-        return stringArray;
     }
 
     public static void AfterMath(List<Unit> units, double lossPercentage) {

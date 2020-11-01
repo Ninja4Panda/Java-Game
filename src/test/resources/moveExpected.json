@@ -11,7 +11,7 @@
         {
           "Troops": {
             "Spearman": {
-              "Movement": 10,
+              "Movement": 0,
               "Amount": 0
             },
             "Slingerman": {
@@ -23,7 +23,7 @@
               "Amount": 0
             },
             "Archerman": {
-              "Movement": 10,
+              "Movement": 0,
               "Amount": 0
             },
             "Cavalry": {
@@ -39,7 +39,7 @@
         {
           "Troops": {
             "Spearman": {
-              "Movement": 10,
+              "Movement": 0,
               "Amount": 10
             },
             "Slingerman": {
@@ -51,7 +51,7 @@
               "Amount": 0
             },
             "Archerman": {
-              "Movement": 10,
+              "Movement": 0,
               "Amount": 0
             },
             "Cavalry": {

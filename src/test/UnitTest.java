@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import unsw.gloriaromanus.*;
 import unsw.gloriaromanus.region.Region;
-import unsw.gloriaromanus.region.RegionTrainer;
 import unsw.gloriaromanus.units.Archerman;
 import unsw.gloriaromanus.units.Spearman;
 import unsw.gloriaromanus.units.Swordsman;
@@ -79,7 +78,7 @@ public class UnitTest{
         String unit = "Spearman";
         moveSpears.add(unit);
 
-        sydney.moveTroops(4, moveSpears, melbourne);
+//        sydney.move(4, moveSpears, melbourne);
         assertEquals(22, sydney.getTotalUnits());
         assertEquals(268, melbourne.getTotalUnits());
         assertEquals(sydney.findUnit("Spearman").getCurAmount(), 0);

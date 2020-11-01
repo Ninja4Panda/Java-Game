@@ -16,9 +16,11 @@ public class GameTurn implements Subject {
         listObs = new ArrayList<>();
     }
 
+    /**
+     * Eliminate a player
+     */
     public void removePlayer() {
-        subTurn -=1;
-        numPlayers -=1;
+        numPlayers--;
     }
 
     /**
@@ -41,7 +43,7 @@ public class GameTurn implements Subject {
     public void nextTurn() {
         subTurn += 1;
         //One full turn has passed
-        if(subTurn == numPlayers) {
+        if(subTurn >= numPlayers) {
             subTurn = 0;
             turn++;
             notifyObservers();

@@ -10,6 +10,7 @@ import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Region implements Observer {
@@ -111,15 +112,6 @@ public class Region implements Observer {
     }
 
     /**
-     * Forwards method to RegionTrainer.
-     * @param troops list of units
-     * @return true if the units were put into training.
-     */
-    public String train(List<String> troops) {
-        return trainer.train(troops);
-    }
-
-    /**
      * Gets the total amount of troops in the region
      * @return total amount of troops in the region
      */
@@ -142,24 +134,74 @@ public class Region implements Observer {
     }
 
     /**
+     * Forwards method to RegionTrainer.
+     * @param troops list of units
+     * @return true if the units were put into training.
+     */
+    public String train(List<String> troops) {
+        return trainer.train(troops);
+    }
+
+
+    /**
+     * Moves troops to end region
+     * @param unit unit to be moved
+     * @param end target region
+     */
+    public void moveTroops(Unit unit, Region end) {
+        Unit target = end.findUnit(unit.getClassName());
+        //Set the MP of the troop
+        if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
+            target.setCurMovementPoints(unit.getCurMovementPoints());
+        }
+        target.addUnits(unit.getCurAmount());
+        unit.minusUnits(unit.getCurAmount());
+    }
+
+    /**
      * moves troops to other regions
-     * @param movementPoints cost of moving to other region
+     * @param path path taken to the region
      * @param troops to move to other region
-     * @param end where the troops will end up at
+     * @param target target region to move to
      * @return msg to display
      */
-    public String moveTroops(int movementPoints, List<String> troops, Region end) {
-        for(Unit u : units) {
-            if(troops.contains(u.getClassName())) {
-                Unit compareTo = end.findUnit(u.getClassName());
-                if(compareTo.getCurMovementPoints() > u.getCurMovementPoints()) {
-                    compareTo.setCurMovementPoints(u.getCurMovementPoints());
+    public String move(List<Region> path, List<String> troops, Region target) {
+        //Loop through the path and remove
+        for (Region region: path) {
+            Iterator<String> it = troops.iterator();
+            while(it.hasNext()) {
+                Unit unit = findUnit(it.next());
+                unit.reduceMovementPoints(4);
+                //Stop when no more MP
+                if(unit.getCurMovementPoints() == 0) {
+                    moveTroops(unit, region);
+                    it.remove();
                 }
-                compareTo.addUnits(u.getCurAmount());
-                u.minusUnits(u.getCurAmount());
             }
         }
+
+        //Move the troops that has enough points to move there
+        for(String troop: troops) {
+            Unit unit = findUnit(troop);
+            moveTroops(unit,target);
+        }
         return "Troops moved";
+    }
+
+    /**
+     * Invade a region with troops
+     * @param movementPoints cost of moving to other region
+     * @param troops to move to other region
+     * @param target where the troops will end up at
+     * @return msg to display
+     */
+    public String invade(int movementPoints, List<String> troops, Region target) {
+        List<Unit> attackers = new ArrayList<>();
+        for (Unit unit: units) {
+            if(troops.contains(unit.getClassName())) attackers.add(unit);
+            if(unit.getCurMovementPoints()<movementPoints) return "Unsuccessful attack not enough movement Point";
+        }
+        return BattleResolver.resolve(attackers, target, this);
     }
 
     /**
@@ -217,14 +259,6 @@ public class Region implements Observer {
         save.put("Troops", troops);
         save.put("Id", name);
         return save;
-    }
-
-    public String invade(int movementPoints, List<String> troops, Region target) {
-        List<Unit> attackers = new ArrayList<>();
-        for (Unit unit: units) {
-            if(troops.contains(unit.getClassName())) attackers.add(unit);
-        }
-        return BattleResolver.resolve(attackers, target, this);
     }
 
     @Override
