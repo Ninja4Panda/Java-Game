@@ -209,7 +209,7 @@ public class Game implements Observer {
         curPhase.endPhase();
 
         //Checks if player win at the beginning of a phase
-       // msg = checkPlayerStatus();
+        msg = checkPlayerStatus();
         if(msg!=null) return msg;
         return null;
     }
