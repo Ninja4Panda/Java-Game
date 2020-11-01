@@ -322,6 +322,9 @@ public class UnitTest{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("SAVEAFTERINVADE-------------------------\n\n\n\n\n\n\n\n\n");
         }
     }
 
@@ -344,6 +347,24 @@ public class UnitTest{
         }
 
 
+    }
+
+    @Test
+    public void mainTest() {
+        List<String> factions = new ArrayList<>();
+        factions.add("Rome");
+        factions.add("Chinese");
+        factions.add("Airbender");
+        factions.add("Gaul");
+        try{
+            Game game = new Game(factions);
+            game.save("firstTry");
+
+        } catch (NullPointerException e) {
+            System.out.println("maintest");
+        } catch (IOException e) {
+
+        }
     }
 }
 
