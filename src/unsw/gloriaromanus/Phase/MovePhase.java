@@ -107,10 +107,9 @@ public class MovePhase implements GamePhase {
      * @return shortest path as a string
      * @throws IOException
      */
-    public List<String> findShortestPath(String origin, String target)throws IOException {
+    private List<String> findShortestPath(String origin, String target) throws IOException {
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
         JSONObject allAdjacencyMatrix = new JSONObject(content);
-
         
         List<Dinode> visited = new ArrayList<Dinode>();
         List<Dinode> opened = new ArrayList<Dinode>();
@@ -188,7 +187,7 @@ public class MovePhase implements GamePhase {
         return null;
     }
 
-    public Dinode findDinode(List<Dinode> diList, String target) {
+    private Dinode findDinode(List<Dinode> diList, String target) {
         for(Dinode node : diList) {
             if( node.getId().compareTo(target) == 0 ) {
                 return node;
@@ -196,5 +195,4 @@ public class MovePhase implements GamePhase {
         }
         return null;
     }
- 
 }

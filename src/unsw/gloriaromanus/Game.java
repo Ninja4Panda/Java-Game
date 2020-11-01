@@ -27,9 +27,7 @@ public class Game implements Observer {
     private GameTurn gameTurn;
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
-
     private Check campaignWinCond;
-
 
     public Game (List<String> factions) throws IOException {
         //Attach the subject
@@ -185,7 +183,6 @@ public class Game implements Observer {
         Player firstPlayer = (Player)playersMap.values().toArray()[0];
 
         while (it.hasNext()) {
-
             Player player = it.next();
             //Set current player to next player
             if(player.equals(curPlayer)) {
@@ -203,14 +200,21 @@ public class Game implements Observer {
     public String endPhase() {
         //Checks if player won after a phase
         String msg = checkPlayerStatus();
-        if(msg!=null) return msg;
+        if(msg!=null) {
+            //move on to the next player
+            movePhase.endPhase();
+            return msg;
+        }
 
         //EndPhase
         curPhase.endPhase();
 
-        //Checks if player win at the beginning of a phase
+        //Checks if player won at the beginning of a phase
         msg = checkPlayerStatus();
-        if(msg!=null) return msg;
+        if(msg!=null) {
+            movePhase.endPhase();
+            return msg;
+        }
         return null;
     }
 
@@ -303,10 +307,6 @@ public class Game implements Observer {
         for(Player player: playersMap.values()) {
             if(player.removeRegion(defeated)) break;
         }
-        for(String p : playersMap.keySet()) {
-            System.out.println(p);
-        }
-        System.out.println("--------------------------------------------------\n\n\n");
         curPlayer.addRegion(defeated);
     }
 

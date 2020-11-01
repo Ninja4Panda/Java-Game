@@ -10,6 +10,7 @@ public class Dinode {
         this.setParent(parent);
         this.setCost(cost);
     }
+
     public String getParentID() {
         return parent.getId();
     }
