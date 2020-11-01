@@ -2,7 +2,7 @@ package unsw.gloriaromanus.winCond;
 
 import java.util.List;
 
-import unsw.gloriaromanus.Player;
+import unsw.gloriaromanus.Game.Player;
 import unsw.gloriaromanus.region.Region;
 
 public class WealthCond implements WinCond {

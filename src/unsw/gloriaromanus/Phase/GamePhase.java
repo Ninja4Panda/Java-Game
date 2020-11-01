@@ -25,7 +25,7 @@ public interface GamePhase {
      * Try to preform an action according to the phase
      * @param originRegion origin region initiated the action
      * @param troops hash map of troops
-     * @param args string array expecting targetRegion,targetFaction in order when required
+     * @param args string array expecting targetRegion, targetFaction in order when required
      * @return msg to display
      */
     String action(String originRegion, List<String> troops, String ... args) throws IOException;

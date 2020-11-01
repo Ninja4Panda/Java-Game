@@ -3,6 +3,10 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.Melee;
 
 public class Swordsman extends Unit {
+    public Swordsman() {
+        this(10,0);
+    }
+
     public Swordsman(int curMovementPoint, int curAmount) {
         super(curMovementPoint, 10, 1, 50, 10, curAmount, new Melee(5, 1), 5, 10, 10, 0, 0);
         // Swordsman is a unit with 

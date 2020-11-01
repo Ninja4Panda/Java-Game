@@ -4,8 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import unsw.gloriaromanus.BattleResolver;
-import unsw.gloriaromanus.GameTurn;
+import unsw.gloriaromanus.Game.BattleResolver;
+import unsw.gloriaromanus.Game.GameTurn;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
@@ -28,12 +28,12 @@ public class Region implements Observer {
         trainer = new RegionTrainer(this);
         this.wealth = wealth;
         this.tax = tax;
-        this.units = new ArrayList<Unit>();
-        this.units.add(new Archerman(1, 0));
-        this.units.add(new Cavalry(1, 0));
-        this.units.add(new Slingerman(1, 0));
-        this.units.add(new Spearman(1, 0));
-        this.units.add(new Swordsman(1, 0));
+        this.units = new ArrayList<>();
+        this.units.add(new Archerman());
+        this.units.add(new Cavalry());
+        this.units.add(new Slingerman());
+        this.units.add(new Spearman());
+        this.units.add(new Swordsman());
     }
 
     //Testing
@@ -51,10 +51,6 @@ public class Region implements Observer {
         name = regionData.getString("Id");
         wealth = regionData.getInt("Wealth");
         tax = regionData.getInt("Tax");
-
-        //Set up region trainer
-        JSONArray trainData = regionData.getJSONArray("Trainer");
-        trainer = new RegionTrainer(trainData,this);
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -84,6 +80,10 @@ public class Region implements Observer {
         movementPoint = swordsman.getInt("Movement");
         amount = swordsman.getInt("Amount");
         units.add(new Swordsman(movementPoint, amount));
+
+        //Set up region trainer
+        JSONArray trainData = regionData.getJSONArray("Trainer");
+        trainer = new RegionTrainer(trainData,this);
     }
 
     public String getName() {
@@ -222,16 +222,6 @@ public class Region implements Observer {
             }
         }
         return null;
-    }
-
-    /**
-     * Reduces the number of troops of a chosen UnitCluster, selected by its name
-     * @param unit is the unit that is going to have it's number of troops reduced
-     * @param numTroops is the amount of troops reduced
-     */
-    public void minusUnits(String unit, int numTroops) {
-        Unit u = findUnit(unit);
-        u.minusUnits(numTroops);
     }
 
     /**
