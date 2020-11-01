@@ -63,10 +63,18 @@ public class MovePhase implements GamePhase {
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
 
-//        ArrayList<String> visitedNode = new ArrayList<>();
-//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
-        int movementPoints = 4;
-        return curPlayer.move(movementPoints, origin, troops, target);
+        List<String> path = findShortestPath(originRegion, targetRegion);
+        List<Region> regions = new ArrayList<>();
+        for(String name: path) {
+            for (Player player : game.getPlayersMap().values()) {
+                Region subRegion = player.getRegion(name);
+                if (subRegion!=null) {
+                    regions.add(subRegion);
+                    break;
+                }
+            }
+        }
+        return curPlayer.move(regions, origin, troops, target);
     }
 
     /**
@@ -88,28 +96,25 @@ public class MovePhase implements GamePhase {
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
-//        ArrayList<String> visitedNode = new ArrayList<>();
-//        int movementPoints = findShortestPath(originRegion, targetRegion, visitedNode);
-        int movementPoints = 4;
-        return curPlayer.invade(movementPoints, origin, troops, target);
+        int movementPoint = findShortestPath(originRegion, targetRegion).size();
+        return curPlayer.invade(movementPoint, origin, troops, target);
     }
 
     /**
      * Find the shortest path between two regions
      * @param origin origin region
      * @param target target region
-     * @param visited arraylist of visited nodes
-     * @return amount of movement points needed or 1000 if cannot find shortest path
+     * @return shortest path as a string
      * @throws IOException
      */
-    public List<String> findShortestPath(String origin, String target )throws IOException {
+    public List<String> findShortestPath(String origin, String target)throws IOException {
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
         JSONObject allAdjacencyMatrix = new JSONObject(content);
 
         
         List<Dinode> visited = new ArrayList<Dinode>();
         List<Dinode> opened = new ArrayList<Dinode>();
-        //Player player = game.getCurPlayer();
+        Player player = game.getCurPlayer();
 
         Dinode start = new Dinode(origin, null, 0);
         opened.add(start);
@@ -140,8 +145,8 @@ public class MovePhase implements GamePhase {
                if( !adjacencyMatrix.getBoolean(neighbour.getId()) ) {
                    continue;
                }
-                // Check if player owns region
-                //if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null) continue;
+                // Check if player owns region & is not recently conquered
+                if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null && player.getRecentlyConquered().contains(neighbour)) continue;
                 // add to opened if never visited and never opened 
                 // or if visited and not in opened then see if we found a shorter way
                 if( findDinode(opened, neighbour.getId()) == null && findDinode(visited, neighbour.getId()) == null) {

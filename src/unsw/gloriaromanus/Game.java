@@ -28,6 +28,7 @@ public class Game implements Observer {
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
     private Check campaignWinCond;
+    private static final int MAX_PROVICES = 58;
 
     public Game(String configFile) throws IOException, JSONException {
         //Attach the subject
@@ -215,6 +216,7 @@ public class Game implements Observer {
         gameSave.put("Phase", curPhase.toString());
         gameSave.put("Turn", gameTurn.getTurn());
         gameSave.put("Subturn", gameTurn.getSubTurn());
+        gameSave.put("CampaignWinCond", campaignWinCond.getSave());
 
         //Construct the players json array
         JSONArray playerSave = new JSONArray();
@@ -226,7 +228,6 @@ public class Game implements Observer {
         JSONObject save = new JSONObject();
         save.put("Game",gameSave);
         save.put("Players",playerSave);
-        save.put("CampaignWinCond", campaignWinCond.getSave());
         writer.write(save.toString(2));
         writer.close();
     }

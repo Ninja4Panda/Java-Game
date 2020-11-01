@@ -19,8 +19,8 @@ public class Player implements Observer {
     private int gold;
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
-        gameTurn.attach(this);
         this.gameTurn = gameTurn;
+        gameTurn.attach(this);
         recentlyConquered = new ArrayList<>();
         JSONArray regions = playerData.getJSONArray("Regions");
         String factionName = playerData.getString("Faction");
@@ -34,6 +34,20 @@ public class Player implements Observer {
             Region region = new Region(regionJson, gameTurn);
             regionsMap.put(name, region);
         }
+    }
+
+    /**
+     * @return list of recently conquered region
+     */
+    public List<Region> getRecentlyConquered() {
+        return recentlyConquered;
+    }
+
+    /**
+     * @return the faction of the player
+     */
+    public String getFaction() {
+        return faction;
     }
 
     /**
@@ -77,8 +91,8 @@ public class Player implements Observer {
      * @param target target region object to move to
      * @return msg to display
      */
-    public String move(int movementPoints, Region origin, List<String> troops, Region target) {
-        return origin.moveTroops(movementPoints, troops, target);
+    public String move(List<Region> movementPoints, Region origin, List<String> troops, Region target) {
+        return origin.move(movementPoints, troops, target);
     }
 
     /**
@@ -100,23 +114,26 @@ public class Player implements Observer {
      * @return msg to display
      */
     public String train(Region origin, List<String> troops) {
-        if(!enoughGold(origin,troops)) return "not enough gold!";
-        return origin.train(troops);
+        int cost = getCost(origin,troops);
+        if(cost>gold) return "not enough gold!";
+        String msg = origin.train(troops);
+        if("Success".equals(msg)) gold -= cost;
+        return msg;
     }
 
     /**
-     * Check if player has enough gold to train units
+     * Get the total cost of train units
      * @param origin origin region
      * @param troops list of troops to train
-     * @return true/false to indicate enough gold or not
+     * @return the cost of it
      */
-    private Boolean enoughGold(Region origin, List<String> troops) {
+    private int getCost(Region origin, List<String> troops) {
         int cost = 0;
         for(String name: troops) {
             Unit troop = origin.findUnit(name);
              cost += troop.getCost();
         }
-        return cost <= gold;
+        return cost;
     }
 
     /**
