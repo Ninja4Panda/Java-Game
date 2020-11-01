@@ -163,8 +163,6 @@ public class UnitTest{
         assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
         assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
         assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
-        assertEquals(145, melbourne.getTotalUnits());
-        assertEquals(0, sydney.getTotalUnits());
     }
 
     @Test

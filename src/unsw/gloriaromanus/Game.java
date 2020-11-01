@@ -27,51 +27,11 @@ public class Game implements Observer {
     private GameTurn gameTurn;
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
+<<<<<<<<< Temporary merge branch 1
     private Check campaignWinCond;
-
-    public Game (List<String> factions) throws IOException {
-        //Attach the subject
-        BattleResolver resolver = BattleResolver.getINSTANCE();
-        resolver.attach(this);
-
-        //Set up the fields
-        preparationPhase = new PreparationPhase(this);
-        movePhase = new MovePhase(this);
-        playersMap = new LinkedHashMap<>();
-        curPhase = preparationPhase;
-        gameTurn = new GameTurn(0,0, factions.size());
-
-        //Read the ownership
-        String content = Files.readString(Paths.get("src/unsw/gloriaromanus/initial_province_ownership.json"));
-        JSONObject ownership = new JSONObject(content);
-        for(String faction: factions) {
-            Map<String, Region> regionMap = new HashMap<>();
-            JSONArray regions = ownership.getJSONArray(faction);
-            for(int i = 0; i<regions.length(); i++) {
-                String regionName = regions.getString(i);
-                Random rand = new Random();
-                //Create new region
-                int wealth = rand.nextInt(500)+500;
-                Region region = new Region(regionName, gameTurn, wealth, 10);
-                regionMap.put(regionName, region);
-            }
-
-            //Create new players
-            Player player = new Player(regionMap, faction, gameTurn);
-            playersMap.put(faction, player);
-        }
-
-        //Make new win condition
-        WinCond conquest = new ConquestCond();
-        WinCond treasury = new TreasuryCond();
-        WinCond wealth = new WealthCond();
-
-        List<WinCond> campaignVictory = new ArrayList<WinCond>();
-        campaignVictory.add(conquest);
-        campaignVictory.add(treasury);
-        campaignVictory.add(wealth);
-        campaignWinCond = new Check(campaignVictory);
-    }
+=========
+    private static final int MAX_PROVICES = 58;
+>>>>>>>>> Temporary merge branch 2
 
     public Game(String configFile) throws IOException, JSONException {
         //Attach the subject
@@ -88,9 +48,22 @@ public class Game implements Observer {
         JSONObject config = new JSONObject(content);
         JSONObject game = config.getJSONObject("Game");
 
-        //Load the CampaignWinCond
-        JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
-        campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
+
+        // Make or Load the CampaignWinCond
+        if(game.getString("CampaignWinCond").compareTo("null") == 0) {
+            WinCond conquest = new ConquestCond();
+            WinCond treasury = new TreasuryCond();
+            WinCond wealth = new WealthCond();
+
+            List<WinCond> campaignVictory = new ArrayList<WinCond>();
+            campaignVictory.add(conquest);
+            campaignVictory.add(treasury);
+            campaignVictory.add(wealth);
+            campaignWinCond = new Check(campaignVictory);
+        } else {
+            JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
+            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
+        }
 
         //Set up current phase
         String state = game.getString("Phase");
@@ -196,6 +169,16 @@ public class Game implements Observer {
     /**
      * Wrapper function to end a phase
      */
+<<<<<<<<< Temporary merge branch 1
+    public void endPhase() {
+        checkPlayerStatus();
+        curPhase.endPhase();
+    }
+
+    private void checkPlayerStatus() {
+        if( campaignWinCond.player(getCurPlayer()) ) {
+            //win
+=========
     public String endPhase() {
         //Checks if player won after a phase
         String msg = checkPlayerStatus();
@@ -218,10 +201,12 @@ public class Game implements Observer {
             gameTurn.removePlayer();
             playersMap.remove(curPlayer.getFaction());
             return "You Lose";
-        } if( campaignWinCond.player(getCurPlayer()) ) {
-//            save("Autosave");
-            return "You Win! Game is saved in ";
+        } else if(curPlayer.getAllRegions().size()==MAX_PROVICES) {
+            //TODO: save and stuff
+            return "You Win";
+>>>>>>>>> Temporary merge branch 2
         }
+
         return null;
     }
 
@@ -257,7 +242,6 @@ public class Game implements Observer {
         //Make the new save file
         String filename = name+".json";
         File file = new File(dir, filename);
-//        while(file.exists()) filename = ""
         FileWriter writer = new FileWriter(file);
 
         //Construct the game json object
@@ -276,7 +260,7 @@ public class Game implements Observer {
         JSONObject save = new JSONObject();
         save.put("Game",gameSave);
         save.put("Players",playerSave);
-        gameSave.put("CampaignWinCond", campaignWinCond.getSave());
+        save.put("CampaignWinCond", campaignWinCond.getSave());
         writer.write(save.toString(2));
         writer.close();
     }
