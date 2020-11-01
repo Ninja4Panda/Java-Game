@@ -6,6 +6,11 @@ import org.json.JSONObject;
 import unsw.gloriaromanus.Phase.*;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
+import unsw.gloriaromanus.winCond.Check;
+import unsw.gloriaromanus.winCond.ConquestCond;
+import unsw.gloriaromanus.winCond.TreasuryCond;
+import unsw.gloriaromanus.winCond.WealthCond;
+import unsw.gloriaromanus.winCond.WinCond;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+
 public class Game implements Observer {
     private GamePhase preparationPhase;
     private GamePhase movePhase;
@@ -21,6 +27,7 @@ public class Game implements Observer {
     private GameTurn gameTurn;
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
+    private Check campaignWinCond;
 
     public Game(String configFile) throws IOException, JSONException {
         //Attach the subject
@@ -36,6 +43,24 @@ public class Game implements Observer {
         String content = Files.readString(Paths.get(configFile));
         JSONObject config = new JSONObject(content);
         JSONObject game = config.getJSONObject("Game");
+
+
+        // Make or Load the CampaignWinCond
+        if(game.getString("CampaignWinCond").compareTo("null") == 0) {
+            WinCond conquest = new ConquestCond();
+            WinCond treasury = new TreasuryCond();
+            WinCond wealth = new WealthCond();
+
+            List<WinCond> campaignVictory = new ArrayList<WinCond>();
+            campaignVictory.add(conquest);
+            campaignVictory.add(treasury);
+            campaignVictory.add(wealth);
+            campaignWinCond = new Check(campaignVictory);
+        } else {
+            JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
+            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
+        }
+
         //Set up current phase
         String state = game.getString("Phase");
         if (preparationPhase.toString().equals(state)) {
@@ -141,19 +166,13 @@ public class Game implements Observer {
      * Wrapper function to end a phase
      */
     public void endPhase() {
-        curPhase.endPhase();
         checkPlayerStatus();
+        curPhase.endPhase();
     }
 
     private void checkPlayerStatus() {
-        HashMap<String, String> playerStatus = WinCond.check(playersMap);
-        for(String playerFaction : playerStatus.keySet()) {
-            if(playerStatus.get(playerFaction).compareTo("You Lose") == 0) {
-                gameTurn.removePlayer();
-                playersMap.remove(playerFaction);
-            } else if (playerStatus.get(playerFaction).compareTo("You Win") == 0) {
-                // end game?
-            }
+        if( campaignWinCond.player(getCurPlayer()) ) {
+            //win
         }
     }
 
@@ -207,6 +226,7 @@ public class Game implements Observer {
         JSONObject save = new JSONObject();
         save.put("Game",gameSave);
         save.put("Players",playerSave);
+        save.put("CampaignWinCond", campaignWinCond.getSave());
         writer.write(save.toString(2));
         writer.close();
     }
