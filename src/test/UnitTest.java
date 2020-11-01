@@ -41,7 +41,7 @@ public class UnitTest{
     }
 
     @Test
-    public void RegionMoveTest(){
+    public void moveTroopsTest(){
         List<Unit> SydUnits = new ArrayList<Unit>();
 
         Unit SydArcher = new Archerman(12, 12);
@@ -74,11 +74,7 @@ public class UnitTest{
         assertEquals(10, melbourne.findUnit("Swordsman").getCurAmount());
         assertEquals(145, melbourne.getTotalUnits());
 
-        List<String> moveSpears = new ArrayList<String>();
-        String unit = "Spearman";
-        moveSpears.add(unit);
-
-//        sydney.move(4, moveSpears, melbourne);
+        sydney.moveTroops(sydney.findUnit("Spearman"), melbourne);
         assertEquals(22, sydney.getTotalUnits());
         assertEquals(268, melbourne.getTotalUnits());
         assertEquals(sydney.findUnit("Spearman").getCurAmount(), 0);
