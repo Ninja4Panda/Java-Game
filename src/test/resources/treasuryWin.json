@@ -2,7 +2,24 @@
   "Game": {
     "Phase": "Preparation",
     "Turn": 0,
-    "Subturn": 0
+    "Subturn": 0,
+    "CampaignWinCond": {
+      "Goal": "WealthCond",
+      "Junction": "OrCheck",
+      "SubCheck": {
+        "Goal": "TreasuryCond",
+        "Junction": "OrCheck",
+        "SubCheck": {
+          "Goal": "ConquestCond",
+          "Junction": "AndCheck",
+          "SubCheck": {
+            "Goal": "null",
+            "Junction": "null",
+            "SubCheck": "null"
+          }
+        }
+      }
+    }
   },
   "Players": [
     {
@@ -11,7 +28,7 @@
       "Faction": "Rome"
     },
     {
-      "Gold": 400,
+      "Gold": 100000,
       "Regions": [{
         "Troops": {
           "Spearman": {
