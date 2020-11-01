@@ -47,7 +47,10 @@
             "Amount": 0
           }
         },
-        "Trainer": [],
+        "Trainer": [{
+          "Type": "Cavalry",
+          "TurnLeft": 1
+        }],
         "Tax": 10,
         "Id": "Cyprus",
         "Wealth": 10

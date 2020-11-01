@@ -2,7 +2,11 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Melee;
 
-public class Cavalry extends Unit{
+public class Cavalry extends Unit {
+    public Cavalry() {
+        this(20,0);
+    }
+
     public Cavalry(int curMovementPoint, int curAmount) {
         super(curMovementPoint, 20, 2, 100, 5, curAmount, new Melee(7, 2), 5, 15, 15, 0, 1);
         // Cavalry is a unit with 

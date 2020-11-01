@@ -2,8 +2,8 @@ package unsw.gloriaromanus.Phase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Game;
-import unsw.gloriaromanus.Player;
+import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.Game.Player;
 import unsw.gloriaromanus.region.Region;
 
 import java.io.IOException;

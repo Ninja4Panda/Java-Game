@@ -3,6 +3,10 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.Melee;
 
 public class Spearman extends Unit{
+    public Spearman() {
+        this(10,0);
+    }
+
     public Spearman(int curMovementPoint, int curAmount) {
         super(curMovementPoint, 10, 2, 75, 10, curAmount, new Melee(5, 3), 8, 15, 15, 1, 1);
         // Spearman is a unit with 

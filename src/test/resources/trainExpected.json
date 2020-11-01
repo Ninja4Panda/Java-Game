@@ -23,7 +23,7 @@
   },
   "Players": [
     {
-      "Gold": 251,
+      "Gold": 401,
       "Regions": [{
         "Troops": {
           "Spearman": {
@@ -40,17 +40,14 @@
           },
           "Archerman": {
             "Movement": 10,
-            "Amount": 10
+            "Amount": 0
           },
           "Cavalry": {
             "Movement": 20,
-            "Amount": 0
+            "Amount": 5
           }
         },
-        "Trainer": [{
-          "Type": "Spearman",
-          "TurnLeft": 1
-        }],
+        "Trainer": [],
         "Tax": 10,
         "Id": "Cyprus",
         "Wealth": 20

@@ -1,8 +1,10 @@
-package unsw.gloriaromanus;
+package unsw.gloriaromanus.Game;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import unsw.gloriaromanus.Game.GameTurn;
+import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
@@ -124,7 +126,7 @@ public class Player implements Observer {
      * @return msg to display
      */
     public String train(Region origin, List<String> troops) {
-        int cost = getCost(origin,troops);
+        int cost = getCost(origin, troops);
         if(cost>gold) return "not enough gold!";
         String msg = origin.train(troops);
         if("Success".equals(msg)) gold -= cost;

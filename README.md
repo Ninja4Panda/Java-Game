@@ -370,7 +370,7 @@ This example of a victory condition would allow victory in either of the followi
 
 Upon reaching the victory condition, the game should be automatically saved, and the user presented with an interface congratulating them on their victory. Re-loading the automatic save should allow the user to continue playing the game without  further victory prompts.
 
-### Basic Campaign Game Interactions
+### Basic Campaign unsw.gloriaromanus.Game.Game Interactions
 
 Upon starting/loading a game, the user should be presented with a game map and a menu/menus to perform actions. The game map should display a map of the world, split into historically accurate, clickable provinces (as in the starter-code). Each province should be allocated to a faction, and display the flag of the faction, the province wealth, the number of soldiers, and the faction name.
 
@@ -531,7 +531,7 @@ Note that if a unit successfully routes from the battle, if it is in an attackin
 
 Upon starting the game, the user should be presented with a main menu.
 
-From here, the user should be able to choose to start a "Campaign Game". The user should be able to select an option for a "Campaign AI", and a separate option for a "Battle Resolver", which will apply throughout the duration of the campaign. The user should at least be able to select the "Basic Campaign AI" and "Basic Battle Resolver", details of which have been outlined above. If you develop different campaign AIs/battle resolvers, the user should be able to select their preferred option. After selecting any/all relevant settings, the user should be able to start the campaign game.
+From here, the user should be able to choose to start a "Campaign unsw.gloriaromanus.Game.Game". The user should be able to select an option for a "Campaign AI", and a separate option for a "Battle Resolver", which will apply throughout the duration of the campaign. The user should at least be able to select the "Basic Campaign AI" and "Basic Battle Resolver", details of which have been outlined above. If you develop different campaign AIs/battle resolvers, the user should be able to select their preferred option. After selecting any/all relevant settings, the user should be able to start the campaign game.
 
 The user should be able to load a previously saved game from the main menu (or a follow-on-menu).
 
@@ -544,7 +544,7 @@ Each turn takes 1 year. Thus, in this spec, the terms "year" and "turn" are syno
 
 Bankruptcy is not possible in the game outlined in the basic specification because there are no recurring costs, and players can only spend money in the treasury (they cannot raise debt). Implementing an extension for upkeep would also require you to consider how bankruptcy would be handled.
 
-When a faction loses all of its provinces, it should be removed from the game. If the player loses all of their provinces, the game should present a "Game lost" screen, from which the player can return to the main menu.
+When a faction loses all of its provinces, it should be removed from the game. If the player loses all of their provinces, the game should present a "unsw.gloriaromanus.Game.Game lost" screen, from which the player can return to the main menu.
 
 ### The Client's Inspiration
 

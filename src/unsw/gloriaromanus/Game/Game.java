@@ -1,8 +1,9 @@
-package unsw.gloriaromanus;
+package unsw.gloriaromanus.Game;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.Phase.*;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
@@ -44,6 +45,7 @@ public class Game implements Observer {
         //Read the ownership
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/initial_province_ownership.json"));
         JSONObject ownership = new JSONObject(content);
+
         for(String faction: factions) {
             Map<String, Region> regionMap = new HashMap<>();
             JSONArray regions = ownership.getJSONArray(faction);
@@ -58,6 +60,7 @@ public class Game implements Observer {
 
             //Create new players
             Player player = new Player(regionMap, faction, gameTurn);
+            if(curPlayer == null) curPlayer = player;
             playersMap.put(faction, player);
         }
 
@@ -66,7 +69,7 @@ public class Game implements Observer {
         WinCond treasury = new TreasuryCond();
         WinCond wealth = new WealthCond();
 
-        List<WinCond> campaignVictory = new ArrayList<WinCond>();
+        List<WinCond> campaignVictory = new ArrayList<>();
         campaignVictory.add(conquest);
         campaignVictory.add(treasury);
         campaignVictory.add(wealth);
@@ -190,7 +193,6 @@ public class Game implements Observer {
                 break;
             }
         }
-
         gameTurn.nextTurn();
     }
 
@@ -226,13 +228,13 @@ public class Game implements Observer {
             gameTurn.removePlayer();
             playersMap.remove(curPlayer.getFaction());
             return "You Lose";
-        } if( campaignWinCond.player(getCurPlayer()) ) {
+        } else if(campaignWinCond.player(getCurPlayer())) {
             try {
                 save(curPlayer.getFaction() + "_Win");
             } catch(IOException e) {
                 e.printStackTrace();
             }
-            return "You Win! Game is saved in ";
+            return "You Win! Game is saved!";
         }
         return null;
     }
@@ -250,7 +252,10 @@ public class Game implements Observer {
 
     /**
      * Wrapper function for preforming an action.
-     * See GameState for more details.
+     * @param originRegion origin region initiated the action
+     * @param troops hash map of troops
+     * @param args string array expecting [targetRegion,targetFaction] in order when required
+     * @return msg to displays
      */
     public String action(String originRegion, List<String> troops, String ... args) throws IOException {
         return curPhase.action(originRegion, troops, args);

@@ -45,6 +45,7 @@ public class RegionTrainer {
     public String train(List<String> troops) {
         if(troops.size()+trainingUnits.size()>2) return "Unsuccessful training too many troops are training already";
         for(String unit: troops) {
+            if(trainingUnits.get(unit)!=null) return unit +" is already training!";
             Unit newUnit = region.findUnit(unit);
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.trainTime());

@@ -1,4 +1,7 @@
-package unsw.gloriaromanus;
+package unsw.gloriaromanus.Game;
+
+import unsw.gloriaromanus.Observer;
+import unsw.gloriaromanus.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +56,6 @@ public class GameTurn implements Subject {
     @Override
     public void attach(Observer obs) {
         listObs.add(obs);
-    }
-
-    @Override
-    public void detach(Observer obs) {
-        listObs.remove(obs);
     }
 
     @Override

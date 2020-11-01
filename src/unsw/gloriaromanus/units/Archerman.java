@@ -3,9 +3,13 @@ package unsw.gloriaromanus.units;
 import unsw.gloriaromanus.units.attack.Range;
 
 public class Archerman extends Unit {
+    public Archerman() {
+        this(10,0);
+    }
+
     public Archerman(int curMovementPoint, int curAmount) {
         super(curMovementPoint, 10,1, 75, 10, curAmount, new Range(3, 5), 5, 10, 10, 0, 0);
-        // ArcherMan is a unit with 
+        // ArcherMan is a unit with
         // 10 initial movement points
         // 10 max movement points
         // 1 turn build time
