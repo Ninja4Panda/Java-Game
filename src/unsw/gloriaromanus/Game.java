@@ -183,7 +183,9 @@ public class Game implements Observer {
     public void nextPlayerTurn() {
         Iterator<Player> it = playersMap.values().iterator();
         Player firstPlayer = (Player)playersMap.values().toArray()[0];
+
         while (it.hasNext()) {
+
             Player player = it.next();
             //Set current player to next player
             if(player.equals(curPlayer)) {
@@ -207,7 +209,7 @@ public class Game implements Observer {
         curPhase.endPhase();
 
         //Checks if player win at the beginning of a phase
-        msg = checkPlayerStatus();
+       // msg = checkPlayerStatus();
         if(msg!=null) return msg;
         return null;
     }
@@ -221,7 +223,11 @@ public class Game implements Observer {
             playersMap.remove(curPlayer.getFaction());
             return "You Lose";
         } if( campaignWinCond.player(getCurPlayer()) ) {
-//            save("Autosave");
+            try {
+                save(curPlayer.getFaction() + "_Win");
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
             return "You Win! Game is saved in ";
         }
         return null;
@@ -297,6 +303,10 @@ public class Game implements Observer {
         for(Player player: playersMap.values()) {
             if(player.removeRegion(defeated)) break;
         }
+        for(String p : playersMap.keySet()) {
+            System.out.println(p);
+        }
+        System.out.println("--------------------------------------------------\n\n\n");
         curPlayer.addRegion(defeated);
     }
 
