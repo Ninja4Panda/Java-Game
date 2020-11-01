@@ -173,7 +173,11 @@ public class Game implements Observer {
 
     private void checkPlayerStatus() {
         if( campaignWinCond.player(getCurPlayer()) ) {
-            //win
+            try {
+                save(getCurPlayer().getFaction() + "_Win");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
