@@ -24,7 +24,7 @@
   "Players": [
     {
       "Gold": 400,
-      "Regions": [{
+      "Regions":[{
         "Troops": {
           "Spearman": {
             "Movement": 10,
@@ -50,12 +50,12 @@
         "Trainer": [],
         "Tax": 10,
         "Id": "Cyprus",
-        "Wealth": 10
+        "Wealth": 20
       }],
       "Faction": "Rome"
     },
     {
-      "Gold": 400,
+      "Gold": 100,
       "Regions": [{
         "Troops": {
           "Spearman": {
@@ -82,7 +82,7 @@
         "Trainer": [],
         "Tax": 10,
         "Id": "Syria",
-        "Wealth": 10
+        "Wealth": 500000
       }],
       "Faction": "Egypt"
     }

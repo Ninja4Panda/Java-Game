@@ -162,7 +162,6 @@ public class UnitTest{
 
         assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
         assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
-        assertEquals("Attackers win", BattleResolver.resolve(SydUnits, melbourne ,sydney));
     }
 
     @Test
@@ -304,7 +303,23 @@ public class UnitTest{
             e.printStackTrace();
         }
     }
+    @Test
+    public void mainTest() {
+        List<String> factions = new ArrayList<>();
+        factions.add("Rome");
+        factions.add("Chinese");
+        factions.add("Airbender");
+        factions.add("Gaul");
+        try{
+            Game game = new Game(factions);
+            game.save("firstTry");
 
+        } catch (NullPointerException e) {
+            System.out.println("maintest");
+        } catch (IOException e) {
+
+        }
+    }
     @Test
     public void saveAfterInvadeTest() {
         try {
@@ -323,8 +338,33 @@ public class UnitTest{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("SAVEAFTERINVADE-------------------------\n\n\n\n\n\n\n\n\n");
         }
     }
+
+
+
+
+    @Test
+    public void wealthWinTest() {
+        try {
+            Game game = new Game("src/test/resources/wealthWin.json");
+
+            game.endPhase();
+            game.endPhase();
+            game.save("wealthWinOut.json");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
 
