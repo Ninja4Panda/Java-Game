@@ -21,6 +21,7 @@ public class Game implements Observer {
     private GameTurn gameTurn;
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
+    private static final int MAX_PROVICES = 58;
 
     public Game(String configFile) throws IOException, JSONException {
         //Attach the subject
@@ -140,21 +141,34 @@ public class Game implements Observer {
     /**
      * Wrapper function to end a phase
      */
-    public void endPhase() {
+    public String endPhase() {
+        //Checks if player won after a phase
+        String msg = checkPlayerStatus();
+        if(msg!=null) return msg;
+
+        //EndPhase
         curPhase.endPhase();
-        checkPlayerStatus();
+
+        //Checks if player win at the beginning of a phase
+        msg = checkPlayerStatus();
+        if(msg!=null) return msg;
+        return null;
     }
 
-    private void checkPlayerStatus() {
-        HashMap<String, String> playerStatus = WinCond.check(playersMap);
-        for(String playerFaction : playerStatus.keySet()) {
-            if(playerStatus.get(playerFaction).compareTo("You Lose") == 0) {
-                gameTurn.removePlayer();
-                playersMap.remove(playerFaction);
-            } else if (playerStatus.get(playerFaction).compareTo("You Win") == 0) {
-                // end game?
-            }
+    /**
+     * Checks the if current player conquered all region or lost
+     */
+    private String checkPlayerStatus() {
+        if(curPlayer.getAllRegions().size()==0){
+            gameTurn.removePlayer();
+            playersMap.remove(curPlayer.getFaction());
+            return "You Lose";
+        } else if(curPlayer.getAllRegions().size()==MAX_PROVICES) {
+            //TODO: save and stuff
+            return "You Win";
         }
+
+        return null;
     }
 
     /**
