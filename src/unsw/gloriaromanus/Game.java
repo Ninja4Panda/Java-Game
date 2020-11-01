@@ -27,7 +27,9 @@ public class Game implements Observer {
     private GameTurn gameTurn;
     private Player curPlayer;
     private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
+
     private Check campaignWinCond;
+
 
     public Game (List<String> factions) throws IOException {
         //Attach the subject
@@ -257,7 +259,6 @@ public class Game implements Observer {
         //Make the new save file
         String filename = name+".json";
         File file = new File(dir, filename);
-//        while(file.exists()) filename = ""
         FileWriter writer = new FileWriter(file);
 
         //Construct the game json object
@@ -265,6 +266,7 @@ public class Game implements Observer {
         gameSave.put("Phase", curPhase.toString());
         gameSave.put("Turn", gameTurn.getTurn());
         gameSave.put("Subturn", gameTurn.getSubTurn());
+        gameSave.put("CampaignWinCond", campaignWinCond.getSave());
 
         //Construct the players json array
         JSONArray playerSave = new JSONArray();
@@ -276,7 +278,7 @@ public class Game implements Observer {
         JSONObject save = new JSONObject();
         save.put("Game",gameSave);
         save.put("Players",playerSave);
-        gameSave.put("CampaignWinCond", campaignWinCond.getSave());
+
         writer.write(save.toString(2));
         writer.close();
     }
