@@ -7,10 +7,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Testing",
+            "request": "launch",
+            "mainClass": "test.Testing",
+            "projectName": "t13b-hotdog_thursday_cb7041ee"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - GloriaRomanusLauncher",
             "request": "launch",
             "mainClass": "unsw.gloriaromanus.GloriaRomanusLauncher",
-			"vmArgs": "--module-path \"./lib/symlink_javafx:./lib/symlink_arcgis\" --add-modules javafx.controls,javafx.fxml",
-        },
+            "vmArgs": "--module-path \"./lib/symlink_javafx:./lib/symlink_arcgis\" --add-modules javafx.controls,javafx.fxml"
+        }
     ]
 }
