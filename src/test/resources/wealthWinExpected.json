@@ -1,7 +1,7 @@
 {
   "Game": {
     "Phase": "Preparation",
-    "Turn": 0,
+    "Turn": 1,
     "Subturn": 0,
     "CampaignWinCond": {
       "Goal": "WealthCond",
@@ -23,7 +23,7 @@
   },
   "Players": [
     {
-      "Gold": 400,
+      "Gold": 402,
       "Regions": [{
         "Troops": {
           "Spearman": {
@@ -31,7 +31,7 @@
             "Amount": 0
           },
           "Slingerman": {
-            "Movement": 10,
+            "Movement": 15,
             "Amount": 0
           },
           "Swordsman": {
@@ -43,19 +43,19 @@
             "Amount": 0
           },
           "Cavalry": {
-            "Movement": 10,
+            "Movement": 20,
             "Amount": 0
           }
         },
         "Trainer": [],
         "Tax": 10,
-        "Id": "Lusitania",
-        "Wealth": 20
+        "Id": "Cyprus",
+        "Wealth": 30
       }],
       "Faction": "Rome"
     },
     {
-      "Gold": 400,
+      "Gold": 50100,
       "Regions": [{
         "Troops": {
           "Spearman": {
@@ -63,7 +63,7 @@
             "Amount": 0
           },
           "Slingerman": {
-            "Movement": 10,
+            "Movement": 15,
             "Amount": 0
           },
           "Swordsman": {
@@ -75,14 +75,14 @@
             "Amount": 0
           },
           "Cavalry": {
-            "Movement": 10,
+            "Movement": 20,
             "Amount": 0
           }
         },
         "Trainer": [],
         "Tax": 10,
-        "Id": "Baetica",
-        "Wealth": 20
+        "Id": "Syria",
+        "Wealth": 500010
       }],
       "Faction": "Egypt"
     }

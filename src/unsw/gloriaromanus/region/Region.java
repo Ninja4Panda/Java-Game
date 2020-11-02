@@ -225,16 +225,6 @@ public class Region implements Observer {
     }
 
     /**
-     * Increases the number of troops of a chosen UnitCluster, selected by its name
-     * @param unit is the unit that is going to have it's number of troops increased
-     * @param numTroops is the amount of troops increased
-     */
-    public void addUnits(String unit, int numTroops) {
-        Unit u = findUnit(unit);
-        u.addUnits(numTroops);
-    }
-
-    /**
      * @return the current state of region
      */
     public JSONObject getSave() {

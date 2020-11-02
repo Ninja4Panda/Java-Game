@@ -1,24 +1,12 @@
 {
   "Game": {
-    "Phase": "Preparation",
+    "Phase": "Move",
     "Turn": 0,
     "Subturn": 0,
     "CampaignWinCond": {
-      "Goal": "WealthCond",
-      "Junction": "OrCheck",
-      "SubCheck": {
-        "Goal": "TreasuryCond",
-        "Junction": "OrCheck",
-        "SubCheck": {
-          "Goal": "ConquestCond",
-          "Junction": "AndCheck",
-          "SubCheck": {
-            "Goal": "null",
-            "Junction": "null",
-            "SubCheck": "null"
-          }
-        }
-      }
+      "Goal": "null",
+      "Junction": "null",
+      "SubCheck": "null"
     }
   },
   "Players": [
@@ -28,7 +16,7 @@
         "Troops": {
           "Spearman": {
             "Movement": 10,
-            "Amount": 0
+            "Amount": 10
           },
           "Slingerman": {
             "Movement": 10,
@@ -84,7 +72,7 @@
         "Id": "Baetica",
         "Wealth": 20
       }],
-      "Faction": "Egypt"
+      "Faction": "Gaul"
     }
   ]
 }
