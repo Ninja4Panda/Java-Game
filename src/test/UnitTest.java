@@ -52,50 +52,13 @@ public class UnitTest{
             assertTrue(game.getCurPhase() instanceof PreparationPhase);
             game.endPhase();
             assertTrue(game.getCurPhase() instanceof MovePhase);
+            game.endPhase();
+            GameTurn turn = game.getGameTurn();
+            assertEquals(turn.getSubTurn(), 1);
+            assertEquals(turn.getTurn(), 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void moveTroopsTest(){
-        List<Unit> SydUnits = new ArrayList<Unit>();
-
-        Unit SydArcher = new Archerman(12, 12);
-        Unit SydSwordsMan = new Swordsman(10, 10);
-        Unit SydSpearman = new Spearman(9, 123);
-
-        SydUnits.add(SydArcher);
-        SydUnits.add(SydSpearman);
-        SydUnits.add(SydSwordsMan);
-
-        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
-        assertEquals(123, sydney.findUnit("Spearman").getCurAmount());
-        assertEquals(12, sydney.findUnit("Archerman").getCurAmount());
-        assertEquals(10, sydney.findUnit("Swordsman").getCurAmount());
-        assertEquals(145, sydney.getTotalUnits());
-
-        List<Unit> MelUnits = new ArrayList<Unit>();
-
-        Unit MelArcher = new Archerman(12, 12);
-        Unit MelSwordsMan = new Swordsman(10, 10);
-        Unit MelSpearman = new Spearman(9, 123);
-
-        MelUnits.add(MelArcher);
-        MelUnits.add(MelSpearman);
-        MelUnits.add(MelSwordsMan);
-
-        Region melbourne = new Region("Melbourne", new GameTurn(4, 4, 4), MelUnits, 10, 10);
-        assertEquals(123, melbourne.findUnit("Spearman").getCurAmount());
-        assertEquals(12, melbourne.findUnit("Archerman").getCurAmount());
-        assertEquals(10, melbourne.findUnit("Swordsman").getCurAmount());
-        assertEquals(145, melbourne.getTotalUnits());
-
-        sydney.moveTroops(sydney.findUnit("Spearman"), melbourne);
-        assertEquals(22, sydney.getTotalUnits());
-        assertEquals(268, melbourne.getTotalUnits());
-        assertEquals(sydney.findUnit("Spearman").getCurAmount(), 0);
-        assertEquals(246, melbourne.findUnit("Spearman").getCurAmount());
     }
 
     @Test
@@ -161,24 +124,27 @@ public class UnitTest{
     }
 
     @Test
-    public void noDefenceTest() {
-        List<Unit> SydUnits = new ArrayList<Unit>();
+    public void moveTroopsTest() {
+        List<String> factions = new ArrayList<>();
+        factions.add("Rome");
+        factions.add("Gaul");
+        try {
+            Game game = new Game(factions);
+            List<String> atkUnits = new ArrayList<>();
+            atkUnits.add("Swordsman");
+            game.action("Lugdunensis", atkUnits);
+            game.endPhase();
+            game.endPhase();
+            game.endPhase();
+            game.endPhase();
 
-        Unit SydArcher = new Archerman(12, 12);
-        Unit SydSwordsMan = new Swordsman(10, 10);
-        Unit SydSpearman = new Spearman(9, 123);
-
-        SydUnits.add(SydArcher);
-        SydUnits.add(SydSpearman);
-        SydUnits.add(SydSwordsMan);
-
-        Region sydney = new Region("Sydney", new GameTurn(4, 4, 4), SydUnits, 10, 10);
-
-        List<Unit> MelUnits = new ArrayList<Unit>();
-        Region melbourne = new Region("Melbourne", new GameTurn(4, 4, 4), MelUnits, 10, 10);
-
-        assertEquals(0, BattleResolver.getDefendingWin(SydUnits, melbourne, sydney));
-        assertEquals(1, BattleResolver.getAttackingWin(SydUnits, melbourne, sydney));
+            //New turn
+            game.endPhase();
+            String result = game.action("Lugdunensis", atkUnits, "Narbonensis");
+            assertEquals(result,"Troops moved");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -219,15 +185,9 @@ public class UnitTest{
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Swordsman");
             assertEquals(game.action("Lugdunensis", atkUnits), "Success");
-            System.out.println(game.getCurPhase());
-            //TODO
-            System.out.println(game.getCurPlayer().getFaction());
-            System.out.println(game.endPhase());
-            System.out.println(game.getCurPhase());
-            System.out.println(game.getCurPlayer().getFaction());
-            System.out.println(game.endPhase());
-            System.out.println(game.getCurPhase());
-            System.out.println(game.getCurPlayer().getFaction());
+            game.endPhase();
+            game.endPhase();
+
             //Player2
             List<String> defUnits = new ArrayList<>();
             defUnits.add("Archerman");
@@ -245,7 +205,14 @@ public class UnitTest{
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Belgica", "Gaul");
+            game.endPhase();
+            //Player2
+            assertEquals(game.action("Baetica", defUnits), "Success");
+            game.endPhase();
+            game.endPhase();
+            //Player1
+            game.endPhase();
+            String result = game.action("Lugdunensis", atkUnits, "Baetica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -289,7 +256,7 @@ public class UnitTest{
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Belgica", "Gaul");
+            String result = game.action("Lugdunensis", atkUnits, "Baetica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -508,8 +475,12 @@ public class UnitTest{
             Game game = new Game("src/test/resources/wealthWin.json");
             game.endPhase();
             game.endPhase();
-            game.save("wealthWinOut.json");
+            game.save("wealthWinOutput");
 
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/wealthWinExpected.json"));
+            String filename = "wealthWinOutput.json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+            assertArrayEquals(f1, f2);
         } catch (IOException e) {
             e.printStackTrace();
         } catch(JSONException e) {
@@ -517,6 +488,50 @@ public class UnitTest{
         }
     }
 
+    @Test
+    public void lostAllRegionTest() {
+        try {
+            Game game = new Game("src/test/resources/loseByNoRegionTest.json");
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Spearman");
+            game.action("Lusitania", troops, "Baetica", "Gaul");
+            game.endPhase();
+            assertEquals(game.endPhase(),"You Lose");
+            game.save("loseByNoRegionOutput");
 
+            byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/loseByNoRegionExpected.json"));
+            String filename = "loseByNoRegionOutput.json";
+            byte[] f2 = Files.readAllBytes(Paths.get("saves/",filename));
+            assertArrayEquals(f1, f2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void displayRegionDataTest() {
+        List<String> factions = new ArrayList<>();
+        factions.add("Rome");
+        try {
+            Game game = new Game(factions);
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Swordsman");
+            game.action("Lusitania", troops);
+            game.endPhase();
+            game.endPhase();
+            List<Unit> units = game.displayRegion("Lusitania");
+            for(Unit unit: units) {
+                int amount = unit.getCurAmount();
+                if(unit instanceof Swordsman) {
+                    assertEquals(amount, 10);
+                } else {
+                    assertEquals(amount,0);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

@@ -93,7 +93,11 @@ public class Game implements Observer {
 
         //Load the CampaignWinCond
         JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
-        campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
+        try {
+            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
+        } catch (JSONException e) {
+            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), null);
+        }
 
         //Set up current phase
         String state = game.getString("Phase");

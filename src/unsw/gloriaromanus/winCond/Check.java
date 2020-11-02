@@ -11,29 +11,31 @@ public class Check {
     private Check subCheck;
     private WinCond goal;
     private Junction checkType;
+
     public Check(List<WinCond> goals) {
-        if( !(goals.size() > 0) ) {
+        if(goals.size() == 0) {
             this.goal = null;
             this.subCheck = null;
+            this.checkType = null;
         } else {
             Random randomiser = new Random();
             int randomGoal = randomiser.nextInt(goals.size());
             this.goal = goals.get(randomGoal);
-            goals.remove(randomGoal);
-            this.subCheck = new Check(goals);
-            if(randomiser.nextDouble() <= 0.5) {
+            if(randomiser.nextDouble() <= 0.5 && goals.size()!=1) {
                 this.checkType = new OrCheck();
             } else {
                 this.checkType = new AndCheck();
             }
+            goals.remove(randomGoal);
+            this.subCheck = new Check(goals);
         }
-        
     }
+
     public Check(String goal, String checkType, JSONObject subCheck) {
-        if(goal.compareTo("null") == 0 && checkType.compareTo("null") == 0) {
+        if(goal.compareTo("null") == 0) {
            this.subCheck = null;
-           this.checkType = null;
            this.goal = null;
+           this.checkType = null;
         } else {
             switch (goal) {
                 case "WealthCond":
@@ -48,28 +50,27 @@ public class Check {
                 default:
                     break;
             }
+
             if(checkType.compareTo("OrCheck") == 0) {
                 this.checkType = new OrCheck();
             } else if (checkType.compareTo("AndCheck") == 0){
                 this.checkType = new AndCheck();
-            } 
+            }
+
             if(subCheck.getString("Goal").compareTo("null") == 0 && subCheck.getString("Junction").compareTo("null") == 0) {
                 JSONObject stopRecursion = new JSONObject();
                 stopRecursion.put("Goal", "null");
                 stopRecursion.put("Junction", "null");
                 stopRecursion.put("SubCheck", "null");
-                this.subCheck = new Check(subCheck.getString("Goal"),
-                                         subCheck.getString("Junction"),stopRecursion);
-
+                this.subCheck = new Check(subCheck.getString("Goal"), subCheck.getString("Junction"), stopRecursion);
             } else {
-                this.subCheck = new Check(subCheck.getString("Goal"),
-                                         subCheck.getString("Junction"), subCheck.getJSONObject("SubCheck"));
+                this.subCheck = new Check(subCheck.getString("Goal"), subCheck.getString("Junction"), subCheck.getJSONObject("SubCheck"));
             }
         }
     }
 
     public boolean player(Player gamer) {
-        if(goal ==  null && subCheck == null) {
+        if(goal == null) {
             return true;
         }
         return checkType.conds(goal.playerWin(gamer), subCheck.player(gamer));

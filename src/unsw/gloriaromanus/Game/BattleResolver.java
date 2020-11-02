@@ -26,41 +26,6 @@ public class BattleResolver implements Subject {
         this.defender = defender;
     }
 
-    // For Testing
-    public static double getAttackingWin(List<Unit> attackers, Region defending, Region attacking){
-        int attackingStrength = 0;
-        List<Unit> defenders = defending.getUnits();
-        for(Unit u : attackers) {
-            attackingStrength += u.strength();
-        }
-
-        int defendingStrength = 0;
-        for(Unit u : defenders ) {
-            defendingStrength += u.strength();
-        }
-
-        // will always generate a number that is less than 1
-        double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
-        return attackingWin;
-    }
-
-    public static double getDefendingWin(List<Unit> attackers, Region defending, Region attacking){
-        int attackingStrength = 0;
-        List<Unit> defenders = defending.getUnits();
-        for(Unit u : attackers) {
-            attackingStrength += u.strength();
-        }
-
-        int defendingStrength = 0;
-        for(Unit u : defenders ) {
-            defendingStrength += u.strength();
-        }
-
-        // will always generate a number that is less than 1
-        double defendingWin = (double)defendingStrength/(attackingStrength + defendingStrength);
-        return defendingWin;
-    }
-
     // Pass implementation of battle resolver
     public static String resolve(List<Unit> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
@@ -87,7 +52,6 @@ public class BattleResolver implements Subject {
         // will always generate a number that is less than 1
         double attackingWin = (double)attackingStrength/(attackingStrength + defendingStrength);
         double defendingWin = (double)defendingStrength/(attackingStrength + defendingStrength);
-
 
         // keep fighting with the armies until someone wins if not draw
         Random decider = new Random();
