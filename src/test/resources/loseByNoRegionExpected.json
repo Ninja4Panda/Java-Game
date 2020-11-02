@@ -1,0 +1,74 @@
+{
+  "Game": {
+    "Phase": "Preparation",
+    "Turn": 1,
+    "Subturn": 0,
+    "CampaignWinCond": {
+      "Goal": "null",
+      "Junction": "null",
+      "SubCheck": "null"
+    }
+  },
+  "Players": [{
+    "Gold": 404,
+    "Regions": [
+      {
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Slingerman": {
+            "Movement": 15,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 20,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Lusitania",
+        "Wealth": 30
+      },
+      {
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 10
+          },
+          "Slingerman": {
+            "Movement": 15,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 20,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Baetica",
+        "Wealth": 30
+      }
+    ],
+    "Faction": "Rome"
+  }]
+}
