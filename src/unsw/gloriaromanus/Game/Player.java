@@ -127,7 +127,7 @@ public class Player implements Observer {
      */
     public String train(Region origin, List<String> troops) {
         int cost = getCost(origin, troops);
-        if(cost>gold) return "not enough gold!";
+        if(cost>gold) return "Not enough gold!";
         String msg = origin.train(troops);
         if("Success".equals(msg)) gold -= cost;
         return msg;

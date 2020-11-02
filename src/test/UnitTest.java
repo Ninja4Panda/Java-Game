@@ -508,6 +508,17 @@ public class UnitTest{
         }
     }
 
+    @Test
+    public void notEnoughGoldTest() {
+        try {
+            Game game = new Game("src/test/resources/notEnoughGoldTest.json");
+            ArrayList<String> troops = new ArrayList<>();
+            troops.add("Spearman");
+            assertEquals(game.action("Lusitania", troops), "Not enough gold!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void displayRegionDataTest() {

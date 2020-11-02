@@ -57,7 +57,7 @@ public class Check {
                 this.checkType = new AndCheck();
             }
 
-            if(subCheck.getString("Goal").compareTo("null") == 0 && subCheck.getString("Junction").compareTo("null") == 0) {
+            if(subCheck.getString("Goal").compareTo("null") == 0) {
                 JSONObject stopRecursion = new JSONObject();
                 stopRecursion.put("Goal", "null");
                 stopRecursion.put("Junction", "null");
@@ -78,7 +78,7 @@ public class Check {
 
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        if(subCheck == null || goal == null) {
+        if(goal == null) {
             save.put("SubCheck", "null");
             save.put("Goal", "null");
             save.put("Junction", "null");

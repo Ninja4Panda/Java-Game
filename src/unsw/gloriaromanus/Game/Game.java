@@ -18,6 +18,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -234,7 +236,10 @@ public class Game implements Observer {
             return "You Lose";
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
-                save(curPlayer.getFaction() + "_Win");
+                //Auto save
+                DateFormat df = new SimpleDateFormat("dd:MM:yy-HH:mm:ss");
+                Date today = new Date();
+                save("Autosave-"+df.format(today));
             } catch(IOException e) {
                 e.printStackTrace();
             }
