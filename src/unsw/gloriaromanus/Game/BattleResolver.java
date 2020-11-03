@@ -57,7 +57,7 @@ public class BattleResolver implements Subject {
         Random decider = new Random();
 //        for( int numCombats = 0; numCombats < 200; numCombats ++) {
         if( decider.nextDouble() <= attackingWin ) {
-            int randomExtraUnitsLoss = decider.nextInt(100 - (int) attackingWin * 100);
+            int randomExtraUnitsLoss = decider.nextInt(100 - (int) (attackingWin * 100));
             double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
             AfterMath(defending.getUnits(), losersLoss);
 
@@ -76,7 +76,7 @@ public class BattleResolver implements Subject {
             double winnersLoss = decider.nextDouble();
             AfterMath(defending.getUnits(), winnersLoss);
 
-            int randomExtraUnitsLoss = decider.nextInt(100- (int) defendingWin);
+            int randomExtraUnitsLoss = decider.nextInt(100- (int) (defendingWin*100));
             double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
             AfterMath(attackers, losersLoss);
             return "Defenders win";
@@ -94,7 +94,6 @@ public class BattleResolver implements Subject {
         }
 
         // get how many units need to be killed off
-        if(lossPercentage >1) lossPercentage = 1;
         double exactUnitsLost = (double) totalUnits *lossPercentage;
         int unitsLost = (int) Math.ceil(exactUnitsLost);
         Random russianRoulette = new Random();
