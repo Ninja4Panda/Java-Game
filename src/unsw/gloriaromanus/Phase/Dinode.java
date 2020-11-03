@@ -14,9 +14,6 @@ public class Dinode {
     public String getParentID() {
         return parent.getId();
     }
-    public Dinode getParent() {
-        return parent;
-    }
 
     public void setParent(Dinode parent) {
         this.parent = parent;
@@ -30,8 +27,6 @@ public class Dinode {
         this.cost = cost;
     }
 
-
-
     public String getId() {
         return id;
     }
@@ -39,6 +34,5 @@ public class Dinode {
     public void setId(String id) {
         this.id = id;
     }
-
 
 }
