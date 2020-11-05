@@ -167,6 +167,15 @@ public class MovePhase implements GamePhase {
         return null;
     }
 
+    /**
+     * Takes a List of Dinodes and attempts to see if they form a path
+     * from the origin to the target
+     * @param Dipath List of Dinodes
+     * @param origin start of the desired path
+     * @param target end of the desired path
+     * @return the shortest path between origin and target that can be
+     *         created by the Dipath
+     */
     private List<String> shortestPath(List<Dinode> Dipath, String origin, String target) {
         String currRegion = target;
         List<String> shortestPath = new ArrayList<String>();
@@ -187,6 +196,12 @@ public class MovePhase implements GamePhase {
         return null;
     }
 
+    /**
+     * Finds a Dinode in a List of Dinodes
+     * @param diList List of Dinodes
+     * @param target Dinode wanted
+     * @return Dinode wanted
+     */
     private Dinode findDinode(List<Dinode> diList, String target) {
         for(Dinode node : diList) {
             if( node.getId().compareTo(target) == 0 ) {
