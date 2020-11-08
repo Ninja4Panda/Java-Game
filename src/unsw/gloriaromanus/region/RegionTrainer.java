@@ -48,7 +48,7 @@ public class RegionTrainer {
             if(trainingUnits.get(unit)!=null) return unit +" is already training!";
             Unit newUnit = region.findUnit(unit);
             //Check of the amount currently training unit & valid unit type
-            if(newUnit != null) trainingUnits.put(unit, newUnit.trainTime());
+            if(newUnit != null) trainingUnits.put(unit, newUnit.getTrainTime());
         }
         return "Success";
     }
