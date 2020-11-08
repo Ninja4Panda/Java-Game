@@ -9,6 +9,7 @@ import java.util.List;
 public interface GamePhase {
     /**
      * Get the appropriate region data
+     *
      * @param region region object
      * @return list of units
      */
@@ -22,11 +23,41 @@ public interface GamePhase {
     void endPhase();
 
     /**
-     * Try to preform an action according to the phase
-     * @param originRegion origin region initiated the action
-     * @param troops hash map of troops
-     * @param args string array expecting targetRegion, targetFaction in order when required
+     * Wrapper function for troops training
+     * @param originRegion origin region initiated the training
+     * @param troops list of troops to train
      * @return msg to display
      */
-    String action(String originRegion, List<String> troops, String ... args) throws IOException;
+    default String train(String originRegion, List<String> troops) {
+        //Shouldn't get to this point
+        return "Invalid operation";
+    }
+
+    /**
+     * Wrapper function for player movement.
+     * Note that this function expects both origin region & target region to be current player's region.
+     * @param originRegion origin region initiated the movement
+     * @param troops       list of troops moving
+     * @param targetRegion target region to move to
+     * @return msg to display
+     * @throws IOException
+     */
+    default String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
+        //Shouldn't get to this point
+        return "Invalid operation";
+    }
+
+    /**
+     * Wrapper function for player invade.
+     * @param originRegion origin region initiated the invade
+     * @param troops list of troops invading
+     * @param targetRegion target region to invade
+     * @param targetFaction target faction to invade
+     * @return msg to display
+     * @throws IOException
+     */
+    default String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
+        //Shouldn't get to this point
+        return "Invalid operation";
+    }
 }

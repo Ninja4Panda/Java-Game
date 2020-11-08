@@ -132,7 +132,7 @@ public class UnitTest{
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Swordsman");
-            game.action("Lugdunensis", atkUnits);
+            game.train("Lugdunensis", atkUnits);
             game.endPhase();
             game.endPhase();
             game.endPhase();
@@ -140,7 +140,7 @@ public class UnitTest{
 
             //New turn
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Narbonensis");
+            String result = game.move("Lugdunensis", atkUnits, "Narbonensis");
             assertEquals(result,"Troops moved");
         } catch (IOException e) {
             e.printStackTrace();
@@ -156,18 +156,18 @@ public class UnitTest{
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Swordsman");
-            assertEquals(game.action("Lusitania", atkUnits), "Success");
+            assertEquals(game.train("Lusitania", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
 
             List<String> defUnits = new ArrayList<>();
             defUnits.add("Archerman");
             defUnits.add("Swordsman");
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
             game.endPhase();
-            String result = game.action("Lusitania", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lusitania", atkUnits, "Baetica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
 
         } catch (IOException e) {
@@ -184,7 +184,7 @@ public class UnitTest{
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Swordsman");
-            assertEquals(game.action("Lugdunensis", atkUnits), "Success");
+            assertEquals(game.train("Lugdunensis", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
 
@@ -192,7 +192,7 @@ public class UnitTest{
             List<String> defUnits = new ArrayList<>();
             defUnits.add("Archerman");
             defUnits.add("Swordsman");
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
 
@@ -200,19 +200,19 @@ public class UnitTest{
             game.endPhase();
             game.endPhase();
             //Player2
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
             //Player1
             game.endPhase();
             game.endPhase();
             //Player2
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Baetica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -229,18 +229,18 @@ public class UnitTest{
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Swordsman");
             atkUnits.add("Archerman");
-            assertEquals(game.action("Lugdunensis", atkUnits), "Success");
+            assertEquals(game.train("Lugdunensis", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
             //Player2
             List<String> defUnits = new ArrayList<>();
             defUnits.add("Archerman");
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
 
             //Player1
-            assertEquals(game.action("Lugdunensis", atkUnits), "Success");
+            assertEquals(game.train("Lugdunensis", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
             //Player2
@@ -248,7 +248,7 @@ public class UnitTest{
             game.endPhase();
 
             //Player1
-            assertEquals(game.action("Lugdunensis", atkUnits), "Success");
+            assertEquals(game.train("Lugdunensis", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
             //Player2
@@ -256,7 +256,7 @@ public class UnitTest{
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Baetica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -272,7 +272,7 @@ public class UnitTest{
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();
             atkUnits.add("Archerman");
-            assertEquals(game.action("Lugdunensis", atkUnits), "Success");
+            assertEquals(game.train("Lugdunensis", atkUnits), "Success");
             game.endPhase();
             game.endPhase();
 
@@ -280,13 +280,13 @@ public class UnitTest{
             List<String> defUnits = new ArrayList<>();
             defUnits.add("Archerman");
             defUnits.add("Swordsman");
-            assertEquals(game.action("Baetica", defUnits), "Success");
+            assertEquals(game.train("Baetica", defUnits), "Success");
             game.endPhase();
             game.endPhase();
 
             //Player1
             game.endPhase();
-            String result = game.action("Lugdunensis", atkUnits, "Belgica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Belgica", "Gaul");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -320,7 +320,7 @@ public class UnitTest{
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Archerman");
             troops.add("Spearman");
-            assertEquals(game.action("Cyprus", troops),"Unsuccessful training too many troops are training already");
+            assertEquals(game.train("Cyprus", troops),"Unsuccessful training too many troops are training already");
             game.endPhase();
             game.endPhase();
 
@@ -328,7 +328,7 @@ public class UnitTest{
             troops = new ArrayList<>();
             troops.add("Cavalry");
             troops.add("Swordsman");
-            assertEquals(game.action("Syria", troops), "Success");
+            assertEquals(game.train("Syria", troops), "Success");
             game.endPhase();
             game.endPhase();
 
@@ -418,7 +418,7 @@ public class UnitTest{
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Archerman");
             troops.add("Spearman");
-            game.action("Cyprus", troops, "Lusitania");
+            game.move("Cyprus", troops, "Lusitania");
             game.save("moveOutput");
 
             byte[] f1 = Files.readAllBytes(Paths.get("src/test/resources/moveExpected.json"));
@@ -438,7 +438,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/invadeTest.json");
             List<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            game.action("Cyprus", troops, "Cilicia", "Egypt");
+            game.invade("Cyprus", troops, "Cilicia", "Egypt");
 
             game.save("invadeOutput");
 
@@ -494,7 +494,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/loseByNoRegionTest.json");
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            game.action("Lusitania", troops, "Baetica", "Gaul");
+            game.invade("Lusitania", troops, "Baetica", "Gaul");
             game.endPhase();
             assertEquals(game.endPhase(),"You Lose");
             game.save("loseByNoRegionOutput");
@@ -514,7 +514,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/notEnoughGoldTest.json");
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            assertEquals(game.action("Lusitania", troops), "Not enough gold!");
+            assertEquals(game.train("Lusitania", troops), "Not enough gold!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -528,7 +528,7 @@ public class UnitTest{
             Game game = new Game(factions);
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Swordsman");
-            game.action("Lusitania", troops);
+            game.train("Lusitania", troops);
             game.endPhase();
             game.endPhase();
             List<Unit> units = game.displayRegion("Lusitania");
