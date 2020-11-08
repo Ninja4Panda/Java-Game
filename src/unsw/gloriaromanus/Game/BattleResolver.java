@@ -26,7 +26,14 @@ public class BattleResolver implements Subject {
         this.defender = defender;
     }
 
-    // Pass implementation of battle resolver
+
+    /**
+     * Pass implementation of battle resolver
+     * @param attackers List of units that the attacking region will send to attack
+     * @param defending Region that is defending against the attack
+     * @param attacking Region that sends the units to attack
+     * @return the result of the battle
+     */
     public static String resolve(List<Unit> attackers, Region defending, Region attacking) {
         int attackingStrength = 0;
         List<Unit> defenders = defending.getUnits();
@@ -87,6 +94,11 @@ public class BattleResolver implements Subject {
 //        return "Draw";
     }
 
+    /**
+     * Responsible for stimulating loss of Units after a battle
+     * @param units that participated in the battle
+     * @param lossPercentage percentage of Units lost
+     */
     public static void AfterMath(List<Unit> units, double lossPercentage) {
         int totalUnits = 0;
         for(Unit u : units) {

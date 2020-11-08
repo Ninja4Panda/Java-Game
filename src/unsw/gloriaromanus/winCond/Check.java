@@ -69,6 +69,13 @@ public class Check {
         }
     }
 
+    /**
+     * Checks if a player has met a random conjunction / disjunction
+     * of different Win Conditions
+     * @param gamer Player that the conditions are checked against
+     * @return the success of the player meeting the random
+     *         conjunction / disjunction of the condition
+     */
     public boolean player(Player gamer) {
         if(goal == null) {
             return true;
