@@ -23,18 +23,13 @@ public class PreparationPhase implements GamePhase {
         game.setCurPhase(game.getMovePhase());
     }
 
-    @Override
-    public String action(String originRegion, List<String> troops, String ... args) {
-        return train(originRegion, troops);
-    }
-
     /**
      * Wrapper function for troops training
      * @param originRegion origin region initiated the training
      * @param troops list of troops to train
      * @return msg to display
      */
-    private String train(String originRegion, List<String> troops) {
+    public String train(String originRegion, List<String> troops) {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         return curPlayer.train(origin, troops);

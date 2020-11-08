@@ -260,14 +260,39 @@ public class Game implements Observer {
     }
 
     /**
-     * Wrapper function for preforming an action.
-     * @param originRegion origin region initiated the action
-     * @param troops hash map of troops
-     * @param args string array expecting [targetRegion,targetFaction] in order when required
-     * @return msg to displays
+     * Wrapper function for troops training
+     * @param originRegion origin region initiated the training
+     * @param troops list of troops to train
+     * @return msg to display
      */
-    public String action(String originRegion, List<String> troops, String ... args) throws IOException {
-        return curPhase.action(originRegion, troops, args);
+    public String train(String originRegion, List<String> troops) {
+        return curPhase.train(originRegion,troops);
+    }
+
+    /**
+     * Wrapper function for player movement.
+     * Note that this function expects both origin region & target region to be current player's region.
+     * @param originRegion origin region initiated the movement
+     * @param troops       list of troops moving
+     * @param targetRegion target region to move to
+     * @return msg to display
+     * @throws IOException
+     */
+    public String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
+        return curPhase.move(originRegion,troops,targetRegion);
+    }
+
+    /**
+     * Wrapper function for player invade.
+     * @param originRegion origin region initiated the invade
+     * @param troops list of troops invading
+     * @param targetRegion target region to invade
+     * @param targetFaction target faction to invade
+     * @return msg to display
+     * @throws IOException
+     */
+    public String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
+        return curPhase.invade(originRegion,troops,targetRegion,targetFaction);
     }
 
     /**

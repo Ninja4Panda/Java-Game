@@ -33,22 +33,6 @@ public class MovePhase implements GamePhase {
         game.setCurPhase(game.getPreparationPhase());
     }
 
-    @Override
-    public String action(String originRegion, List<String> troops, String ... args) throws IOException {
-        Player curPlayer = game.getCurPlayer();
-
-        //Safe to index as there should be args[0] for both action
-        String targetRegion= args[0];
-
-        //Both regions are current player's region
-        if(curPlayer.getRegion(originRegion) != null && curPlayer.getRegion(targetRegion) != null)
-            return move(originRegion, troops, targetRegion);
-
-        //Safe to index as there should be args[1] for invade
-        String targetFaction = args[1];
-        return invade(originRegion, troops, targetRegion, targetFaction);
-    }
-
     /**
      * Wrapper function for player movement.
      * Note that this function expects both origin region & target region to be current player's region.
@@ -58,7 +42,7 @@ public class MovePhase implements GamePhase {
      * @return msg to display
      * @throws IOException
      */
-    private String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
+    public String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
         Region target = curPlayer.getRegion(targetRegion);
@@ -86,7 +70,7 @@ public class MovePhase implements GamePhase {
      * @return msg to display
      * @throws IOException
      */
-    private String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
+    public String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
 
