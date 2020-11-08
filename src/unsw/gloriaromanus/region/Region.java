@@ -106,6 +106,9 @@ public class Region implements Observer {
         return wealth;
     }
 
+    /**
+     * @return Amount of gold that the owner of this region will gain
+     */
     public int calcGold() {
         return (int) (wealth* (double) tax/100);
     }
@@ -254,12 +257,19 @@ public class Region implements Observer {
         trainer.pushUnits();
     }
 
+    /**
+     * Ensures all units in this region has the correct
+     * movementPoints at the start of every turn
+     */
     private void updateMovementPoints() {
         for(Unit u : units) {
             u.setCurMovementPoints(u.getMaxMovementPoints());
         }
     }
 
+    /**
+     * Ensures the region's wealth is properly incremented
+     */
     private void updateWealth() {
         switch (tax) {
             case 10:
