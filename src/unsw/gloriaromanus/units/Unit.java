@@ -85,32 +85,21 @@ public class Unit {
         return maxMovementPoints;
     }
 
-
     public void setCurMovementPoints(int curMovementPoints) {
         this.curMovementPoints = curMovementPoints;
     }
-
 
     public int getCurMovementPoints() {
         return curMovementPoints;
     }
 
-
-    public void reduceMovementPoints(int movementPoints) {
-        this.curMovementPoints -= movementPoints;
-        if(this.curMovementPoints<0) this.curMovementPoints = 0;
-    }
-
-
     public int getCurAmount() {
         return curAmount;
     }
 
-
     public int getTrainAmount() {
         return trainAmount;
     }
-
 
     public String getClassName() {
         String className = this.getClass().getName();
@@ -118,27 +107,45 @@ public class Unit {
         return classNameParts[classNameParts.length - 1];
     }
 
-
-
-
-    public int trainTime() {
+    public int getTrainTime() {
         return buildTime;
     }
 
+    /**
+     * Reduce the movementPoint of the unit
+     * @param movementPoints
+     */
+    public void reduceMovementPoints(int movementPoints) {
+        this.curMovementPoints -= movementPoints;
+        if(this.curMovementPoints<0) this.curMovementPoints = 0;
+    }
+
+    /**
+     * Add the default train amount to unit
+     */
     public void addTrainedUnit() {
         curAmount+=trainAmount;
     }
 
+    /**
+     * Add unit by number of troops
+     * @param numTroops the amounts to be added
+     */
     public void addUnits(int numTroops) {
         curAmount+=numTroops;
     }
 
-
+    /**
+     * Minus unit by number of troops
+     * @param num the amounts to be deducted
+     */
     public void minusUnits(int num) {
         curAmount -= num;
     }
 
-
+    /**
+     * @return the strength of the unit
+     */
     public int strength() {
         return armour * attack.getAttackValue() * getCurAmount();
     }
