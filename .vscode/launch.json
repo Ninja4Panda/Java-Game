@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "cwd": "${workspaceRoot}",
     "configurations": [
+        
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GloriaRomanusApplication",
+            "request": "launch",
+            "mainClass": "unsw.gloriaromanus.GloriaRomanusApplication",
+            "projectName": "t13b-hotdog_thursday_1460ee8a"
+        },
         {
             "type": "java",
             "name": "CodeLens (Launch) - Testing",
