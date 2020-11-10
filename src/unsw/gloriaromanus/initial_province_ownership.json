@@ -14,7 +14,17 @@
     "Pannonia Inferior",
     "Pannonia Superior",
     "Raetia",
-    "Sardinia et Corsica"
+    "Sardinia et Corsica", 
+    "Sicilia",
+    "Syria",
+    "Tarraconensis",
+    "Thracia",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "X",
+    "XI"
 
   ],
   "Gaul": [
@@ -33,10 +43,7 @@
     "Bithynia et Pontus",
     "Britannia",
     "Cilicia",
-    "Creta et Cyrene"
-
-  ],
-  "Chinese": [
+    "Creta et Cyrene",  
     "Cyprus",
     "Dacia",
     "Dalmatia",
@@ -49,17 +56,6 @@
     "IV",
     "IX",
     "Iudaea"
-  ],
-  "Airbender": [
-    "Sicilia",
-    "Syria",
-    "Tarraconensis",
-    "Thracia",
-    "V",
-    "VI",
-    "VII",
-    "VIII",
-    "X",
-    "XI"
+
   ]
 }
