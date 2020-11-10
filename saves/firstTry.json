@@ -1,0 +1,1534 @@
+{
+  "Game": {
+    "Phase": "Preparation",
+    "Turn": 0,
+    "Subturn": 0,
+    "CampaignWinCond": {
+      "Goal": "TreasuryCond",
+      "Junction": "OrCheck",
+      "SubCheck": {
+        "Goal": "WealthCond",
+        "Junction": "AndCheck",
+        "SubCheck": {
+          "Goal": "ConquestCond",
+          "Junction": "OrCheck",
+          "SubCheck": {
+            "Goal": "null",
+            "Junction": "null",
+            "SubCheck": "null"
+          }
+        }
+      }
+    }
+  },
+  "Players": [
+    {
+      "Gold": 1000,
+      "Regions": [
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Noricum",
+          "Wealth": 751
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Raetia",
+          "Wealth": 662
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Numidia",
+          "Wealth": 901
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Narbonensis",
+          "Wealth": 945
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Pannonia Superior",
+          "Wealth": 662
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Mauretania Tingitana",
+          "Wealth": 710
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Pannonia Inferior",
+          "Wealth": 513
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Lugdunensis",
+          "Wealth": 814
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Sardinia et Corsica",
+          "Wealth": 737
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Macedonia",
+          "Wealth": 859
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Moesia Inferior",
+          "Wealth": 614
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Lycia et Pamphylia",
+          "Wealth": 933
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Moesia Superior",
+          "Wealth": 582
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Lusitania",
+          "Wealth": 553
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Mauretania Caesariensis",
+          "Wealth": 910
+        }
+      ],
+      "Faction": "Rome"
+    },
+    {
+      "Gold": 1000,
+      "Regions": [
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "II",
+          "Wealth": 862
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Cyprus",
+          "Wealth": 778
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Iudaea",
+          "Wealth": 898
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Dacia",
+          "Wealth": 980
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Germania Superior",
+          "Wealth": 542
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "III",
+          "Wealth": 800
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "I",
+          "Wealth": 857
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Dalmatia",
+          "Wealth": 903
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Germania Inferior",
+          "Wealth": 544
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "IV",
+          "Wealth": 922
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Galatia et Cappadocia",
+          "Wealth": 779
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "IX",
+          "Wealth": 599
+        }
+      ],
+      "Faction": "Chinese"
+    },
+    {
+      "Gold": 1000,
+      "Regions": [
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Tarraconensis",
+          "Wealth": 887
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "XI",
+          "Wealth": 752
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "VI",
+          "Wealth": 740
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "V",
+          "Wealth": 825
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "VII",
+          "Wealth": 566
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "X",
+          "Wealth": 804
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "VIII",
+          "Wealth": 567
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Sicilia",
+          "Wealth": 711
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Syria",
+          "Wealth": 614
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Thracia",
+          "Wealth": 627
+        }
+      ],
+      "Faction": "Airbender"
+    },
+    {
+      "Gold": 1000,
+      "Regions": [
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Bithynia et Pontus",
+          "Wealth": 516
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Armenia Mesopotamia",
+          "Wealth": 965
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Cilicia",
+          "Wealth": 586
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Africa Proconsularis",
+          "Wealth": 605
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Britannia",
+          "Wealth": 804
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Alpes Maritimae",
+          "Wealth": 775
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Creta et Cyrene",
+          "Wealth": 544
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Aquitania",
+          "Wealth": 724
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Alpes Cottiae",
+          "Wealth": 697
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Alpes Graiae et Poeninae",
+          "Wealth": 716
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Arabia",
+          "Wealth": 674
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Asia",
+          "Wealth": 764
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Aegyptus",
+          "Wealth": 522
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Achaia",
+          "Wealth": 519
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Belgica",
+          "Wealth": 754
+        },
+        {
+          "Troops": {
+            "Spearman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Slingerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Swordsman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Archerman": {
+              "Movement": 1,
+              "Amount": 0
+            },
+            "Cavalry": {
+              "Movement": 1,
+              "Amount": 0
+            }
+          },
+          "Trainer": [],
+          "Tax": 10,
+          "Id": "Baetica",
+          "Wealth": 823
+        }
+      ],
+      "Faction": "Gaul"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "Game": {
+    "Phase": "Preparation",
+    "Turn": 0,
+    "Subturn": 0,
+    "CampaignWinCond": {
+      "Goal": "WealthCond",
+      "Junction": "OrCheck",
+      "SubCheck": {
+        "Goal": "TreasuryCond",
+        "Junction": "OrCheck",
+        "SubCheck": {
+          "Goal": "ConquestCond",
+          "Junction": "AndCheck",
+          "SubCheck": {
+            "Goal": "null",
+            "Junction": "null",
+            "SubCheck": "null"
+          }
+        }
+      }
+    }
+  },
+  "Players": [
+    {
+      "Gold": 400,
+      "Regions": [{
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Slingerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 10,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Lusitania",
+        "Wealth": 20
+      }],
+      "Faction": "Rome"
+    },
+    {
+      "Gold": 400,
+      "Regions": [{
+        "Troops": {
+          "Spearman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Slingerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Swordsman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Archerman": {
+            "Movement": 10,
+            "Amount": 0
+          },
+          "Cavalry": {
+            "Movement": 10,
+            "Amount": 0
+          }
+        },
+        "Trainer": [],
+        "Tax": 10,
+        "Id": "Baetica",
+        "Wealth": 20
+      }],
+      "Faction": "Egypt"
+    }
+  ]
+}
