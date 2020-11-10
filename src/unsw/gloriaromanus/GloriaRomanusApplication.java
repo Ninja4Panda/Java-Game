@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import unsw.gloriaromanus.ConfigMenu.ConfigScreen;
+import unsw.gloriaromanus.StartUpMenu.StartScreen;
 
 public class GloriaRomanusApplication extends Application {
 
@@ -14,18 +16,26 @@ public class GloriaRomanusApplication extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    // set up the scene
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-    Parent root = loader.load();
-    controller = loader.getController();
-    Scene scene = new Scene(root);
+    StartScreen startScreen = new StartScreen(stage);
+    ConfigScreen configScreen = new ConfigScreen(stage);
 
-    // set up the stage
-    stage.setTitle("Gloria Romanus");
-    stage.setWidth(800);
-    stage.setHeight(700);
-    stage.setScene(scene);
-    stage.show();
+    startScreen.getController().setConfigScreen(configScreen);
+    configScreen.getController().setStartScreen(startScreen);
+
+    startScreen.start();
+
+//    // set up the scene
+//    FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+//    Parent root = mainLoader.load();
+//    controller = mainLoader.getController();
+//    Scene scene = new Scene(root);
+//
+//    // set up the stage
+//    stage.setTitle("Gloria Romanus");
+//    stage.setWidth(800);
+//    stage.setHeight(700);
+//    stage.setScene(scene);
+//    stage.show();
 
   }
 
@@ -43,7 +53,6 @@ public class GloriaRomanusApplication extends Application {
    * @param args arguments passed to this application
    */
   public static void main(String[] args) {
-
     Application.launch(args);
   }
 }
