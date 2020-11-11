@@ -12,3 +12,4 @@ build.gradle
 gradlew*
 /gradle/
 /saves/
+/src/.idea/
