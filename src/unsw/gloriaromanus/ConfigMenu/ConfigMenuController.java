@@ -129,7 +129,7 @@ public class ConfigMenuController {
 
             //Check if two players has the same faction
             if(faction == null) {
-                Alert a = new Alert(Alert.AlertType.NONE, "A player must have a faction!", ButtonType.CLOSE);
+                Alert a = new Alert(Alert.AlertType.NONE, "All players must choose a faction!", ButtonType.CLOSE);
                 a.show();
                 return;
             } else if(factions.contains(faction)) {

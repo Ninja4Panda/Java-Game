@@ -90,8 +90,6 @@ public class LoadSaveMenuController {
         String time = game.getString("LastPlayed");
         //Add last played
         Label timeLabel = new Label("Last played: "+time);
-        timeLabel.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(nameLabel, Priority.ALWAYS);
         HBox.setMargin(timeLabel, new Insets(20, 20, 20, 20));
         box.getChildren().add(timeLabel);
 
