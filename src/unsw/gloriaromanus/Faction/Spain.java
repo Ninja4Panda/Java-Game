@@ -12,7 +12,7 @@ public class Spain implements Faction {
 
     @Override
     public String toString() {
-        return "Spain";
+        return name;
     }
 
     @Override

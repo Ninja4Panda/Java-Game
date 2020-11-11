@@ -12,7 +12,7 @@ public class Carthage implements Faction {
 
     @Override
     public String toString() {
-        return "Carthage";
+        return name;
     }
 
     @Override
