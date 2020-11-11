@@ -3,7 +3,7 @@ package unsw.gloriaromanus.Game;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Game.GameTurn;
+import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
@@ -14,29 +14,26 @@ import java.util.List;
 import java.util.Map;
 
 public class Player implements Observer {
-    private GameTurn gameTurn;
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
     private List<Region> recentlyConquered;
-    private String faction;
+    private Faction faction;
     private int gold;
 
     public Player(Map<String, Region> regionsMap, String faction, GameTurn gameTurn) {
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
 
         this.regionsMap = regionsMap;
         recentlyConquered = new ArrayList<>();
-        this.faction = faction;
+        this.faction = Faction.find(faction);
         this.gold = 1000;
     }
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
         recentlyConquered = new ArrayList<>();
         JSONArray regions = playerData.getJSONArray("Regions");
         String factionName = playerData.getString("Faction");
-        faction = factionName;
+        faction = Faction.find(factionName);
         gold = playerData.getInt("Gold");
         regionsMap = new HashMap<>();
 
@@ -59,7 +56,7 @@ public class Player implements Observer {
      * @return the faction of the player
      */
     public String getFaction() {
-        return faction;
+        return faction.toString();
     }
 
     /**
@@ -153,7 +150,7 @@ public class Player implements Observer {
      */
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        save.put("Faction", faction);
+        save.put("Faction", faction.toString());
         save.put("Gold", gold);
 
         //Construct the region json array

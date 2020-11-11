@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import unsw.gloriaromanus.ConfigMenu.ConfigScreen;
 import javafx.event.ActionEvent;
+import unsw.gloriaromanus.LoadSaveMenu.LoadSaveScreen;
 
 import java.io.IOException;
 
@@ -13,9 +14,14 @@ public class StartMenuController {
     @FXML
     private Button loadGameBtn;
     private ConfigScreen configScreen;
+    private LoadSaveScreen loadSaveScreen;
 
     public void setConfigScreen(ConfigScreen configScreen) {
         this.configScreen = configScreen;
+    }
+
+    public void setLoadSaveScreen(LoadSaveScreen loadSaveScreen) {
+        this.loadSaveScreen = loadSaveScreen;
     }
 
     @FXML
@@ -24,7 +30,7 @@ public class StartMenuController {
     }
 
     @FXML
-    void handleLoadBtn(ActionEvent e) {
-
+    void handleLoadBtn(ActionEvent e) throws IOException {
+        loadSaveScreen.start();
     }
 }
