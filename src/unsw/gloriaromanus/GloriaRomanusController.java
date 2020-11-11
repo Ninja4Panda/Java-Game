@@ -57,6 +57,7 @@ import org.json.JSONObject;
 
 import javafx.util.Pair;
 
+
 public class GloriaRomanusController{
 
   @FXML
@@ -99,7 +100,7 @@ public class GloriaRomanusController{
     currentlySelectedHumanProvince = null;
     currentlySelectedEnemyProvince = null;
 
-    String []menus = {"scenes/invasion_menu.fxml", "scenes/basic_menu.fxml"};
+    String []menus = {"scenes/phaseMenu.fxml",  "scenes/regionMenu.fxml"};
     controllerParentPairs = new ArrayList<Pair<MenuController, VBox>>();
     for (String fxmlName: menus){
       System.out.println(fxmlName);
@@ -109,9 +110,11 @@ public class GloriaRomanusController{
       menuController.setParent(this);
       controllerParentPairs.add(new Pair<MenuController, VBox>(menuController, root));
     }
+  
 
-    stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
-
+    
+    stackPaneMain.getChildren().add(controllerParentPairs.get(1).getValue());
+    //stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
     initializeProvinceLayers();
 
   }

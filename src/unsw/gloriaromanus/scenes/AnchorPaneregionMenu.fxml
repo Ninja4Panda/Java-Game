@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Background?>
+<?import javafx.scene.layout.BackgroundFill?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxWidth="400.0" prefWidth="408.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.RegionMenuController">
+    <padding>
+        <Insets topRightBottomLeft="10" />
+    </padding>
+    <background>
+        <Background>
+            <fills>
+                <BackgroundFill>
+                    <fill>
+                        <Color opacity="0.3" />
+                    </fill>
+                </BackgroundFill>
+            </fills>
+        </Background>
+    </background>
+    <HBox>
+        <VBox>
+            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="16.0" prefWidth="200.0" text="Province">
+            <font>
+               <Font size="30.0" />
+            </font></Label>
+        </VBox>
+        <VBox>
+            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="36.0" prefWidth="200.0" text="Province">
+            <font>
+               <Font size="30.0" />
+            </font></Label>
+        </VBox>
+    </HBox>
+    <VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+              <content>
+                <AnchorPane fx:id="leftScrollAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="172.0" />
+              </content>
+            </ScrollPane>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+              <content>
+                <AnchorPane fx:id="rightScrollAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="169.0" />
+              </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+    </VBox>
+   <AnchorPane prefHeight="0.0" prefWidth="268.0">
+      <children>
+          <Button fx:id="interactionButton" alignment="CENTER" layoutX="163.0" layoutY="-6.0" onAction="#handleInteraction" prefWidth="54.0" text="Move" />
+      </children>
+   </AnchorPane>
+</VBox>
