@@ -237,9 +237,7 @@ public class Game implements Observer {
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
                 //Auto save
-                DateFormat df = new SimpleDateFormat("dd:MM:yy-HH:mm:ss");
-                Date today = new Date();
-                save("Autosave-"+df.format(today));
+                save("Autosave");
             } catch(IOException e) {
                 e.printStackTrace();
             }
@@ -305,6 +303,10 @@ public class Game implements Observer {
         File dir = new File(".","saves");
         dir.mkdir();
 
+        //Get the date
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+        Date today = new Date();
+
         //Make the new save file
         String filename = name+".json";
         File file = new File(dir, filename);
@@ -312,6 +314,7 @@ public class Game implements Observer {
 
         //Construct the game json object
         JSONObject gameSave = new JSONObject();
+        gameSave.put("LastPlayed", df.format(today));
         gameSave.put("Phase", curPhase.toString());
         gameSave.put("Turn", gameTurn.getTurn());
         gameSave.put("Subturn", gameTurn.getSubTurn());

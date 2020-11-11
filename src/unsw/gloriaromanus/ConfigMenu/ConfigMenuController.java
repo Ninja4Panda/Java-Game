@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import unsw.gloriaromanus.Faction.*;
 import unsw.gloriaromanus.StartUpMenu.StartScreen;
 
 import java.io.File;
@@ -34,82 +36,81 @@ public class ConfigMenuController {
     private final int MAX_PLAYERS = 6;
     private final int MAX_PROVINCES = 53;
 
-    public ConfigMenuController() {
+    public void setStartScreen(StartScreen startScreen) {
+        this.startScreen = startScreen;
+    }
+
+    @FXML
+    void initialize() {
         gridPane = new GridPane();
+        ColumnConstraints column = new ColumnConstraints();
+        column.setPercentWidth(100);
+        gridPane.getColumnConstraints().add(column);
         addPlayer();
         addPlayer();
+        scrollPane.setContent(gridPane);
     }
 
     /**
      * Add a new player
      */
     private void addPlayer() {
-        HBox box = new HBox();
-
         //Index for the players
-        int index = gridPane.getChildren().size()+1;
-        Label name = new Label("Player "+index);
-        box.setMargin(name, new Insets(20, 20, 20, 20));
+        int size = gridPane.getChildren().size();
+
+        //Hbox container
+        HBox box = new HBox();
+        GridPane.setRowIndex(box, size);
+        if((size+1)%2==0) box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+
+        //Player name
+        Label name = new Label("Player "+(size+1));
+        name.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(name, Priority.ALWAYS);
+        HBox.setMargin(name, new Insets(20, 20, 20, 20));
         box.getChildren().add(name);
 
         //Add the factions comboBox
-        ComboBox<String> factionsDropdown = new ComboBox<>();
+        ComboBox<Faction> factionsDropdown = new ComboBox<>();
         factionsDropdown.setPromptText("Faction");
-        factionsDropdown.getItems().addAll("Carthage","Celts","Egypt","Gauls","Rome","Spain");
-        box.setMargin(factionsDropdown, new Insets(20, 20, 20, 20));
+        factionsDropdown.getItems().addAll(Rome.getINSTANCE(), Carthage.getINSTANCE(), Celts.getINSTANCE(), Egypt.getINSTANCE(), Gaul.getINSTANCE(), Spain.getINSTANCE());
+        HBox.setMargin(factionsDropdown, new Insets(20, 20, 20, 20));
         box.getChildren().add(factionsDropdown);
 
         //Add image container
         ImageView image = new ImageView();
-        factionsDropdown.setOnAction(e-> updateFlag(image, factionsDropdown.getValue()));
-        box.setMargin(image, new Insets(0, 20, 20, 20));
+        factionsDropdown.setOnAction(e-> {
+            Image flag = new Image(factionsDropdown.getValue().getFlagPath());
+            image.setImage(flag);
+        });
+        HBox.setMargin(image, new Insets(0, 20, 20, 20));
         box.getChildren().add(image);
 
         //Add remove button
-        if(index>2) {
+        if(size>1) {
             Button close = new Button("X");
-            close.setOnAction(e->gridPane.getChildren().remove(index));
+            close.setOnAction(e-> {
+                //Remove target row
+                int target = GridPane.getRowIndex(box);
+                gridPane.getChildren().remove(target);
+                //Reset the row index & name label
+                for (int i = target; i<gridPane.getChildren().size(); i++) {
+                    HBox child = (HBox) gridPane.getChildren().get(i);
+                    GridPane.setRowIndex(child, i);
+                    Label nameLabel = (Label) child.getChildren().get(0);
+                    nameLabel.setText("Player "+(i+1));
+                    if((i+1)%2==0) {
+                        child.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+                    } else {
+                        child.setBackground(null);
+                    }
+                }
+            });
             box.getChildren().add(close);
         }
 
         //Add the box into the pane
-        gridPane.addRow(index, box);
-    }
-
-    /**
-     * Update flag according to the user's choice
-     * @param image image container box
-     * @param faction user's selection
-     */
-    private void updateFlag(ImageView image, String faction) {
-        Image flag = null;
-        switch (faction) {
-            case "Carthage":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Carthage/CarthageFlag.png")).toURI().toString());
-                break;
-            case "Celts":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Celtic/CelticFlag.png")).toURI().toString());
-                break;
-            case "Egypt":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Egyptian/EgyptianFlag.png")).toURI().toString());
-                break;
-            case "Gauls":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Gallic/GallicFlag.png")).toURI().toString());
-                break;
-            case "Rome":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Roman/RomanFlag.png")).toURI().toString());
-                break;
-            case "Spain":
-                flag = new Image((new File("images/CS2511Sprites_No_Background/Flags/Spanish/SpanishFlag.png")).toURI().toString());
-                break;
-        }
-        image.setImage(flag);
-    }
-
-    @FXML
-    void initialize() {
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(gridPane);
+        gridPane.getChildren().add(box);
     }
 
     @FXML
@@ -119,12 +120,14 @@ public class ConfigMenuController {
 
     @FXML
     void handleStartBtn(ActionEvent e) throws IOException {
-        //Check if two players has the same faction
+        //Make faction list
         List<String> factions = new ArrayList<>();
         for (Node row : gridPane.getChildren()) {
             HBox box = (HBox)row;
             ComboBox factionBox = (ComboBox) box.getChildren().get(1);
             String faction = (String) factionBox.getValue();
+
+            //Check if two players has the same faction
             if(faction == null) {
                 Alert a = new Alert(Alert.AlertType.NONE, "A player must have a faction!", ButtonType.CLOSE);
                 a.show();
@@ -146,14 +149,21 @@ public class ConfigMenuController {
     private void generateOwnership(List<String> factions) throws IOException {
         int div = MAX_PROVINCES/factions.size();
         int reminder = MAX_PROVINCES%factions.size();
+        System.out.println(div);
+        System.out.println(reminder);
+
         //Create the ownership json base on number of players
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/provinces_label.geojson"));
         JSONObject obj = new JSONObject(content);
         JSONArray provinces = obj.getJSONArray("features");
+
         for(int i = 0; i<provinces.length(); i++) {
             String province = provinces.getJSONObject(i).getJSONObject("properties").getString("name");
-//            Random rand = new Random();
-//            rand.nextInt()
+            Random rand = new Random();
+            int num = rand.nextInt();
+//            switch() {
+//
+//            }
 //            System.out.println(provinces.length());
         }
     }
@@ -166,9 +176,5 @@ public class ConfigMenuController {
         } else {
             addPlayer();
         }
-    }
-
-    public void setStartScreen(StartScreen startScreen) {
-        this.startScreen = startScreen;
     }
 }
