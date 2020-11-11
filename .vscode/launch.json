@@ -7,6 +7,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - GloriaRomanusApplication",
+            "request": "launch",
+            "mainClass": "unsw.gloriaromanus.GloriaRomanusApplication",
+            "projectName": "t13b-hotdog_thursday_cb7041ee"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Testing",
             "request": "launch",
             "mainClass": "test.Testing",

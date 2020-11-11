@@ -13,7 +13,7 @@
 <?import javafx.geometry.Insets?>
 
 
-<VBox StackPane.alignment="TOP_LEFT" spacing="10" maxWidth="250" styleClass="panel-region" fx:controller="unsw.gloriaromanus.InvasionMenuController" xmlns:fx="http://javafx.com/fxml" stylesheets="/unsw/gloriaromanus/style.css">
+<VBox StackPane.alignment="TOP_RIGHT" spacing="10" maxWidth="250" styleClass="panel-region" fx:controller="unsw.gloriaromanus.InvasionMenuController" xmlns:fx="http://javafx.com/fxml" stylesheets="/unsw/gloriaromanus/style.css">
     <padding>
         <Insets topRightBottomLeft="10"/>
     </padding>

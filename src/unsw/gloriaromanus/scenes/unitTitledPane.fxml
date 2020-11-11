@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<TitledPane fx:id="unitTitledPane" animated="false" contentDisplay="RIGHT" prefHeight="400.0" prefWidth="150.0" text="Unit" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.UnitTitledPaneController">
+   <graphic>
+      <ImageView fx:id="titledPaneImage" fitHeight="32.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/CS2511Sprites_No_Background/ArcherMan/Archer_Man_NB.png" />
+         </image>
+      </ImageView>
+   </graphic>
+   <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <VBox layoutX="13.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="movementPoints" prefHeight="29.0" prefWidth="125.0" text="movementPoints" />
+                  <Label fx:id="attack" prefHeight="29.0" prefWidth="125.0" text="Attack" />
+                  <Label fx:id="health" prefHeight="29.0" prefWidth="125.0" text="Health" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>

@@ -3,7 +3,12 @@ package unsw.gloriaromanus;
 public class GloriaRomanusLauncher {
 
     public static void main(String[] args) {
-        GloriaRomanusApplication.main(args);
+        try{
+            GloriaRomanusApplication.main(args);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         
     }
 }
