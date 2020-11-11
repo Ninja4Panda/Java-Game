@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Phase.GamePhase;
@@ -52,10 +53,12 @@ public class LoadSaveMenuController {
                 String name = splitName;
                 String content = Files.readString(save.toPath());
                 addSave(save, content, name);
-            } catch (IOException e) {
-                //TODO:Log report
+            } catch (JSONException e) {
+                //Delete the corrupted file
+                save.delete();
                 e.printStackTrace();
-                continue;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -66,7 +69,7 @@ public class LoadSaveMenuController {
      * @param content content of the file
      * @param name save filename
      */
-    private void addSave(File save, String content, String name) {
+    private void addSave(File save, String content, String name) throws IOException {
         //Index for the players
         int size = gridPane.getChildren().size();
 

@@ -125,7 +125,7 @@ public class ConfigMenuController {
         for (Node row : gridPane.getChildren()) {
             HBox box = (HBox)row;
             ComboBox factionBox = (ComboBox) box.getChildren().get(1);
-            String faction = (String) factionBox.getValue();
+            String faction = factionBox.getValue().toString();
 
             //Check if two players has the same faction
             if(faction == null) {
