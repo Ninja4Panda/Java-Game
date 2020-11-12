@@ -56,9 +56,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.util.Pair;
+import unsw.gloriaromanus.Controllers.PlayerMenuController;
 import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.Game.Player;
 
 public class GloriaRomanusController{
 
@@ -120,9 +122,25 @@ public class GloriaRomanusController{
     stackPaneMain.getChildren().add(controllerParentPairs.get(1).getValue());
     stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
     stackPaneMain.getChildren().add(controllerParentPairs.get(2).getValue());
+
+    if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
+      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
+    }
+
     initializeProvinceLayers();
 
   }
+
+  public void endPhase() {
+    game.endPhase();
+    if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
+      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
+    }
+  }
+
+ public String getCurPhase() {
+   return game.getCurPhase().toString();
+ }
 
   // public void clickedInvadeButton(ActionEvent e) throws IOException {
   //   if (currentlySelectedLeftProvince != null && currentlySelectedRightProvince != null){
