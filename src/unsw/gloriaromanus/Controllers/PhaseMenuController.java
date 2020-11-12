@@ -14,7 +14,11 @@ public class PhaseMenuController extends MenuController{
 
     @FXML
     public void handleChangePhase() {
-        
+        this.getParent().endPhase();
     }
 
+    @FXML
+    private void initialize() {
+        
+    }
 }
