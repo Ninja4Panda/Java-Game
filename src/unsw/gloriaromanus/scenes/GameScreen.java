@@ -19,10 +19,10 @@ public class GameScreen {
     }
 
     public void start(Game game) throws IOException {
+        controller.setGame(game);
         //Load new scene into the stage
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         loader.setController(controller);
-//        controller.setGame(game);
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
