@@ -7,9 +7,13 @@ hs_err_pid*
 /.gradle/
 /resources/
 /jniLibs/
+<<<<<<< HEAD
 /.idea/
 build.gradle
 gradlew*
 /gradle/
 /saves/
 /src/.idea/
+=======
+/saves/
+>>>>>>> Game

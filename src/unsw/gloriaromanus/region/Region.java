@@ -15,7 +15,6 @@ import java.util.List;
 
 public class Region implements Observer {
     private String name;
-    private GameTurn gameTurn;
     private RegionTrainer trainer;
     private List<Unit> units;
     private int wealth;
@@ -23,7 +22,6 @@ public class Region implements Observer {
 
     public Region(String name, GameTurn gameTurn, int wealth, int tax) {
         this.name = name;
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
         trainer = new RegionTrainer(this);
         this.wealth = wealth;
@@ -46,7 +44,6 @@ public class Region implements Observer {
     }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
         name = regionData.getString("Id");
         wealth = regionData.getInt("Wealth");

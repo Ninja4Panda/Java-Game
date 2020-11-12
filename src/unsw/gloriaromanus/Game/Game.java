@@ -237,13 +237,12 @@ public class Game implements Observer {
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
                 //Auto save
-                DateFormat df = new SimpleDateFormat("dd:MM:yy-HH:mm:ss");
-                Date today = new Date();
-                save("Autosave-"+df.format(today));
+                save("Autosave");
+                return "You Win! Game is saved!";
             } catch(IOException e) {
                 e.printStackTrace();
+                return "Cannot save game!";
             }
-            return "You Win! Game is saved!";
         }
         return null;
     }
@@ -305,31 +304,35 @@ public class Game implements Observer {
         File dir = new File(".","saves");
         dir.mkdir();
 
+        //Get the date
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+        Date today = new Date();
+
         //Make the new save file
         String filename = name+".json";
         File file = new File(dir, filename);
-        FileWriter writer = new FileWriter(file);
+        try (FileWriter writer = new FileWriter(file)) {
+            //Construct the game json object
+            JSONObject gameSave = new JSONObject();
+            gameSave.put("LastPlayed", df.format(today));
+            gameSave.put("Phase", curPhase.toString());
+            gameSave.put("Turn", gameTurn.getTurn());
+            gameSave.put("Subturn", gameTurn.getSubTurn());
+            gameSave.put("CampaignWinCond", campaignWinCond.getSave());
 
-        //Construct the game json object
-        JSONObject gameSave = new JSONObject();
-        gameSave.put("Phase", curPhase.toString());
-        gameSave.put("Turn", gameTurn.getTurn());
-        gameSave.put("Subturn", gameTurn.getSubTurn());
-        gameSave.put("CampaignWinCond", campaignWinCond.getSave());
+            //Construct the players json array
+            JSONArray playerSave = new JSONArray();
+            for (Player player : playersMap.values()) {
+                playerSave.put(player.getSave());
+            }
 
-        //Construct the players json array
-        JSONArray playerSave = new JSONArray();
-        for (Player player: playersMap.values()) {
-            playerSave.put(player.getSave());
+            //Construct the whole json object
+            JSONObject save = new JSONObject();
+            save.put("Game", gameSave);
+            save.put("Players", playerSave);
+
+            writer.write(save.toString(2));
         }
-
-        //Construct the whole json object
-        JSONObject save = new JSONObject();
-        save.put("Game",gameSave);
-        save.put("Players",playerSave);
-
-        writer.write(save.toString(2));
-        writer.close();
     }
 
     @Override
