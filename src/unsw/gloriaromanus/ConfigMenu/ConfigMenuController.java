@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Faction.*;
+import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.GameScreen;
 import unsw.gloriaromanus.StartUpMenu.StartScreen;
 
 import java.io.File;
@@ -32,11 +34,16 @@ public class ConfigMenuController {
     private ScrollPane scrollPane;
     private GridPane gridPane;
     private StartScreen startScreen;
+    private GameScreen gameScreen;
+
     private final int MAX_PLAYERS = 6;
-    private final int MAX_PROVINCES = 53;
 
     public void setStartScreen(StartScreen startScreen) {
         this.startScreen = startScreen;
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
     }
 
     @FXML
@@ -138,6 +145,8 @@ public class ConfigMenuController {
             factions.add(faction);
         }
         generateOwnership(factions);
+        Game game = new Game(factions);
+        gameScreen.start(game);
     }
 
     /**
