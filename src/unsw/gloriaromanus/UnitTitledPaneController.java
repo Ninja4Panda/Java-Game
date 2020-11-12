@@ -21,5 +21,7 @@ public class UnitTitledPaneController {
     @FXML 
     private Label movementPoints;
 
-    
+    @FXML
+    public void initialize() {
+    }
 }

@@ -35,10 +35,6 @@ public class RegionMenuController extends MenuController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/unitTitledPane.fxml"));
         try {
             TitledPane root = (TitledPane) loader.load();
-            if(root.getChildrenUnmodifiable().isEmpty()) {
-                System.out.println("no dropdown");
-
-            }
             leftScrollVbox.getChildren().add(root);
 
             
