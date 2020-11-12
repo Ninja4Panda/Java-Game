@@ -12,8 +12,8 @@ public class BasicMenuController extends MenuController{
     @FXML
     private URL location; // has to be called location
 
-    @FXML
-    public void clickedInvadeButton(ActionEvent e) throws IOException {
-        getParent().clickedInvadeButton(e);
-    }
+    // @FXML
+    // public void clickedInvadeButton(ActionEvent e) throws IOException {
+    //     getParent().clickedInvadeButton(e);
+    // }
 }

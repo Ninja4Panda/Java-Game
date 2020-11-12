@@ -351,5 +351,11 @@ public class Game implements Observer {
         }
         curPlayer.addRegion(defeated);
     }
-
+    /**
+     * Method forwarder; calls Player.getFaction
+     * @return gets the current players faction name
+     */
+    public String getCurFaction() {
+        return curPlayer.getFaction();
+    }
 }
