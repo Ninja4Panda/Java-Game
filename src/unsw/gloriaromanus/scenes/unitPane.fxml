@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="unitPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="203.0" prefWidth="138.0" style="-fx-border-color: black; -fx-border-width: 5; -fx-border-style: solid;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.UnitPaneController">
+   <children>
+      <VBox layoutX="11.0" layoutY="14.0" prefHeight="167.0" prefWidth="115.0">
+         <children>
+            <HBox prefHeight="44.0" prefWidth="108.0" style="-fx-background-color: pink;">
+               <children>
+                  <Label fx:id="unitName" prefHeight="48.0" prefWidth="72.0" text="Unit" underline="true">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <ImageView  fitHeight="44.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image >
+                        <Image fx:id="unitImage" url="@images/CS2511Sprites_No_Background/Trebuchet/Trebuchet_NB.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="unitHealth" prefHeight="35.0" prefWidth="114.0" text="Stats" />
+                  <Label fx:id="unitAttack" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                  <Label fx:id="unitArmour" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                  <Label fx:id="unitMoveSpeed" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>
