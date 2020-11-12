@@ -3,9 +3,7 @@ package unsw.gloriaromanus.LoadSaveMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -14,14 +12,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Faction.Faction;
-import unsw.gloriaromanus.Phase.GamePhase;
+import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.GameScreen;
 import unsw.gloriaromanus.StartUpMenu.StartScreen;
 
 import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 public class LoadSaveMenuController {
     @FXML
@@ -29,10 +28,15 @@ public class LoadSaveMenuController {
     @FXML
     private ScrollPane scrollPane;
     private StartScreen startScreen;
+    private GameScreen gameScreen;
     private GridPane gridPane;
 
     public void setStartScreen(StartScreen startScreen) {
         this.startScreen = startScreen;
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
     }
 
     @FXML
@@ -54,8 +58,7 @@ public class LoadSaveMenuController {
                 String content = Files.readString(save.toPath());
                 addSave(save, content, name);
             } catch (JSONException e) {
-                //Delete the corrupted file
-                save.delete();
+                //Corrupted file
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,7 +79,7 @@ public class LoadSaveMenuController {
         //Hbox container
         HBox box = new HBox();
         GridPane.setRowIndex(box, size);
-        box.setOnMouseClicked(e->handleBoxClick());
+        box.setOnMouseClicked(e->handleBoxClick(save.getAbsolutePath()));
         box.setStyle("-fx-cursor: hand;");
         if((size+1)%2==0) box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
@@ -136,8 +139,19 @@ public class LoadSaveMenuController {
         gridPane.getChildren().add(box);
     }
 
-    private void handleBoxClick() {
-
+    /**
+     * Handles when a save is clicked
+     * @param configFile path to config file
+     */
+    private void handleBoxClick(String configFile) {
+        try {
+            Game game = new Game(configFile);
+            gameScreen.start(game);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.NONE, "Cannot load save!", ButtonType.CLOSE);
+            a.show();
+        }
     }
 
     @FXML

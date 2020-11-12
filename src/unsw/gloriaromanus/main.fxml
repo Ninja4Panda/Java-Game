@@ -3,7 +3,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import com.esri.arcgisruntime.mapping.view.MapView?>
 
-<StackPane fx:controller="unsw.gloriaromanus.GloriaRomanusController" xmlns:fx="http://javafx.com/fxml"
-           stylesheets="/unsw/gloriaromanus/style.css" fx:id="stackPaneMain">
+<StackPane xmlns:fx="http://javafx.com/fxml" stylesheets="/unsw/gloriaromanus/style.css" fx:id="stackPaneMain">
     <MapView fx:id="mapView"/>
 </StackPane>
