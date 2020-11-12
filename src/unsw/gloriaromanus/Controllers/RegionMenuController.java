@@ -1,5 +1,7 @@
 package unsw.gloriaromanus.Controllers;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -7,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import unsw.gloriaromanus.MenuController;
+import unsw.gloriaromanus.region.Region;
+import unsw.gloriaromanus.units.Unit;
 
 public class RegionMenuController extends MenuController {
     @FXML
@@ -24,24 +28,65 @@ public class RegionMenuController extends MenuController {
     @FXML
     private Button interactionButton;
 
+    private boolean isLeftSelected;
+    private boolean isRightSelected;
+    
+
     @FXML
     private void handleInteraction(){
 
     }
 
+    public boolean isLeftSelected() {
+        return isLeftSelected;
+    }
+
+    public boolean isRightSelected() {
+        return isRightSelected;
+    }
+
+    public void handleLeftClick(String name, List<Unit> units) {
+        leftProvinceLabel.setText(name);
+        leftScrollVbox.getChildren().clear();
+        for(Unit u : units) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
+            try {
+                Pane root = (Pane) loader.load();
+                UnitPaneController UPC = (UnitPaneController) loader.getController();
+                UPC.configure(u);
+                leftScrollVbox.getChildren().add(root);
+    
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void handleRightClick(String name, List<Unit> units) {
+        rightProvinceLabel.setText(name);
+        rightScrollVbox.getChildren().clear();
+        for(Unit u : units) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
+            try {
+                Pane root = (Pane) loader.load();
+                UnitPaneController UPC = (UnitPaneController) loader.getController();
+                UPC.configure(u);
+                rightScrollVbox.getChildren().add(root);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+  
+
+   
+
     @FXML
     public void initialize() {
   
-        // set up the titledPane for all units
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
-        try {
-            Pane root = (Pane) loader.load();
-            leftScrollVbox.getChildren().add(root);
-
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

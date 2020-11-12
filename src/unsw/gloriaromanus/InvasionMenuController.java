@@ -32,8 +32,8 @@ public class InvasionMenuController extends MenuController{
         output_terminal.appendText(message + "\n");
     }
 
-    @FXML
-    public void clickedInvadeButton(ActionEvent e) throws IOException {
-        getParent().clickedInvadeButton(e);
-    }
+    // @FXML
+    // public void clickedInvadeButton(ActionEvent e) throws IOException {
+    //     getParent().clickedInvadeButton(e);
+    // }
 }

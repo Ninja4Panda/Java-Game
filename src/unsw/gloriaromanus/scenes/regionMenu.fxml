@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox translateY="55" maxWidth="357.0" prefHeight="455.0" prefWidth="357.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.RegionMenuController">
+<VBox maxWidth="392.0" prefHeight="455.0" prefWidth="392.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" translateY="55" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.RegionMenuController">
     <padding>
         <Insets topRightBottomLeft="10" />
     </padding>
@@ -31,13 +31,13 @@
     </background>
     <HBox>
         <VBox>
-            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="16.0" prefWidth="200.0" text="Province">
+            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Province" textFill="#ee27b2" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
         </VBox>
         <VBox>
-            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="36.0" prefWidth="200.0" text="Province">
+            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Province" textFill="#1a0017" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
@@ -48,7 +48,7 @@
          <children>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="leftScrollVbox" prefHeight="627.0" prefWidth="150.0">
+                  <VBox fx:id="leftScrollVbox" prefHeight="627.0" prefWidth="167.0">
                      <children>
                         <Line endX="17.292892456054688" endY="-3.313709020614624" startX="-100.0" visible="false" />
                      </children>
@@ -57,7 +57,7 @@
             </ScrollPane>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="rightScrollVbox" prefHeight="639.0" prefWidth="147.0">
+                  <VBox fx:id="rightScrollVbox" prefHeight="639.0" prefWidth="167.0">
                      <children>
                         <Line endX="14.292892456054688" endY="1.5497207641601562E-6" startX="-100.0" visible="false" />
                      </children>
