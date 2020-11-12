@@ -15,12 +15,11 @@ import unsw.gloriaromanus.Faction.*;
 import unsw.gloriaromanus.StartUpMenu.StartScreen;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ConfigMenuController {
     @FXML
@@ -74,17 +73,20 @@ public class ConfigMenuController {
         ComboBox<Faction> factionsDropdown = new ComboBox<>();
         factionsDropdown.setPromptText("Faction");
         factionsDropdown.getItems().addAll(Rome.getINSTANCE(), Carthage.getINSTANCE(), Celts.getINSTANCE(), Egypt.getINSTANCE(), Gaul.getINSTANCE(), Spain.getINSTANCE());
+        factionsDropdown.getSelectionModel().selectFirst();
         HBox.setMargin(factionsDropdown, new Insets(20, 20, 20, 20));
         box.getChildren().add(factionsDropdown);
 
         //Add image container
         ImageView image = new ImageView();
-        factionsDropdown.setOnAction(e-> {
-            Image flag = new Image(factionsDropdown.getValue().getFlagPath());
-            image.setImage(flag);
-        });
+        Image flag = new Image(factionsDropdown.getValue().getFlagPath());
+        image.setImage(flag);
         HBox.setMargin(image, new Insets(0, 20, 20, 20));
         box.getChildren().add(image);
+        factionsDropdown.setOnAction(e-> {
+            Image newFlag = new Image(factionsDropdown.getValue().getFlagPath());
+            image.setImage(newFlag);
+        });
 
         //Add remove button
         if(size>1) {
@@ -128,11 +130,7 @@ public class ConfigMenuController {
             String faction = factionBox.getValue().toString();
 
             //Check if two players has the same faction
-            if(faction == null) {
-                Alert a = new Alert(Alert.AlertType.NONE, "All players must choose a faction!", ButtonType.CLOSE);
-                a.show();
-                return;
-            } else if(factions.contains(faction)) {
+            if(factions.contains(faction)) {
                 Alert a = new Alert(Alert.AlertType.NONE, "Two players cannot have the same factions!", ButtonType.CLOSE);
                 a.show();
                 return;
@@ -147,24 +145,46 @@ public class ConfigMenuController {
      * @throws IOException reads in provinces_label.geojson
      */
     private void generateOwnership(List<String> factions) throws IOException {
-        int div = MAX_PROVINCES/factions.size();
-        int reminder = MAX_PROVINCES%factions.size();
-        System.out.println(div);
-        System.out.println(reminder);
-
         //Create the ownership json base on number of players
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/provinces_label.geojson"));
         JSONObject obj = new JSONObject(content);
-        JSONArray provinces = obj.getJSONArray("features");
+        JSONArray features = obj.getJSONArray("features");
 
-        for(int i = 0; i<provinces.length(); i++) {
-            String province = provinces.getJSONObject(i).getJSONObject("properties").getString("name");
-            Random rand = new Random();
-            int num = rand.nextInt();
-//            switch() {
-//
-//            }
-//            System.out.println(provinces.length());
+        //Construct the provinces list
+        List<String> provinces = new ArrayList<>();
+        for(int i = 0; i<features.length(); i++) {
+            String province = features.getJSONObject(i).getJSONObject("properties").getString("name");
+            provinces.add(province);
+        }
+
+        //Randomise the provinces
+        Collections.shuffle(provinces);
+        int div = provinces.size()/factions.size();
+        int reminder = provinces.size()%factions.size();
+
+        //Write to the initial ownership file
+        File file = new File("src/unsw/gloriaromanus/initial_province_ownership.json");
+        try (FileWriter writer = new FileWriter(file)) {
+            JSONObject ownership = new JSONObject();
+            int index = 0;
+            for (String factionName : factions) {
+                JSONArray owned = new JSONArray();
+
+                //Fairly divide each region to different faction
+                int amount = div;
+                if(index<reminder) amount++;
+                int i = 0;
+                for (Iterator<String> it = provinces.iterator(); it.hasNext();) {
+                    if (i>=amount) break;
+                    String province = it.next();
+                    owned.put(province);
+                    it.remove();
+                    i++;
+                }
+                ownership.put(factionName, owned);
+                index++;
+            }
+            writer.write(ownership.toString(2));
         }
     }
 
