@@ -105,7 +105,7 @@ public class GloriaRomanusController{
     currentlySelectedHumanProvince = null;
     currentlySelectedEnemyProvince = null;
 
-    String []menus = {"scenes/phaseMenu.fxml",  "scenes/regionMenu.fxml",   "scenes/playerMenu.fxml"};
+    String []menus = {"scenes/phaseMenu.fxml", "scenes/regionMenu.fxml", "scenes/playerMenu.fxml"};
     controllerParentPairs = new ArrayList<Pair<MenuController, VBox>>();
     for (String fxmlName: menus){
       System.out.println(fxmlName);
