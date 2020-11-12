@@ -1,5 +1,5 @@
 .panel-region .label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
   }
   
   .label {
@@ -26,7 +26,7 @@
      -fx-text-fill: black;
   }
 
-  .titled-pane > *.content 
+  .pane
    {
       background-color: black;
    -fx-background-color: black;

@@ -57,6 +57,7 @@ import org.json.JSONObject;
 
 import javafx.util.Pair;
 
+import unsw.gloriaromanus.Controllers.*;
 
 public class GloriaRomanusController{
 
@@ -100,7 +101,7 @@ public class GloriaRomanusController{
     currentlySelectedHumanProvince = null;
     currentlySelectedEnemyProvince = null;
 
-    String []menus = {"scenes/phaseMenu.fxml",  "scenes/regionMenu.fxml",  "scenes/playerMenu.fxml"};
+    String []menus = {"scenes/phaseMenu.fxml",  "scenes/regionMenu.fxml",   "scenes/playerMenu.fxml"};
     controllerParentPairs = new ArrayList<Pair<MenuController, VBox>>();
     for (String fxmlName: menus){
       System.out.println(fxmlName);

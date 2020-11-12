@@ -1,11 +1,12 @@
-package unsw.gloriaromanus;
+package unsw.gloriaromanus.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import unsw.gloriaromanus.MenuController;
 
 public class RegionMenuController extends MenuController {
     @FXML
@@ -32,9 +33,9 @@ public class RegionMenuController extends MenuController {
     public void initialize() {
   
         // set up the titledPane for all units
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/unitTitledPane.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
         try {
-            TitledPane root = (TitledPane) loader.load();
+            Pane root = (Pane) loader.load();
             leftScrollVbox.getChildren().add(root);
 
             

@@ -8,28 +8,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="411.0" prefWidth="940.0" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.PlayerMenuController">
+<VBox maxHeight="55.0" prefHeight="55.0" prefWidth="480.0" style="-fx-border-color: Pink; -fx-border-width: 5; -fx-background-color: pink;" StackPane.alignment="TOP_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.PlayerMenuController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="38.0" prefWidth="635.0">
          <children>
-            <Label fx:id="playerFaction" style="-fx-background-color: blue;" text="Faction">
+            <Label fx:id="playerFaction" prefHeight="55.0" prefWidth="245.0" text="Faction">
                <font>
-                  <Font size="50.0" />
+                  <Font size="45.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="482.0" style="-fx-background-color: blue;" text="Gold: ">
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="55.0" prefWidth="124.0" text="Gold: ">
                <font>
                   <Font size="20.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="61.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: blue;">
+                  <ImageView fitHeight="50.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: blue;">
                      <image>
                         <Image url="@images/gold_pile.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="playerGold" prefHeight="61.0" prefWidth="85.0" style="-fx-background-color: blue;" text="amount">
+            <Label fx:id="playerGold" prefHeight="76.0" prefWidth="111.0" text="amount">
                <font>
                   <Font size="20.0" />
                </font>
