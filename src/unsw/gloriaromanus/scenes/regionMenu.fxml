@@ -48,7 +48,7 @@
          <children>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="leftScrollVbox" prefHeight="378.0" prefWidth="121.0">
+                  <VBox fx:id="leftScrollVbox" prefHeight="627.0" prefWidth="121.0">
                      <children>
                         <Line endX="17.292892456054688" endY="-3.313709020614624" startX="-100.0" visible="false" />
                      </children>
@@ -57,7 +57,7 @@
             </ScrollPane>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="rightScrollVbox" prefHeight="372.0" prefWidth="122.0">
+                  <VBox fx:id="rightScrollVbox" prefHeight="639.0" prefWidth="122.0">
                      <children>
                         <Line endX="14.292892456054688" endY="1.5497207641601562E-6" startX="-100.0" visible="false" />
                      </children>

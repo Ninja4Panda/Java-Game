@@ -4,11 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="600.0" StackPane.alignment="BOTTOM_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.PhaseMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="600.0"  translateY="-100.0" translateX="100.0" StackPane.alignment="BOTTOM_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.PhaseMenuController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -18,6 +21,26 @@
                      <font>
                         <Font size="39.0" />
                      </font>
+                     <graphic>
+                        <Ellipse radiusX="222.0" radiusY="44.0" strokeType="INSIDE">
+                           <fill>
+                              <RadialGradient centerX="0.5280898876404494" centerY="0.5" focusAngle="-66.8" focusDistance="-0.09523809523809523" radius="1.0">
+                                 <stops>
+                                    <Stop color="#ff1f90" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <RadialGradient centerX="0.5280898876404494" centerY="0.5" focusAngle="-66.8" focusDistance="-0.09523809523809523" radius="1.0">
+                                 <stops>
+                                    <Stop color="#271ac4" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </stroke>
+                        </Ellipse>
+                     </graphic>
                   </Label>
                </children>
             </AnchorPane>
