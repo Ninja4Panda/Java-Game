@@ -14,6 +14,6 @@ gradlew*
 /gradle/
 /saves/
 /src/.idea/
-=======
 /saves/
->>>>>>> Game
+/src/unsw/gloriaromanus/initial_province_ownership.json
+
