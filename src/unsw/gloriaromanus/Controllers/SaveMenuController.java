@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,10 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -28,11 +25,9 @@ import org.json.JSONObject;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
 
-import javax.swing.text.LabelView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class SaveMenuController {
     @FXML
@@ -174,7 +169,7 @@ public class SaveMenuController {
      * @param content content of the file
      * @param name save filename
      */
-    private void addSave(File save, String content, String name) throws IOException {
+    private void addSave(File save, String content, String name) {
         //Index for the players
         int size = gridPane.getChildren().size();
 
@@ -182,7 +177,7 @@ public class SaveMenuController {
         HBox box = new HBox();
         GridPane.setRowIndex(box, size);
         box.setOnMouseClicked(e-> {
-            handleBoxClick(save, box, name);
+            handleSaveClick(save, box, name);
         });
         box.setStyle("-fx-cursor: hand;");
         if((size+1)%2==0) box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
@@ -250,7 +245,13 @@ public class SaveMenuController {
         }
     }
 
-    private void handleBoxClick(File save, HBox box, String filename) {
+    /**
+     * Handle when user click on a save
+     * @param save target save
+     * @param box target box
+     * @param filename target filename
+     */
+    private void handleSaveClick(File save, HBox box, String filename) {
         Stage popupStage = new Stage();
         popupStage.initStyle(StageStyle.UNDECORATED);
         popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -325,7 +326,7 @@ public class SaveMenuController {
     }
 
     @FXML
-    void handleBackBtn(ActionEvent e) throws IOException {
+    void handleBackBtn(ActionEvent e) {
         stage.hide();
     }
 }
