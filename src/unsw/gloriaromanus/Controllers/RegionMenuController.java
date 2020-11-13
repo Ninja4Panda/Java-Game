@@ -29,37 +29,37 @@ public class RegionMenuController extends MenuController {
     @FXML 
     private Label wealthMirror;
 
-    @FXML
-    private Label tax;
-
     @FXML 
     private Label taxMirror;
 
-    private int changeToTax;
 
     @FXML
     public void setFirstTaxBracket(){
+        taxMirror.setText("10%");
         taxDropDown.setText("10%");
-        changeToTax = 10;
+        this.getParent().regionConTaxReform(10, leftProvinceLabel.getText());
     }
 
     @FXML
     public void setSecondTaxBracket(){
+        taxMirror.setText("15%");
         taxDropDown.setText("15%");
-        changeToTax = 15;
+        this.getParent().regionConTaxReform(15, leftProvinceLabel.getText());
     }
 
     @FXML
     public void setThirdTaxBracket(){
+        taxMirror.setText("20%");
         taxDropDown.setText("20%");
-        changeToTax = 20;
+        this.getParent().regionConTaxReform(20, leftProvinceLabel.getText());
         
     }
 
     @FXML
     public void setFourthTaxBracket(){
+        taxMirror.setText("25%");
         taxDropDown.setText("25%");
-        changeToTax = 25;
+        this.getParent().regionConTaxReform(25, leftProvinceLabel.getText());
     }
 
     @FXML
@@ -99,10 +99,24 @@ public class RegionMenuController extends MenuController {
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
         }
-        this.getParent().regionConRequest(changeToTax, train, leftProvinceLabel.getText());
+        this.getParent().regionConTrainRequest( train, leftProvinceLabel.getText());
         rightProvinceLabel.setText("New " + leftProvinceLabel.getText());
-        interactionButton.setText("Cancel");
     }
+
+    @FXML
+    private void handleMove() {
+        List<String> moveUnits = new ArrayList<>();
+        for(Unit u : selectedUnits) {
+            moveUnits.add(u.getClassName());
+        }
+        this.getParent().regionMoveRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), moveUnits);
+    }
+
+    @FXML
+    private void handleAttack() {
+        // this.getParent().regionAttackRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), selectedUnits);
+    }
+
 
     public boolean isLeftSelected() {
         return isLeftSelected;
@@ -117,6 +131,8 @@ public class RegionMenuController extends MenuController {
         leftProvinceLabel.setText(region.getName());
         leftScrollVbox.getChildren().clear();
         List<Unit> units = region.getUnits();
+
+
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
@@ -132,23 +148,44 @@ public class RegionMenuController extends MenuController {
             }
         }
         if(Objects.equals(this.getParent().getCurPhase(), "Preparation") ) {
-            handleRightClick("After Train", units);
+            handleRightClick("After Training", units, false);
         }
         wealth.setText(Integer.toString(region.getWealth()));
-        // tax.setText(Integer.toString(region.getTax()));
+        taxDropDown.setText(Integer.toString(region.getTax()));
         wealthMirror.setText(Integer.toString(region.getWealth()));
-        // taxMirror.setText(Integer.toString(region.getTax()));
+        taxMirror.setText(Integer.toString(region.getTax()));
     }
 
-    public void handleRightClick(String name, List<Unit> units) {
+    public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
         rightProvinceLabel.setText(name);
         rightScrollVbox.getChildren().clear();
+        
+        if(units == null) {
+            if(leftUnits == null) {
+                // error msg "please select attacking region first"
+                return;
+            } else {
+            units = new ArrayList<>();
+            units.addAll(leftUnits.values());
+            }
+        }
+       
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                UPC.configure(u, true);
+                if(isEnemy) { 
+                    UPC.configureEnemy(u);
+                    setAttackButton();
+                }else {
+                    UPC.configure(u, true);
+                        if(Objects.equals(this.getParent().getCurPhase(), "Preparation") ) {
+                            setTrainButton();
+                        } else {
+                            setMoveButton();
+                        }
+                }
                 UPC.setParent(this);
                 rightScrollVbox.getChildren().add(root);
                 rightUnits.put(UPC, u);
@@ -157,6 +194,8 @@ public class RegionMenuController extends MenuController {
                 e.printStackTrace();
             }
         }
+
+        
          
         
     }
@@ -165,7 +204,11 @@ public class RegionMenuController extends MenuController {
         selectedUnits.add(unit);
         for(UnitPaneController UPC : rightUnits.keySet() ) {
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
-                UPC.showAmountAdded(unit);
+                if(Objects.equals(this.getParent().getCurPhase(), "Preparation")) {
+                    UPC.showAmountAdded(unit.getTrainAmount());
+                } else {
+                    UPC.showAmountAdded(unit.getCurAmount());
+                }
             }
         }
     }
@@ -185,6 +228,34 @@ public class RegionMenuController extends MenuController {
         leftUnits = new HashMap<>();
         rightUnits = new HashMap<>();
         
+    }
+
+    private void setMoveButton() {
+        interactionButton.setText("Move");
+        interactionButton.setOnAction(event -> handleMove() );
+    }
+
+    private void setAttackButton() {
+        interactionButton.setText("move");
+        interactionButton.setOnAction(event -> handleMove() );
+    }
+
+    private void setTrainButton() {
+        interactionButton.setText("Train");
+        interactionButton.setOnAction(event -> handleInteraction() );
+
+    }
+
+    public void reset() {
+        leftScrollVbox.getChildren().clear();
+        rightScrollVbox.getChildren().clear();
+        leftProvinceLabel.setText("Select Region");
+        rightProvinceLabel.setText("Select Region");
+        if(Objects.equals(this.getParent().getCurPhase(), "Move Phase")) {
+            setAttackButton();
+        } else {
+            setTrainButton();
+        }
     }
 
 }

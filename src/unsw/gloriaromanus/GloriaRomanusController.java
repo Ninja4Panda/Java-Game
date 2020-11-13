@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -56,6 +57,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.util.Pair;
+import unsw.gloriaromanus.Controllers.PhaseMenuController;
 import unsw.gloriaromanus.Controllers.PlayerMenuController;
 import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
@@ -133,7 +135,19 @@ public class GloriaRomanusController{
   }
 
   public void endPhase() {
+    if(currentlySelectedLeftProvince != null) {
+      featureLayer_provinces.unselectFeature(currentlySelectedLeftProvince);
+    } 
+    if(currentlySelectedRightProvince != null) {
+      featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
+    }
     game.endPhase();
+    if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
+      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
+    }
+    if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
+      ((RegionMenuController) controllerParentPairs.get(1).getKey()).reset();
+    }
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
@@ -245,7 +259,6 @@ public class GloriaRomanusController{
         // features - so have to check length of result when handling it
         final ListenableFuture<IdentifyLayerResult> identifyFuture = mapView.identifyLayerAsync(flp,
             screenPoint, 0, false, 25);
-
         // add a listener to the future
         identifyFuture.addDoneListener(() -> {
           try {
@@ -292,7 +305,7 @@ public class GloriaRomanusController{
             System.out.println("InterruptedException occurred");
           }
         });
-      } else if (e.getButton() == MouseButton.SECONDARY) {
+      } else if (e.getButton() == MouseButton.SECONDARY && Objects.equals(game.getCurPhase().toString(), "Move")) {
         // get the screen point where the user clicked or tapped
         Point2D screenPoint = new Point2D(e.getX(), e.getY());
 
@@ -324,28 +337,25 @@ public class GloriaRomanusController{
                 // note maybe best to track whether selected...
                 Feature f = features.get(0);
                 String province = (String)f.getAttributes().get("name");
+                if (currentlySelectedRightProvince != null){
+                  featureLayer.unselectFeature(currentlySelectedRightProvince);
+                }
+                currentlySelectedRightProvince = f;
 
                 if (provinceToOwningFactionMap.get(province).equals(game.getCurFaction())){
                   // province owned by human
-                  if (currentlySelectedRightProvince != null){
-                    featureLayer.unselectFeature(currentlySelectedRightProvince);
-                  }
-                  currentlySelectedRightProvince = f;
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
-                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province));
+                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), false);
                   }
 
-                  featureLayer.selectFeature(f);  
+                  
+                } else {
+                  if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
+                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), true);
+                    
+                  }
                 }
-                // else{
-                //   if (currentlySelectedRightProvince != null){
-                //     featureLayer.unselectFeature(currentlySelectedRightProvince);
-                //   }
-                //   currentlySelectedRightProvince = f;
-                //   if (controllerParentPairs.get(0).getKey() instanceof InvasionMenuController){
-                //     ((InvasionMenuController)controllerParentPairs.get(0).getKey()).setOpponentProvince(province);
-                //   }
-                // }
+                featureLayer.selectFeature(f);
               
               }
 
@@ -442,8 +452,28 @@ public class GloriaRomanusController{
     this.game = game;
   }
 
-  public void regionConRequest(int newtax, List<String> train, String region) {
-    game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
-    game.getCurPlayer().getRegion(region).setTax(newtax);
+  public String regionConTrainRequest(List<String> train, String region) {
+    return game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
+  }
+  public void regionConTaxReform(int newTax, String region) {
+    game.getCurPlayer().getRegion(region).setTax(newTax);
+  }
+
+  public void regionMoveRequest(String origin, String target, List<String> units) {
+    try{
+      game.getCurPhase().move(origin, units,  target);
+
+    }catch (Exception e) {
+      e.printStackTrace(); 
+    }
+  }
+
+  public void regionAttackRequest(String origin, String target, List<String> units ) {
+  //   try {
+  //     // game.invade(origin, units, target, targetFaction);
+  //   } catch (IOException e) {
+  //     e.printStackTrace();
+  //   }
+  // }
   }
 }

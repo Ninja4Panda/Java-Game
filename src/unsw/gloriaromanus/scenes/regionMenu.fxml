@@ -106,7 +106,7 @@
     </VBox>
    <AnchorPane prefHeight="0.0" prefWidth="268.0">
       <children>
-          <Button fx:id="interactionButton" alignment="CENTER" layoutX="121.0" layoutY="-3.0" onAction="#handleInteraction" prefHeight="26.0" prefWidth="117.0" text="Confirm Changes" />
+          <Button fx:id="interactionButton" alignment="CENTER" layoutX="121.0" layoutY="-3.0" onAction="#handleInteraction" prefHeight="26.0" prefWidth="117.0" text="Train" />
       </children>
    </AnchorPane>
 </VBox>
