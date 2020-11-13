@@ -314,7 +314,7 @@ public class Game implements Observer {
         try (FileWriter writer = new FileWriter(file)) {
             //Construct the game json object
             JSONObject gameSave = new JSONObject();
-            gameSave.put("LastPlayed", df.format(today));
+            gameSave.put("SaveTime", df.format(today));
             gameSave.put("Phase", curPhase.toString());
             gameSave.put("Turn", gameTurn.getTurn());
             gameSave.put("Subturn", gameTurn.getSubTurn());
