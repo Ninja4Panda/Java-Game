@@ -160,8 +160,11 @@ public class Region implements Observer {
         if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
             target.setCurMovementPoints(unit.getCurMovementPoints());
         }
-        target.addUnits(unit.getCurAmount());
-        unit.minusUnits(unit.getCurAmount());
+        int amt = unit.getCurAmount();
+        target.addUnits(amt);
+        unit.minusUnits(amt);
+        System.out.println(end.getName()+" "+target.getClassName()+" "+target.getCurAmount()+" "+target.getCurMovementPoints());
+        System.out.println(this.getName()+" "+unit.getClassName()+" "+unit.getCurAmount()+" "+unit.getCurMovementPoints());
     }
 
     /**
@@ -173,25 +176,28 @@ public class Region implements Observer {
      */
     public String move(List<Region> path, List<String> troops, Region target) {
         //Loop through the path and remove
+        String msg = "Movement\n";
+        System.out.println(troops);
         for (Region region: path) {
+            System.out.println(path);
             Iterator<String> it = troops.iterator();
             while(it.hasNext()) {
                 Unit unit = findUnit(it.next());
+                if(region.equals(target)) {
+                    moveTroops(unit, region);
+                    msg += unit.getClassName()+" was moved to "+region.getName()+"\n";
+                    continue;
+                }
                 unit.reduceMovementPoints(4);
                 //Stop when no more MP
                 if(unit.getCurMovementPoints() == 0) {
                     moveTroops(unit, region);
-                    it.remove();
+                    msg += unit.getClassName()+" was moved to "+region.getName()+"\n";
                 }
             }
         }
 
-        //Move the troops that has enough points to move there
-        for(String troop: troops) {
-            Unit unit = findUnit(troop);
-            moveTroops(unit,target);
-        }
-        return "Troops moved";
+        return msg;
     }
 
     /**

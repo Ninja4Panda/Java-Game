@@ -141,7 +141,8 @@ public class GloriaRomanusController{
     if(currentlySelectedRightProvince != null) {
       featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
     }
-    game.endPhase();
+    String msg = game.endPhase();
+    System.out.println(msg);
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
       ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
     }
@@ -280,7 +281,7 @@ public class GloriaRomanusController{
                 Feature f = features.get(0);
                 String province = (String)f.getAttributes().get("name");
 
-                if (provinceToOwningFactionMap.get(province).equals(game.getCurFaction())){
+                if (game.getCurPlayer().getRegion(province)!=null){
                   // province owned by human
                   if (currentlySelectedLeftProvince != null){
                     featureLayer.unselectFeature(currentlySelectedLeftProvince);
@@ -342,7 +343,7 @@ public class GloriaRomanusController{
                 }
                 currentlySelectedRightProvince = f;
 
-                if (provinceToOwningFactionMap.get(province).equals(game.getCurFaction())){
+                if (game.getCurPlayer().getRegion(province)!=null){
                   // province owned by human
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
                     ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), false);
@@ -453,31 +454,34 @@ public class GloriaRomanusController{
   }
 
   public String regionConTrainRequest(List<String> train, String region) {
-    String msg  = game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
+    String msg  = game.train(region, train);
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
     return msg;
   }
+
   public void regionConTaxReform(int newTax, String region) {
     game.getCurPlayer().getRegion(region).setTax(newTax);
   }
 
-  public void regionMoveRequest(String origin, String target, List<String> units) {
+  public String regionMoveRequest(String origin, String target, List<String> units) {
     try{
-      game.getCurPhase().move(origin, units,  target);
+      return game.getCurPhase().move(origin, units,  target);
 
     }catch (Exception e) {
       e.printStackTrace(); 
     }
+    return null;
   }
 
-  public void regionAttackRequest(String origin, String target, List<String> units ) {
-  //   try {
-  //     // game.invade(origin, units, target, targetFaction);
-  //   } catch (IOException e) {
-  //     e.printStackTrace();
-  //   }
-  // }
+  public String regionAttackRequest(String origin, String target, List<String> units ) {
+     try {
+        return game.invade(origin, units, target);
+     } catch (IOException e) {
+       e.printStackTrace();
+     }
+     return null;
   }
+
 }

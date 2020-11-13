@@ -50,13 +50,8 @@ public class MovePhase implements GamePhase {
         List<String> path = findShortestPath(originRegion, targetRegion);
         List<Region> regions = new ArrayList<>();
         for(String name: path) {
-            for (Player player : game.getPlayerList()) {
-                Region subRegion = player.getRegion(name);
-                if (subRegion!=null) {
-                    regions.add(subRegion);
-                    break;
-                }
-            }
+            Region subRegion = game.getCurPlayer().getRegion(name);
+            regions.add(subRegion);
         }
         return curPlayer.move(regions, origin, troops, target);
     }
@@ -79,7 +74,7 @@ public class MovePhase implements GamePhase {
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
-        int movementPoint = findShortestPath(originRegion, targetRegion).size();
+        int movementPoint = findShortestPath(originRegion, targetRegion).size()-4;
         return curPlayer.invade(movementPoint, origin, troops, target);
     }
 

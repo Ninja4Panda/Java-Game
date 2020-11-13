@@ -1,13 +1,10 @@
 package unsw.gloriaromanus.Controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -98,8 +95,22 @@ public class RegionMenuController extends MenuController {
         List<String> train = new ArrayList<>();
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
+            for(UnitPaneController UPC : rightUnits.keySet() ) {
+                if(Objects.equals(rightUnits.get(UPC).getClassName(), u.getClassName())) {
+                    UPC.revertShowAmountAdded(u);
+                }
+            }
+            for(UnitPaneController UPC : leftUnits.keySet() ) {
+                if(Objects.equals(leftUnits.get(UPC).getClassName(), u.getClassName())) {
+                    UPC.revertShowAmountAdded(u);
+                }
+            }
         }
-        this.getParent().regionConTrainRequest( train, leftProvinceLabel.getText());
+
+        selectedUnits.clear();
+        String msg = this.getParent().regionConTrainRequest( train, leftProvinceLabel.getText());
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
+        a.show();
         rightProvinceLabel.setText("New " + leftProvinceLabel.getText());
     }
 
@@ -109,12 +120,22 @@ public class RegionMenuController extends MenuController {
         for(Unit u : selectedUnits) {
             moveUnits.add(u.getClassName());
         }
-        this.getParent().regionMoveRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), moveUnits);
+
+        String msg = this.getParent().regionMoveRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), moveUnits);
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
+        a.setResizable(true);
+        a.show();
     }
 
     @FXML
     private void handleAttack() {
-        // this.getParent().regionAttackRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), selectedUnits);
+        List<String> attackUnits = new ArrayList<>();
+        for(Unit u : selectedUnits) {
+            attackUnits.add(u.getClassName());
+        }
+        String msg = this.getParent().regionAttackRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), attackUnits);
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
+        a.show();
     }
 
 
@@ -220,6 +241,11 @@ public class RegionMenuController extends MenuController {
                 UPC.revertShowAmountAdded(unit);
             }
         }
+        for(UnitPaneController UPC : leftUnits.keySet() ) {
+            if(Objects.equals(leftUnits.get(UPC).getClassName(), unit.getClassName())) {
+                UPC.revertShowAmountAdded(unit);
+            }
+        }
     }
 
     @FXML
@@ -251,6 +277,7 @@ public class RegionMenuController extends MenuController {
         rightScrollVbox.getChildren().clear();
         leftProvinceLabel.setText("Select Region");
         rightProvinceLabel.setText("Select Region");
+        selectedUnits.clear();
         if(Objects.equals(this.getParent().getCurPhase(), "Move Phase")) {
             setAttackButton();
         } else {
