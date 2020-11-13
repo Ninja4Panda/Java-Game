@@ -286,12 +286,11 @@ public class Game implements Observer {
      * @param originRegion origin region initiated the invade
      * @param troops list of troops invading
      * @param targetRegion target region to invade
-     * @param targetFaction target faction to invade
      * @return msg to display
      * @throws IOException
      */
-    public String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
-        return curPhase.invade(originRegion,troops,targetRegion,targetFaction);
+    public String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
+        return curPhase.invade(originRegion,troops,targetRegion);
     }
 
     /**
@@ -352,4 +351,15 @@ public class Game implements Observer {
         curPlayer.addRegion(defeated);
     }
 
+    /**
+     * Find the player from the region
+     * @param region target region
+     * @return the player that owns the region
+     */
+    public Player findPlayer(String region) {
+        for(Player player: playersMap.values()) {
+            if(player.getRegion(region)!=null) return player;
+        }
+        return null;
+    }
 }
