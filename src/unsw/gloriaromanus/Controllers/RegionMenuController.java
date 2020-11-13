@@ -236,8 +236,8 @@ public class RegionMenuController extends MenuController {
     }
 
     private void setAttackButton() {
-        interactionButton.setText("move");
-        interactionButton.setOnAction(event -> handleMove() );
+        interactionButton.setText("Attack");
+        interactionButton.setOnAction(event -> handleAttack() );
     }
 
     private void setTrainButton() {

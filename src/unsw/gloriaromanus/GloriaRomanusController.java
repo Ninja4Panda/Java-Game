@@ -453,7 +453,11 @@ public class GloriaRomanusController{
   }
 
   public String regionConTrainRequest(List<String> train, String region) {
-    return game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
+    String msg  = game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
+    if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
+      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
+    }
+    return msg;
   }
   public void regionConTaxReform(int newTax, String region) {
     game.getCurPlayer().getRegion(region).setTax(newTax);
