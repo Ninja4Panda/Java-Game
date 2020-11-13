@@ -39,6 +39,8 @@ public class UnitPaneController {
 
     @FXML
     public void unitSelected() {
+        System.out.println("S");
+        System.out.println(unitPane.getOnMouseClicked());
         parent.selectUnit(unit);
         unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
         unitPane.setOnMouseClicked(event -> unselectUnit() );
@@ -46,6 +48,7 @@ public class UnitPaneController {
 
     @FXML
     public void unselectUnit() {
+        System.out.println("U");
         parent.deselectUnit(unit);
         unitPane.setStyle("-fx-background-color: #f4f4f4;-fx-border-color:black;-fx-border-width: 5;");
         unitPane.setOnMouseClicked(event -> unitSelected() );

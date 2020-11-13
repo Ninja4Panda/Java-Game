@@ -83,7 +83,11 @@ public class BattleResolver implements Subject {
             double winnersLoss = decider.nextDouble();
             AfterMath(defending.getUnits(), winnersLoss);
 
+            System.out.println(attackingStrength);
+            System.out.println(defendingStrength);
+            System.out.println(defendingWin);
             int randomExtraUnitsLoss = decider.nextInt(100- (int) (defendingWin*100));
+
             double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;
             AfterMath(attackers, losersLoss);
             return "Defenders win";
