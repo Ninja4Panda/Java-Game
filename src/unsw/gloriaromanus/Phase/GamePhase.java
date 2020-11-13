@@ -52,11 +52,10 @@ public interface GamePhase {
      * @param originRegion origin region initiated the invade
      * @param troops list of troops invading
      * @param targetRegion target region to invade
-     * @param targetFaction target faction to invade
      * @return msg to display
      * @throws IOException
      */
-    default String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
+    default String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
         //Shouldn't get to this point
         return "Invalid operation";
     }
