@@ -23,7 +23,7 @@ public class LoadSaveScreen {
 
     public void start() throws IOException {
         //Load new scene into the stage
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("loadSaveMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("saveMenu.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
 

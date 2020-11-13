@@ -1,14 +1,20 @@
 package unsw.gloriaromanus.Controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Faction.*;
@@ -123,30 +129,44 @@ public class ConfigMenuController {
     }
 
     @FXML
-    void handleBackBtn(ActionEvent e) throws IOException {
-        startScreen.start();
+    void handleBackBtn(ActionEvent e) {
+        try {
+            startScreen.start();
+        } catch (IOException error) {
+            //Should this be caught?
+            error.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.NONE, "Cannot go back to main menu!", ButtonType.CLOSE);
+            a.show();
+        }
     }
 
     @FXML
-    void handleStartBtn(ActionEvent e) throws IOException {
-        //Make faction list
-        List<String> factions = new ArrayList<>();
-        for (Node row : gridPane.getChildren()) {
-            HBox box = (HBox)row;
-            ComboBox factionBox = (ComboBox) box.getChildren().get(1);
-            String faction = factionBox.getValue().toString();
+    void handleStartBtn(ActionEvent e) {
+        try {
+            //Make faction list
+            List<String> factions = new ArrayList<>();
+            for (Node row : gridPane.getChildren()) {
+                HBox box = (HBox)row;
+                ComboBox factionBox = (ComboBox) box.getChildren().get(1);
+                String faction = factionBox.getValue().toString();
 
-            //Check if two players has the same faction
-            if(factions.contains(faction)) {
-                Alert a = new Alert(Alert.AlertType.NONE, "Two players cannot have the same factions!", ButtonType.CLOSE);
-                a.show();
-                return;
+                //Check if two players has the same faction
+                if(factions.contains(faction)) {
+                    Alert a = new Alert(Alert.AlertType.NONE, "Two players cannot have the same factions!", ButtonType.CLOSE);
+                    a.show();
+                    return;
+                }
+                factions.add(faction);
             }
-            factions.add(faction);
+            generateOwnership(factions);
+            Game game = new Game(factions);
+            gameScreen.start(game);
+        } catch (IOException error) {
+            //Should this be caught?
+            error.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.NONE, "Cannot start game!", ButtonType.CLOSE);
+            a.show();
         }
-        generateOwnership(factions);
-        Game game = new Game(factions);
-        gameScreen.start(game);
     }
 
     /**

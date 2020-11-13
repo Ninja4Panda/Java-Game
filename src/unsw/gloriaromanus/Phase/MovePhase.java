@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class MovePhase implements GamePhase {
     private Game game;
@@ -45,12 +44,13 @@ public class MovePhase implements GamePhase {
     public String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
+        if(origin==null) return "Cannot move from non-friendly region";
         Region target = curPlayer.getRegion(targetRegion);
 
         List<String> path = findShortestPath(originRegion, targetRegion);
         List<Region> regions = new ArrayList<>();
         for(String name: path) {
-            for (Player player : game.getPlayersMap().values()) {
+            for (Player player : game.getPlayerList()) {
                 Region subRegion = player.getRegion(name);
                 if (subRegion!=null) {
                     regions.add(subRegion);
@@ -66,17 +66,16 @@ public class MovePhase implements GamePhase {
      * @param originRegion origin region initiated the invade
      * @param troops list of troops invading
      * @param targetRegion target region to invade
-     * @param targetFaction target faction to invade
      * @return msg to display
      * @throws IOException
      */
-    public String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
+    public String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
+        if(origin==null) return "Cannot initiate attack from non-friendly region";
 
         //Obtain target player object
-        Map<String, Player> playersMap = game.getPlayersMap();
-        Player targetPlayer = playersMap.get(targetFaction);
+        Player targetPlayer = game.findPlayer(targetRegion);
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
