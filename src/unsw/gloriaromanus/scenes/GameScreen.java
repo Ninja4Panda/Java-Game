@@ -1,17 +1,12 @@
 package unsw.gloriaromanus.scenes;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -52,9 +47,9 @@ public class GameScreen {
         gameStage.show();
 
         //Popup stage for the pause menu
-        loader = new FXMLLoader(getClass().getResource("escMenu.fxml"));
+        loader = new FXMLLoader(getClass().getResource("pauseMenu.fxml"));
         Stage popupStage = new Stage(StageStyle.UNDECORATED);
-        loader.setController(new EscMenuController(root, popupStage));
+        loader.setController(new EscMenuController(root, popupStage, game));
         Parent pauseMenu = loader.load();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.initOwner(gameStage);

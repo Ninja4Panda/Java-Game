@@ -4,10 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import unsw.gloriaromanus.scenes.ConfigScreen;
-import unsw.gloriaromanus.scenes.GameScreen;
-import unsw.gloriaromanus.scenes.LoadSaveScreen;
-import unsw.gloriaromanus.scenes.StartScreen;
+import unsw.gloriaromanus.scenes.*;
 
 public class GloriaRomanusApplication extends Application {
   private GloriaRomanusController controller;
