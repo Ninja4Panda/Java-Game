@@ -126,8 +126,8 @@ public class UnitTest{
     @Test
     public void moveTroopsTest() {
         List<String> factions = new ArrayList<>();
+        factions.add("Carthage");
         factions.add("Rome");
-        factions.add("Gaul");
         try {
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();

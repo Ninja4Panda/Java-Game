@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class MovePhase implements GamePhase {
     private Game game;
@@ -51,7 +50,7 @@ public class MovePhase implements GamePhase {
         List<String> path = findShortestPath(originRegion, targetRegion);
         List<Region> regions = new ArrayList<>();
         for(String name: path) {
-            for (Player player : game.getPlayersMap().values()) {
+            for (Player player : game.getPlayerList()) {
                 Region subRegion = player.getRegion(name);
                 if (subRegion!=null) {
                     regions.add(subRegion);
