@@ -8,7 +8,8 @@
     "Lugdunensis",
     "I",
     "Sardinia et Corsica",
-    "II"
+    "II",
+    "Narbonensis"
   ],
   "Gaul": [
     "Lycia et Pamphylia",
@@ -25,12 +26,12 @@
     "VII",
     "V",
     "Lusitania",
-    "Narbonensis",
     "Syria",
     "Pannonia Superior",
     "Iudaea",
     "Pannonia Inferior",
-    "Mauretania Caesariensis"
+    "Mauretania Caesariensis",
+    "Belgica"
   ],
   "Celts": [
     "Achaia",
@@ -61,7 +62,6 @@
     "X",
     "Alpes Cottiae",
     "Bithynia et Pontus",
-    "Armenia Mesopotamia",
-    "Belgica"
+    "Armenia Mesopotamia"
   ]
 }
