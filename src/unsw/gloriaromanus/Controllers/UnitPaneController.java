@@ -1,5 +1,7 @@
 package unsw.gloriaromanus.Controllers;
 
+import java.util.Objects;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -57,9 +59,11 @@ public class UnitPaneController {
         this.parent = parent;
     }
 
-    public void showAmountAdded(Unit unit) {
-        setAmount("Amount : " + Integer.toString(unit.getCurAmount()) + " + " + Integer.toString(unit.getTrainAmount()));
-        unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
+    public void showAmountAdded(int amount) {
+        if(!Objects.equals(unitName.getText(), "???")) {
+            setAmount("Amount : " + Integer.toString(unit.getCurAmount()) + " + " + amount);
+            unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
+        }
     }
 
     public void setAmount(String msg) {
@@ -82,6 +86,17 @@ public class UnitPaneController {
             unitPane.setOnMouseClicked(event -> unitSelected());
         }
         unitAmount.setText("Amount : " + Integer.toString(unit.getCurAmount()));
+        setImage(unit.getClassName());
+       
+    }
+
+    public void configureEnemy(Unit unit) {
+        unitName.setText("???");
+        unitHealth.setText("HP : ???");
+        unitAttack.setText("Attack : ???" );
+        unitArmour.setText("Armour : ???");
+        unitMoveSpeed.setText("MS : ???");
+        unitAmount.setText("Amount : ???");
         setImage(unit.getClassName());
        
     }
