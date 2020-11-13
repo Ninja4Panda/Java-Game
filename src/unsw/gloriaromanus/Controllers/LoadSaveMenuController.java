@@ -59,7 +59,7 @@ public class LoadSaveMenuController {
                 String content = Files.readString(save.toPath());
                 addSave(save, content, name);
             } catch (JSONException e) {
-                //Corrupted file
+                //Skipp corrupted file
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -73,14 +73,14 @@ public class LoadSaveMenuController {
      * @param content content of the file
      * @param name save filename
      */
-    private void addSave(File save, String content, String name) throws IOException {
+    private void addSave(File save, String content, String name) {
         //Index for the players
         int size = gridPane.getChildren().size();
 
         //Hbox container
         HBox box = new HBox();
         GridPane.setRowIndex(box, size);
-        box.setOnMouseClicked(e->handleBoxClick(save.getAbsolutePath()));
+        box.setOnMouseClicked(e-> handleSaveClick(save.getAbsolutePath()));
         box.setStyle("-fx-cursor: hand;");
         if((size+1)%2==0) box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
@@ -144,7 +144,7 @@ public class LoadSaveMenuController {
      * Handles when a save is clicked
      * @param configFile path to config file
      */
-    private void handleBoxClick(String configFile) {
+    private void handleSaveClick(String configFile) {
         try {
             Game game = new Game(configFile);
             gameScreen.start(game);
