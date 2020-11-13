@@ -29,7 +29,7 @@ public class Game implements Observer {
     private GamePhase curPhase;
     private GameTurn gameTurn;
     private Player curPlayer;
-    private Map<String, Player> playersMap; //Key:Faction Name, Value:Player object
+    private List<Player> playerList;
     private Check campaignWinCond;
 
     public Game (List<String> factions) throws IOException {
@@ -40,7 +40,7 @@ public class Game implements Observer {
         //Set up the fields
         preparationPhase = new PreparationPhase(this);
         movePhase = new MovePhase(this);
-        playersMap = new LinkedHashMap<>();
+        playerList = new ArrayList<>();
         curPhase = preparationPhase;
         gameTurn = new GameTurn(0,0, factions.size());
 
@@ -63,7 +63,7 @@ public class Game implements Observer {
             //Create new players
             Player player = new Player(regionMap, faction, gameTurn);
             if(curPlayer == null) curPlayer = player;
-            playersMap.put(faction, player);
+            playerList.add(player);
         }
 
         //Make new win condition
@@ -86,7 +86,7 @@ public class Game implements Observer {
         //Set up the fields
         preparationPhase = new PreparationPhase(this);
         movePhase = new MovePhase(this);
-        playersMap = new LinkedHashMap<>();
+        playerList = new ArrayList<>();
 
         //Read state of game from config file
         String content = Files.readString(Paths.get(configFile));
@@ -128,7 +128,7 @@ public class Game implements Observer {
             if(subTurn == i) curPlayer = player;
 
             //Map each faction name to the player Object
-            playersMap.put(faction, player);
+            playerList.add(player);
         }
         if(curPlayer == null) throw new JSONException("Corrupted config: Invalid Subturn");
     }
@@ -164,8 +164,8 @@ public class Game implements Observer {
     /**
      * @return hashmap of players
      */
-    public Map<String, Player> getPlayersMap() {
-        return playersMap;
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
     /**
@@ -188,8 +188,8 @@ public class Game implements Observer {
      * See GameTurn class for more details
      */
     public void nextPlayerTurn() {
-        Iterator<Player> it = playersMap.values().iterator();
-        Player firstPlayer = (Player)playersMap.values().toArray()[0];
+        Iterator<Player> it = playerList.iterator();
+        Player firstPlayer = playerList.get(0);
 
         while (it.hasNext()) {
             Player player = it.next();
@@ -199,6 +199,7 @@ public class Game implements Observer {
                 break;
             }
         }
+
         gameTurn.nextTurn();
     }
 
@@ -232,7 +233,7 @@ public class Game implements Observer {
     private String checkPlayerStatus() {
         if(curPlayer.getAllRegions().size()==0){
             gameTurn.removePlayer();
-            playersMap.remove(curPlayer.getFaction());
+            playerList.remove(curPlayer);
             return "You Lose";
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
@@ -241,7 +242,7 @@ public class Game implements Observer {
                 return "You Win! Game is saved!";
             } catch(IOException e) {
                 e.printStackTrace();
-                return "Cannot save game!";
+                return "You win! But game cannot be saved!";
             }
         }
         return null;
@@ -286,12 +287,11 @@ public class Game implements Observer {
      * @param originRegion origin region initiated the invade
      * @param troops list of troops invading
      * @param targetRegion target region to invade
-     * @param targetFaction target faction to invade
      * @return msg to display
      * @throws IOException
      */
-    public String invade(String originRegion, List<String> troops, String targetRegion, String targetFaction) throws IOException {
-        return curPhase.invade(originRegion,troops,targetRegion,targetFaction);
+    public String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
+        return curPhase.invade(originRegion,troops,targetRegion);
     }
 
     /**
@@ -314,7 +314,7 @@ public class Game implements Observer {
         try (FileWriter writer = new FileWriter(file)) {
             //Construct the game json object
             JSONObject gameSave = new JSONObject();
-            gameSave.put("LastPlayed", df.format(today));
+            gameSave.put("SaveTime", df.format(today));
             gameSave.put("Phase", curPhase.toString());
             gameSave.put("Turn", gameTurn.getTurn());
             gameSave.put("Subturn", gameTurn.getSubTurn());
@@ -322,7 +322,7 @@ public class Game implements Observer {
 
             //Construct the players json array
             JSONArray playerSave = new JSONArray();
-            for (Player player : playersMap.values()) {
+            for (Player player : playerList) {
                 playerSave.put(player.getSave());
             }
 
@@ -346,16 +346,21 @@ public class Game implements Observer {
     private void changeOwnership() {
         BattleResolver resolver = BattleResolver.getINSTANCE();
         Region defeated = resolver.getDefender();
-        for(Player player: playersMap.values()) {
+        for(Player player: playerList) {
             if(player.removeRegion(defeated)) break;
         }
         curPlayer.addRegion(defeated);
     }
+
     /**
-     * Method forwarder; calls Player.getFaction
-     * @return gets the current players faction name
+     * Find the player from the region
+     * @param region target region
+     * @return the player that owns the region
      */
-    public String getCurFaction() {
-        return curPlayer.getFaction();
+    public Player findPlayer(String region) {
+        for(Player player: playerList) {
+            if(player.getRegion(region)!=null) return player;
+        }
+        return null;
     }
 }
