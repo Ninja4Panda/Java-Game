@@ -162,6 +162,13 @@ public class Game implements Observer {
     }
 
     /**
+     * @return current player faction
+     */
+    public String getCurFaction() {
+        return curPlayer.getFaction().toString();
+    }
+
+    /**
      * @return hashmap of players
      */
     public List<Player> getPlayerList() {
