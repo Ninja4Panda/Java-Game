@@ -167,7 +167,7 @@ public class UnitTest{
             game.endPhase();
             game.endPhase();
             game.endPhase();
-            String result = game.invade("Lusitania", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lusitania", atkUnits, "Baetica");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
 
         } catch (IOException e) {
@@ -212,7 +212,7 @@ public class UnitTest{
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.invade("Lugdunensis", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Baetica");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -256,7 +256,7 @@ public class UnitTest{
             game.endPhase();
             //Player1
             game.endPhase();
-            String result = game.invade("Lugdunensis", atkUnits, "Baetica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Baetica");
             assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,8 +266,8 @@ public class UnitTest{
     @Test
     public void attackNotAdjacentTest() {
         List<String> factions = new ArrayList<>();
+        factions.add("Carthage");
         factions.add("Rome");
-        factions.add("Gaul");
         try {
             Game game = new Game(factions);
             List<String> atkUnits = new ArrayList<>();
@@ -286,7 +286,7 @@ public class UnitTest{
 
             //Player1
             game.endPhase();
-            String result = game.invade("Lugdunensis", atkUnits, "Belgica", "Gaul");
+            String result = game.invade("Lugdunensis", atkUnits, "Belgica");
 //            assertTrue("Defenders win".equals(result) || "Attackers win".equals(result));
         } catch (IOException e) {
             e.printStackTrace();
@@ -441,7 +441,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/invadeTest.json");
             List<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            game.invade("Cyprus", troops, "Cilicia", "Egypt");
+            game.invade("Cyprus", troops, "Cilicia");
 
             game.save("invadeOutput");
 
@@ -496,7 +496,7 @@ public class UnitTest{
             Game game = new Game("src/test/resources/loseByNoRegionTest.json");
             ArrayList<String> troops = new ArrayList<>();
             troops.add("Spearman");
-            game.invade("Lusitania", troops, "Baetica", "Gaul");
+            game.invade("Lusitania", troops, "Baetica");
             game.endPhase();
             assertEquals(game.endPhase(),"You Lose");
             game.save("loseByNoRegionOutput");
