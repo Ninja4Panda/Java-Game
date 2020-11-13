@@ -61,6 +61,7 @@ import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
 import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.units.Unit;
 
 public class GloriaRomanusController{
 
@@ -142,37 +143,6 @@ public class GloriaRomanusController{
    return game.getCurPhase().toString();
  }
 
-  // public void clickedInvadeButton(ActionEvent e) throws IOException {
-  //   if (currentlySelectedLeftProvince != null && currentlySelectedRightProvince != null){
-  //     String humanProvince = (String)currentlySelectedLeftProvince.getAttributes().get("name");
-  //     String enemyProvince = (String)currentlySelectedRightProvince.getAttributes().get("name");
-  //     if (confirmIfProvincesConnected(humanProvince, enemyProvince)){
-  //       // TODO = have better battle resolution than 50% chance of winning
-  //       Random r = new Random();
-  //       int choice = r.nextInt(2);
-  //       if (choice == 0){
-  //         // human won. Transfer 40% of troops of human over. No casualties by human, but enemy loses all troops
-  //         int numTroopsToTransfer = provinceToNumberTroopsMap.get(humanProvince)*2/5;
-  //         provinceToNumberTroopsMap.put(enemyProvince, numTroopsToTransfer);
-  //         provinceToNumberTroopsMap.put(humanProvince, provinceToNumberTroopsMap.get(humanProvince)-numTroopsToTransfer);
-  //         provinceToOwningFactionMap.put(enemyProvince, humanFaction);
-  //         printMessageToTerminal("Won battle!");
-  //       }
-  //       else{
-  //         // enemy won. Human loses 60% of soldiers in the province
-  //         int numTroopsLost = provinceToNumberTroopsMap.get(humanProvince)*3/5;
-  //         provinceToNumberTroopsMap.put(humanProvince, provinceToNumberTroopsMap.get(humanProvince)-numTroopsLost);
-  //         printMessageToTerminal("Lost battle!");
-  //       }
-  //       resetSelections();  // reset selections in UI
-  //       addAllPointGraphics(); // reset graphics
-  //     }
-  //     else{
-  //       printMessageToTerminal("Provinces not adjacent, cannot invade!");
-  //     }
-
-  //   }
-  // }
 
   /**
    * run this initially to update province owner, change feature in each
@@ -304,7 +274,7 @@ public class GloriaRomanusController{
                   }
                   currentlySelectedLeftProvince = f;
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
-                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleLeftClick(province, game.displayRegion(province));
+                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleLeftClick(game.getCurPlayer().getRegion(province));
                   }
                   featureLayer.selectFeature(f);                
 
@@ -470,5 +440,10 @@ public class GloriaRomanusController{
 
   public void setGame(Game game) {
     this.game = game;
+  }
+
+  public void regionConRequest(int newtax, List<String> train, String region) {
+    game.getCurPlayer().train( game.getCurPlayer().getRegion(region), train );
+    game.getCurPlayer().getRegion(region).setTax(newtax);
   }
 }

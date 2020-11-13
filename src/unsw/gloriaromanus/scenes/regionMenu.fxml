@@ -3,11 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Background?>
 <?import javafx.scene.layout.BackgroundFill?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
@@ -30,17 +33,51 @@
         </Background>
     </background>
     <HBox>
-        <VBox>
-            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Province" textFill="#ee27b2" wrapText="true">
+        <VBox fx:id="headerVboxLeft">
+            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="182.0" text="Province" textFill="#ee27b2" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
+         <HBox prefHeight="36.0" prefWidth="182.0">
+            <children>
+               <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" style="-fx-background-color: grey;">
+                  <children>
+                     <Label layoutY="17.0" text="Wealth : " />
+                     <Label fx:id="wealthMirror" layoutX="58.0" layoutY="17.0" text="int" />
+                     <Label layoutX="91.0" layoutY="17.0" text="Tax :" />
+                     <Label fx:id="taxMirror" layoutX="123.0" layoutY="17.0" text="0" />
+                  </children>
+               </Pane>
+            </children>
+         </HBox>
         </VBox>
-        <VBox>
+        <VBox fx:id="headerVboxRight">
             <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Province" textFill="#1a0017" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
+         <HBox prefHeight="36.0" prefWidth="182.0">
+            <children>
+               <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" style="-fx-background-color: grey;">
+                  <children>
+                     <MenuButton fx:id="taxDropDown" layoutX="122.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="0">
+                        <items>
+                           <MenuItem mnemonicParsing="false" onAction="#setFirstTaxBracket" text="10%" />
+                           <MenuItem mnemonicParsing="false" onAction="#setSecondTaxBracket" text="15%" />
+                           <MenuItem mnemonicParsing="false" onAction="#setThirdTaxBracket" text="20%" />
+                           <MenuItem mnemonicParsing="false" onAction="#setFourthTaxBracket" text="25%" />
+                        </items>
+                        <font>
+                           <Font size="10.0" />
+                        </font>
+                     </MenuButton>
+                     <Label layoutY="17.0" text="Wealth : " />
+                     <Label layoutX="86.0" layoutY="17.0" text="Tax :" />
+                     <Label fx:id="wealth" layoutX="55.0" layoutY="17.0" text="int" />
+                  </children>
+               </Pane>
+            </children>
+         </HBox>
         </VBox>
     </HBox>
     <VBox>
@@ -69,7 +106,7 @@
     </VBox>
    <AnchorPane prefHeight="0.0" prefWidth="268.0">
       <children>
-          <Button fx:id="interactionButton" alignment="CENTER" layoutX="163.0" layoutY="-6.0" onAction="#handleInteraction" prefWidth="54.0" text="Move" />
+          <Button fx:id="interactionButton" alignment="CENTER" layoutX="121.0" layoutY="-3.0" onAction="#handleInteraction" prefHeight="26.0" prefWidth="117.0" text="Confirm Changes" />
       </children>
    </AnchorPane>
 </VBox>
