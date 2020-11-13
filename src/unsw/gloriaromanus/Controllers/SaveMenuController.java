@@ -1,5 +1,6 @@
 package unsw.gloriaromanus.Controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -20,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +87,9 @@ public class SaveMenuController {
         }
     }
 
+    /**
+     * Handle the new save button by creating a modal
+     */
     private void handleNewSave() {
         Stage popupStage = new Stage();
         popupStage.initStyle(StageStyle.UNDECORATED);
@@ -116,7 +121,6 @@ public class SaveMenuController {
         HBox col = new HBox();
         row.getChildren().add(col);
         col.setAlignment(Pos.CENTER);
-
 
         //Save Btn
         Button save = new Button("Save");
@@ -177,7 +181,9 @@ public class SaveMenuController {
         //Hbox container
         HBox box = new HBox();
         GridPane.setRowIndex(box, size);
-        box.setOnMouseClicked(e->handleBoxClick(save.getAbsolutePath()));
+        box.setOnMouseClicked(e-> {
+            handleBoxClick(save, box, name);
+        });
         box.setStyle("-fx-cursor: hand;");
         if((size+1)%2==0) box.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
@@ -215,30 +221,107 @@ public class SaveMenuController {
 
         //Delete save button
         Button close = new Button("Delete Save");
-        close.setOnAction(e-> {
-            save.delete();
-            //Remove target row
-            int target = GridPane.getRowIndex(box);
-            gridPane.getChildren().remove(target);
-            //Reset the row index
-            for (int i = target; i<gridPane.getChildren().size(); i++) {
-                HBox child = (HBox) gridPane.getChildren().get(i);
-                GridPane.setRowIndex(child, i);
-                if((i+1)%2==0) {
-                    child.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-                } else {
-                    child.setBackground(null);
-                }
-            }
-        });
+        close.setOnAction(e-> deleteSave(save, box));
         HBox.setMargin(close, new Insets(20, 20, 20, 20));
         box.getChildren().add(close);
 
         gridPane.getChildren().add(box);
     }
 
-    private void handleBoxClick(String absolutePath) {
+    /**
+     * Delete a save
+     * @param save target save
+     * @param box box containers
+     */
+    private void deleteSave(File save, HBox box) {
+        save.delete();
+        //Remove target row
+        int target = GridPane.getRowIndex(box);
+        gridPane.getChildren().remove(target);
+        //Reset the row index
+        for (int i = target; i<gridPane.getChildren().size(); i++) {
+            HBox child = (HBox) gridPane.getChildren().get(i);
+            GridPane.setRowIndex(child, i);
+            if((i+1)%2==0) {
+                child.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+            } else {
+                child.setBackground(null);
+            }
+        }
+    }
 
+    private void handleBoxClick(File save, HBox box, String filename) {
+        Stage popupStage = new Stage();
+        popupStage.initStyle(StageStyle.UNDECORATED);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.initOwner(stage);
+
+        VBox row = new VBox();
+        row.setSpacing(15);
+        row.setAlignment(Pos.CENTER);
+
+        //Title
+        Label title = new Label();
+        title.setText("Are you sure u would like to overwrite this save?");
+        title.setStyle("-fx-font-size: 24;");
+        row.getChildren().add(title);
+
+        //Hbox container
+        HBox col = new HBox();
+        row.getChildren().add(col);
+        col.setAlignment(Pos.CENTER);
+
+        //Yes btn
+        Button yes = new Button("Yes");
+        yes.setPrefSize(143,45);
+        HBox.setMargin(yes, new Insets(20, 20, 20, 20));
+        yes.setOnAction(event-> {
+            try {
+                deleteSave(save, box);
+                //Overwrite the save file
+                game.save(filename);
+
+                //Add the save to the gridPane
+                File dir = new File(".","saves");
+                dir.mkdir();
+                File file = new File(dir, filename.concat(".json"));
+                String content = Files.readString(file.toPath());
+                addSave(file, content, filename);
+            } catch (IOException error) {
+                error.printStackTrace();
+
+                //Modal
+                Stage errorStage = new Stage();
+                errorStage.initStyle(StageStyle.UNDECORATED);
+                errorStage.initModality(Modality.APPLICATION_MODAL);
+                errorStage.initOwner(stage);
+
+                //Error msg
+                Label errorMsg = new Label();
+                errorMsg.setText("Failed to create save!");
+                errorMsg.setStyle("-fx-font-size: 24; -fx-text-fill: red");
+                errorStage.setScene(new Scene(errorMsg));
+                errorStage.show();
+
+                //Auto close after 5sec
+                PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                delay.setOnFinished(e->errorStage.hide());
+                delay.play();
+            } finally {
+                popupStage.hide();
+            }
+        });
+        col.getChildren().add(yes);
+
+        //Cancel btn
+        Button cancel = new Button("Cancel");
+        cancel.setPrefSize(143,45);
+        cancel.setOnAction(event->popupStage.hide());
+        HBox.setMargin(cancel, new Insets(20, 20, 20, 20));
+        col.getChildren().add(cancel);
+
+        popupStage.setScene(new Scene(row));
+        popupStage.show();
     }
 
     @FXML
