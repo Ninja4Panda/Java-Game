@@ -1,11 +1,9 @@
 package unsw.gloriaromanus.Controllers;
 
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import unsw.gloriaromanus.units.Unit;
 
@@ -35,15 +33,18 @@ public class UnitPaneController {
     private Pane unitPane;
 
     private RegionMenuController parent;
+    private Unit unit;
 
     @FXML
     public void unitSelected() {
+        parent.selectUnit(unit);
         unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
         unitPane.setOnMouseClicked(event -> unselectUnit() );
     }
 
     @FXML
     public void unselectUnit() {
+        parent.deselectUnit(unit);
         unitPane.setStyle("-fx-background-color: #f4f4f4;-fx-border-color:black;-fx-border-width: 5;");
         unitPane.setOnMouseClicked(event -> unitSelected() );
     }
@@ -56,15 +57,37 @@ public class UnitPaneController {
         this.parent = parent;
     }
 
-    public void configure(Unit unit) {
+    public void showAmountAdded(Unit unit) {
+        setAmount("Amount : " + Integer.toString(unit.getCurAmount()) + " + " + Integer.toString(unit.getTrainAmount()));
+        unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
+    }
+
+    public void setAmount(String msg) {
+        unitAmount.setText(msg);
+    }
+
+    public void revertShowAmountAdded(Unit unit) {
+        unitAmount.setText("Amount : " + Integer.toString(unit.getCurAmount()) );
+        unitPane.setStyle("-fx-background-color: #f4f4f4; -fx-border-color:black;-fx-border-width: 5;");
+    }
+
+    public void configure(Unit unit, boolean isRightPanel) {
+        this.unit = unit;
         unitName.setText(unit.getClassName());
         unitHealth.setText("HP : " + Integer.toString(unit.getHealth()));
         unitAttack.setText("Attack : " + Integer.toString(unit.getAttackValue()));
         unitArmour.setText("Armour : " + Integer.toString(unit.getDefenseSkill()));
         unitMoveSpeed.setText("MS : " + Integer.toString(unit.getCurMovementPoints()));
+        if(!isRightPanel) {
+            unitPane.setOnMouseClicked(event -> unitSelected());
+        }
         unitAmount.setText("Amount : " + Integer.toString(unit.getCurAmount()));
+        setImage(unit.getClassName());
+       
+    }
 
-        switch (unit.getClassName()) {
+    private void setImage(String unit) {
+        switch (unit) {
             case "Archerman":
                 unitImage.setImage(new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/ArcherMan/Archer_Man_NB.png")));
                 
@@ -88,7 +111,5 @@ public class UnitPaneController {
                 break;
         }
     }
-
-
 
 }
