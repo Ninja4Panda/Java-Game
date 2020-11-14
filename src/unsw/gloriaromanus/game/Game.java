@@ -200,6 +200,7 @@ public class Game implements Observer {
             Player player = it.next();
             //Set current player to next player
             if(player.equals(curPlayer)) {
+                System.out.println(curPlayer.getFaction());
                 curPlayer = it.hasNext()? it.next():firstPlayer;
                 break;
             }

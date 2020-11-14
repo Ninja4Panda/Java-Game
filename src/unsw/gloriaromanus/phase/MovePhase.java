@@ -86,6 +86,7 @@ public class MovePhase implements GamePhase {
         Region target = targetPlayer.getRegion(targetRegion);
 
         List<String> path = findShortestPath(originRegion, targetRegion);
+        if(path==null) return "No path found\n";
         return curPlayer.invade(path, origin, troops, target);
     }
 
