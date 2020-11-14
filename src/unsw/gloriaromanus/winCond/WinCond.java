@@ -1,5 +1,7 @@
 package unsw.gloriaromanus.winCond;
 
+import java.io.InputStream;
+
 import unsw.gloriaromanus.game.Player;
 
 public interface WinCond {
@@ -11,4 +13,5 @@ public interface WinCond {
         return classNameParts[classNameParts.length - 1];
     
     }
+    public InputStream getImage();
 }
