@@ -196,14 +196,14 @@ public class Region implements Observer {
                 Unit unit = findUnit(it.next());
                 if(region.equals(target)) {
                     moveTroops(unit, region);
-                    msg += unit.getClassName()+" was moved to "+region.getName()+"\n";
+                    msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
                     continue;
                 }
                 unit.reduceMovementPoints(4);
                 //Stop when no more MP
                 if(unit.getCurMovementPoints() == 0) {
                     moveTroops(unit, region);
-                    msg += unit.getClassName()+" was moved to "+region.getName()+"\n";
+                    msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
                 }
             }
         }

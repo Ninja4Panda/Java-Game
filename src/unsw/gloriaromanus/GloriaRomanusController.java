@@ -76,7 +76,9 @@ import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
 import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.Phase.GamePhase;
 import unsw.gloriaromanus.Phase.MovePhase;
+import unsw.gloriaromanus.Phase.PreparationPhase;
 import unsw.gloriaromanus.units.Unit;
 
 public class GloriaRomanusController{
@@ -104,8 +106,6 @@ public class GloriaRomanusController{
   private FeatureLayer featureLayer_provinces;
 
   private Game game;
-
-  private String log="";
 
   @FXML
   private void initialize() throws JsonParseException, JsonMappingException, IOException, InterruptedException {
@@ -158,16 +158,21 @@ public class GloriaRomanusController{
       featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
     }
 
-    if(game.getCurPhase() instanceof MovePhase) log = "";
+    //Display message
+    //TODO:LOG
     String msg = game.endPhase();
-    log += msg;
     showSummary(msg);
 
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
       ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
     }
     if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
-      ((RegionMenuController) controllerParentPairs.get(1).getKey()).reset();
+      RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
+      regionControl.reset();
+      if(game.getCurPhase() instanceof PreparationPhase) {
+        regionControl.clearLog();
+        regionControl.addLog(msg);
+      }
     }
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
@@ -201,14 +206,14 @@ public class GloriaRomanusController{
     double height = primaryScreenBounds.getHeight();
     popupStage.setScene(new Scene(row, width*0.5, height*0.5));
     popupStage.show();
-    //Auto close after 3sec
-    PauseTransition delay = new PauseTransition(Duration.seconds(3));
+    //Auto close after 1sec
+    PauseTransition delay = new PauseTransition(Duration.seconds(1));
     delay.setOnFinished(e->popupStage.hide());
     delay.play();
   }
 
-  public String getCurPhase() {
-   return game.getCurPhase().toString();
+  public GamePhase getCurPhase() {
+   return game.getCurPhase();
  }
 
 
