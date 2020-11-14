@@ -207,7 +207,7 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/ExampleLegion.png" />
+                              <Image url="@images/CS2511Sprites_No_Background/Cannon/Cannon_NB.png" />
                            </image>
                         </ImageView>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Conquest goal - Conquering all territories.">
@@ -241,10 +241,10 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/CS2511Sprites_No_Background/Terrain%20and%20Buildings/Walls/Wood/Horizontal%20Wooden%20Wall_NB.png" />
+                              <Image url="@images/CS2511Sprites_No_Background/Terrain%20and%20Buildings/Buildings/Market/Market_NB.png" />
                            </image>
                         </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wealth goal - Accumulating faction wealth of 400,000 gold.">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wealth goal - Accumulating faction wealth of 400,000.">
                            <font>
                               <Font size="15.0" />
                            </font>

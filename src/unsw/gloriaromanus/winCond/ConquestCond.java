@@ -20,6 +20,6 @@ public class ConquestCond implements WinCond{
     }
     @Override
     public InputStream getImage() {
-        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Terrain and Buildings/Walls/Wood/Horizontal Wooden Wall_NB.png");
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Cannon/Cannon_NB.png");
     } 
 }
