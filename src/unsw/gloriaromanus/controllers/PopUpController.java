@@ -1,10 +1,8 @@
 package unsw.gloriaromanus.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 
 public class PopUpController {
     @FXML
@@ -16,7 +14,7 @@ public class PopUpController {
     }
 
     @FXML
-    void handleBackBtn(ActionEvent e) {
+    void handleBackBtn() {
         stage.hide();
     }
 }
