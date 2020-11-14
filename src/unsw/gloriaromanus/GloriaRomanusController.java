@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -57,7 +55,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -75,11 +72,10 @@ import unsw.gloriaromanus.Controllers.PlayerMenuController;
 import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
-import unsw.gloriaromanus.Game.Player;
 import unsw.gloriaromanus.Phase.GamePhase;
 import unsw.gloriaromanus.Phase.MovePhase;
 import unsw.gloriaromanus.Phase.PreparationPhase;
-import unsw.gloriaromanus.units.Unit;
+
 
 public class GloriaRomanusController{
 
@@ -158,6 +154,7 @@ public class GloriaRomanusController{
   }
 
   public void endPhase() {
+    //Resets the left & right province selection & all related children
     resetSelections();
 
     //Display message
@@ -469,6 +466,9 @@ public class GloriaRomanusController{
     return "(" + String.join(" OR ", l) + ")";
   }
 
+  /**
+   * Reset left & right provinces selection and region info bar
+   */
   public void resetSelections(){
     if(currentlySelectedLeftProvince!=null) {
       featureLayer_provinces.unselectFeature(currentlySelectedLeftProvince);

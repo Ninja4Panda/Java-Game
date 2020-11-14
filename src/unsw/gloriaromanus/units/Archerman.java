@@ -1,6 +1,9 @@
 package unsw.gloriaromanus.units;
 
+import javafx.scene.image.Image;
 import unsw.gloriaromanus.units.attack.Range;
+
+import java.io.InputStream;
 
 public class Archerman extends Unit {
     public Archerman() {
@@ -20,5 +23,10 @@ public class Archerman extends Unit {
         // 10 health and maxhealth
         // 5 range
         // 0 defense skill and shieldDefense
+    }
+
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/ArcherMan/Archer_Man_NB.png");
     }
 }

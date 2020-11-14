@@ -2,6 +2,8 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Range;
 
+import java.io.InputStream;
+
 public class Slingerman extends Unit {
     public Slingerman() {
         this(15,0);
@@ -20,5 +22,10 @@ public class Slingerman extends Unit {
         // 5 health and maxhealth
         // 4 range
         // 5 defense skill and shieldDefense
+    }
+
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Slingerman/Slinger_Man_NB.png");
     }
 }

@@ -2,6 +2,8 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Melee;
 
+import java.io.InputStream;
+
 public class Cavalry extends Unit {
     public Cavalry() {
         this(20,0);
@@ -20,5 +22,10 @@ public class Cavalry extends Unit {
         // 15 health and maxhealth
         // 3 range
         // 0 defense skill and 1 shieldDefense
+    }
+
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Horse/Horse_Heavy_Cavalry/Horse_Heavy_Cavalry_NB.png");
     }
 }

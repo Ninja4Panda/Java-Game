@@ -2,7 +2,9 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.AttackType;
 
-public class Unit {
+import java.io.InputStream;
+
+public abstract class Unit {
     private int curMovementPoints; // capability for the unit to move (done)
     private int maxMovementPoints; // (done)
     private int buildTime; // how many turns it will take the unit to appear on the map (done)
@@ -149,4 +151,10 @@ public class Unit {
     public int strength() {
         return armour * attack.getAttackValue() * getCurAmount();
     }
+
+    /**
+     * This function must be override by class that
+     * @return the image object
+     */
+    public abstract InputStream getImage();
 }

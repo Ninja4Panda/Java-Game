@@ -2,6 +2,8 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Melee;
 
+import java.io.InputStream;
+
 public class Swordsman extends Unit {
     public Swordsman() {
         this(10,0);
@@ -22,5 +24,8 @@ public class Swordsman extends Unit {
         // 0 defense skill and shieldDefense
     }
 
-    
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Swordsman/Swordsman_NB.png");
+    }
 }
