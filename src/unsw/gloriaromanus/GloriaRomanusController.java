@@ -72,9 +72,11 @@ import unsw.gloriaromanus.Controllers.PlayerMenuController;
 import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.Game.Player;
 import unsw.gloriaromanus.Phase.GamePhase;
 import unsw.gloriaromanus.Phase.MovePhase;
 import unsw.gloriaromanus.Phase.PreparationPhase;
+import unsw.gloriaromanus.region.Region;
 
 
 public class GloriaRomanusController{
@@ -153,13 +155,13 @@ public class GloriaRomanusController{
     initializeProvinceLayers();
   }
 
-  public void endPhase() {
-    //Resets the left & right province selection & all related children
-    resetSelections();
-
+  public void endPhase() throws IOException {
     //Display message
     String msg = game.endPhase();
     showSummary(msg);
+
+    //Resets the left & right province selection & all related children
+    resetSelections();
 
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
       ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
@@ -262,14 +264,14 @@ public class GloriaRomanusController{
         Point curPoint = new Point(coor.getLongitude(), coor.getLatitude(), SpatialReferences.getWgs84());
 
         String province = (String) f.getProperty("name");
-        String faction = provinceToOwningFactionMap.get(province);
 
+        Player player = game.findPlayer(province);
+        Region region = player.getRegion(province);
         TextSymbol t = new TextSymbol(10,
-            faction + "\n" + province + "\n" + provinceToNumberTroopsMap.get(province), 0xFFFF0000,
+            player.getFaction() + "\n" + province + "\n" + region.getTotalUnits(), 0xFFFF0000,
             HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 
-        Faction a = Faction.find(faction);
-        Image image = new Image(a.getFlagPath(),50,50,false,false);
+        Image image = new Image(player.getFaction().getFlagPath(),50,50,false,false);
         PictureMarkerSymbol s = new PictureMarkerSymbol(image);
 
         t.setHaloColor(0xFFFFFFFF);
@@ -468,7 +470,7 @@ public class GloriaRomanusController{
   /**
    * Reset left & right provinces selection and region info bar
    */
-  public void resetSelections(){
+  public void resetSelections() throws IOException {
     if(currentlySelectedLeftProvince!=null) {
       featureLayer_provinces.unselectFeature(currentlySelectedLeftProvince);
     }
@@ -481,6 +483,7 @@ public class GloriaRomanusController{
       RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
       regionControl.reset();
     }
+    addAllPointGraphics();
   }
 
   private void printMessageToTerminal(String message){
