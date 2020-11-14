@@ -20,7 +20,7 @@ public interface GamePhase {
     /**
      * Ends current phase and move on to the next phase
      */
-    void endPhase();
+    String endPhase();
 
     /**
      * Wrapper function for troops training

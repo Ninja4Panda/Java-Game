@@ -152,6 +152,10 @@ public class LoadSaveMenuController {
             e.printStackTrace();
             Alert a = new Alert(Alert.AlertType.NONE, "Cannot load save!", ButtonType.CLOSE);
             a.show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.NONE, "Corrupted save file!", ButtonType.CLOSE);
+            a.show();
         }
     }
 

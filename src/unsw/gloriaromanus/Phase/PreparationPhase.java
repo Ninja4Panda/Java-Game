@@ -19,8 +19,9 @@ public class PreparationPhase implements GamePhase {
     }
 
     @Override
-    public void endPhase() {
+    public String endPhase() {
         game.setCurPhase(game.getMovePhase());
+        return "Moving Phase begins";
     }
 
     /**

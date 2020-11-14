@@ -50,7 +50,7 @@ public class RegionTrainer {
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.getTrainTime());
         }
-        return "Success";
+        return "Success!";
     }
 
     /**
@@ -67,6 +67,7 @@ public class RegionTrainer {
             Map.Entry<String,Integer> entry = it.next();
             entry.setValue(entry.getValue()-1);
             if(entry.getValue() == 0) {
+                region.getRecentlyTrained().add(entry.getKey());
                 region.addUnits(entry.getKey());
                 it.remove();
             }

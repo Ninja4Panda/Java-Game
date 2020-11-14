@@ -120,8 +120,6 @@ public class Game implements Observer {
         curPlayer = null;
         for(int i = 0; i<players.length(); i++) {
             JSONObject playerJson = players.getJSONObject(i);
-            String faction = playerJson.getString("Faction");
-
             //Create new players
             Player player = new Player(playerJson, gameTurn);
             //Set current player
@@ -215,41 +213,43 @@ public class Game implements Observer {
      */
     public String endPhase() {
         //Checks if player won after a phase
-        String msg = checkPlayerStatus();
-        if(msg!=null) {
+        String status = checkPlayerStatus();
+        if(status!=null) {
             //move on to the next player
-            movePhase.endPhase();
-            return msg;
+            curPhase.endPhase();
+            return status;
         }
 
         //EndPhase
-        curPhase.endPhase();
+        String msg = curPhase.endPhase();
 
         //Checks if player won at the beginning of a phase
-        msg = checkPlayerStatus();
-        if(msg!=null) {
-            movePhase.endPhase();
-            return msg;
+        status = checkPlayerStatus();
+        if(status!=null) {
+            curPhase.endPhase();
+            return status;
         }
-        return null;
+        return msg;
     }
 
     /**
      * Checks the if current player conquered all region or lost
      */
     private String checkPlayerStatus() {
+        //Make sure players can only win on movePhases
+        if(curPhase instanceof PreparationPhase) return null;
         if(curPlayer.getAllRegions().size()==0){
             gameTurn.removePlayer();
             playerList.remove(curPlayer);
-            return "You Lose";
+            return "You have no regions left! You lost the game";
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
                 //Auto save
                 save("Autosave");
-                return "You Win! Game is saved!";
+                return "You won the game! Game is saved!";
             } catch(IOException e) {
                 e.printStackTrace();
-                return "You win! But game cannot be saved!";
+                return "You won the game! But game cannot be saved!";
             }
         }
         return null;

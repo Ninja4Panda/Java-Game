@@ -2,14 +2,25 @@ package unsw.gloriaromanus.Controllers;
 
 import java.util.*;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import unsw.gloriaromanus.MenuController;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
@@ -109,8 +120,7 @@ public class RegionMenuController extends MenuController {
 
         selectedUnits.clear();
         String msg = this.getParent().regionConTrainRequest( train, leftProvinceLabel.getText());
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
-        a.show();
+        showSummary(msg);
         rightProvinceLabel.setText("New " + leftProvinceLabel.getText());
     }
 
@@ -122,9 +132,7 @@ public class RegionMenuController extends MenuController {
         }
 
         String msg = this.getParent().regionMoveRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), moveUnits);
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
-        a.setResizable(true);
-        a.show();
+        showSummary(msg);
     }
 
     @FXML
@@ -134,10 +142,41 @@ public class RegionMenuController extends MenuController {
             attackUnits.add(u.getClassName());
         }
         String msg = this.getParent().regionAttackRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), attackUnits);
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION,leftProvinceLabel.getText()+msg);
-        a.show();
+        showSummary(msg);
     }
 
+    /**
+     * Shows the summary for a phase
+     * @param msg msg to display
+     */
+    private void showSummary(String msg) {
+        //Popup summary
+        Stage stage = (Stage)interactionButton.getScene().getWindow();
+        Stage popupStage = new Stage();
+        popupStage.initStyle(StageStyle.UNDECORATED);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.initOwner(stage);
+        //Container
+        VBox row = new VBox();
+        row.setSpacing(15);
+        row.setAlignment(Pos.CENTER);
+        //msg
+        Label summary = new Label();
+        summary.setText(msg);
+        summary.setTextFill(Paint.valueOf("red"));
+        summary.setFont(Font.font("",30));
+        row.getChildren().add(summary);
+        //Set the popup size
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        double width = primaryScreenBounds.getWidth();
+        double height = primaryScreenBounds.getHeight();
+        popupStage.setScene(new Scene(row, width*0.5, height*0.5));
+        popupStage.show();
+        //Auto close after 3sec
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(e->popupStage.hide());
+        delay.play();
+    }
 
     public boolean isLeftSelected() {
         return isLeftSelected;
