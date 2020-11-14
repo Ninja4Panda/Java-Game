@@ -304,7 +304,7 @@ public class SaveMenuController {
                 errorStage.setScene(new Scene(errorMsg));
                 errorStage.show();
 
-                //Auto close after 5sec
+                //Auto close after 3sec
                 PauseTransition delay = new PauseTransition(Duration.seconds(3));
                 delay.setOnFinished(e->errorStage.hide());
                 delay.play();

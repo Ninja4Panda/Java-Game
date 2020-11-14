@@ -26,10 +26,19 @@ public class MovePhase implements GamePhase {
     }
 
     @Override
-    public void endPhase() {
+    public String endPhase() {
         //Advance to the next player's turn as this is the last phase of a player's turn
         game.nextPlayerTurn();
         game.setCurPhase(game.getPreparationPhase());
+
+        String trainedMsg = "";
+        for (Region region: game.getCurPlayer().getAllRegions()) {
+            for(String unit: region.getRecentlyTrained()) {
+                trainedMsg += unit+" in "+region.getName()+" is trained\n";
+            }
+            region.getRecentlyTrained().clear();
+        }
+        return game.getCurPlayer().getFaction()+"'s turn\n\n"+"Unit Trained: \n"+trainedMsg;
     }
 
     /**
@@ -47,8 +56,10 @@ public class MovePhase implements GamePhase {
         if(origin==null) return "Cannot move from non-friendly region";
         Region target = curPlayer.getRegion(targetRegion);
 
+        //Convert string to regions
         List<String> path = findShortestPath(originRegion, targetRegion);
         List<Region> regions = new ArrayList<>();
+        if(path==null) return "No path found";
         for(String name: path) {
             Region subRegion = game.getCurPlayer().getRegion(name);
             regions.add(subRegion);
@@ -74,8 +85,8 @@ public class MovePhase implements GamePhase {
         //Obtain target region object
         Region target = targetPlayer.getRegion(targetRegion);
 
-        int movementPoint = findShortestPath(originRegion, targetRegion).size()-4;
-        return curPlayer.invade(movementPoint, origin, troops, target);
+        List<String> path = findShortestPath(originRegion, targetRegion);
+        return curPlayer.invade(path, origin, troops, target);
     }
 
     /**
@@ -123,7 +134,7 @@ public class MovePhase implements GamePhase {
                    continue;
                }
                 // Check if player owns region & is not recently conquered
-                if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null && player.getRecentlyConquered().contains(neighbour)) continue;
+                if (!neighbour.getId().equals(target) && player.getRegion(neighbour.getId())==null) continue;
                 // add to opened if never visited and never opened 
                 // or if visited and not in opened then see if we found a shorter way
                 if( findDinode(opened, neighbour.getId()) == null && findDinode(visited, neighbour.getId()) == null) {

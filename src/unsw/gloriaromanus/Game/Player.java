@@ -106,14 +106,21 @@ public class Player implements Observer {
 
     /**
      * Invade target region from origin with troops
-     * @param movementPoints movement points needed to get to target
+     * @param path the shortest path lists
      * @param origin origin region object initiated the invade
      * @param troops list of troops invading
      * @param target target region object to invade
      * @return msg to display
      */
-    public String invade(int movementPoints, Region origin, List<String> troops, Region target) {
-         return origin.invade(movementPoints, troops, target);
+    public String invade(List<String> path, Region origin, List<String> troops, Region target) {
+        int attackFrom = path.size()-2;
+        for(Region region: recentlyConquered) {
+            if(region.getName().equals(path.get(attackFrom))) {
+                return "Cannot attack from region that was recently conquered";
+            }
+        }
+        int movementPoints = path.size()-4;
+        return origin.invade(movementPoints, troops, target);
     }
 
     /**

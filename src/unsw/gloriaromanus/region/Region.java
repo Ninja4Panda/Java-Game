@@ -19,6 +19,7 @@ public class Region implements Observer {
     private List<Unit> units;
     private int wealth;
     private int tax;
+    private List<String> recentlyTrained;
 
     public Region(String name, GameTurn gameTurn, int wealth, int tax) {
         this.name = name;
@@ -26,6 +27,7 @@ public class Region implements Observer {
         trainer = new RegionTrainer(this);
         this.wealth = wealth;
         this.tax = tax;
+        recentlyTrained = new ArrayList<>();
         this.units = new ArrayList<>();
         this.units.add(new Archerman());
         this.units.add(new Cavalry());
@@ -48,6 +50,11 @@ public class Region implements Observer {
         name = regionData.getString("Id");
         wealth = regionData.getInt("Wealth");
         tax = regionData.getInt("Tax");
+        JSONArray trainedList = regionData.getJSONArray("RecentlyTrained");
+        recentlyTrained = new ArrayList<>();
+        for(int i = 0; i<trainedList.length(); i++) {
+            recentlyTrained.add(trainedList.getString(i));
+        }
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -81,6 +88,10 @@ public class Region implements Observer {
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
         trainer = new RegionTrainer(trainData,this);
+    }
+
+    public List<String> getRecentlyTrained() {
+        return recentlyTrained;
     }
 
     public String getName() {
@@ -176,7 +187,7 @@ public class Region implements Observer {
      */
     public String move(List<Region> path, List<String> troops, Region target) {
         //Loop through the path and remove
-        String msg = "Movement\n";
+        String msg = "";
         System.out.println(troops);
         for (Region region: path) {
             System.out.println(path);
@@ -212,6 +223,7 @@ public class Region implements Observer {
         for (Unit unit: units) {
             if(troops.contains(unit.getClassName())) attackers.add(unit);
             if(unit.getCurMovementPoints()<movementPoints) return "Unsuccessful attack not enough movement Point";
+            unit.reduceMovementPoints(movementPoints);
         }
         return BattleResolver.resolve(attackers, target, this);
     }
@@ -244,7 +256,8 @@ public class Region implements Observer {
             troop.put("Amount",unit.getCurAmount());
             troops.put(unit.getClassName(), troop);
         }
-
+        JSONArray trainedJson = new JSONArray(recentlyTrained);
+        save.put("RecentlyTrained", trainedJson);
         save.put("Wealth", wealth);
         save.put("Tax",tax);
         save.put("Trainer", trainer.getSave());

@@ -34,7 +34,7 @@
     </background>
     <HBox>
         <VBox fx:id="headerVboxLeft">
-            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="182.0" text="Province" textFill="#ee27b2" wrapText="true">
+            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="182.0" text="Select Province" textAlignment="CENTER" textFill="#ee27b2" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
@@ -52,7 +52,7 @@
          </HBox>
         </VBox>
         <VBox fx:id="headerVboxRight">
-            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Province" textFill="#1a0017" wrapText="true">
+            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Select Province" textAlignment="CENTER" textFill="#fafafa" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>

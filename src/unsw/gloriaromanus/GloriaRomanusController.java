@@ -18,10 +18,15 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
@@ -50,6 +55,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.geojson.FeatureCollection;
 import org.geojson.LngLatAlt;
 
@@ -63,6 +76,7 @@ import unsw.gloriaromanus.Controllers.RegionMenuController;
 import unsw.gloriaromanus.Faction.Faction;
 import unsw.gloriaromanus.Game.Game;
 import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.Phase.MovePhase;
 import unsw.gloriaromanus.units.Unit;
 
 public class GloriaRomanusController{
@@ -90,6 +104,8 @@ public class GloriaRomanusController{
   private FeatureLayer featureLayer_provinces;
 
   private Game game;
+
+  private String log="";
 
   @FXML
   private void initialize() throws JsonParseException, JsonMappingException, IOException, InterruptedException {
@@ -141,8 +157,12 @@ public class GloriaRomanusController{
     if(currentlySelectedRightProvince != null) {
       featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
     }
+
+    if(game.getCurPhase() instanceof MovePhase) log = "";
     String msg = game.endPhase();
-    System.out.println(msg);
+    log += msg;
+    showSummary(msg);
+
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
       ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
     }
@@ -154,7 +174,40 @@ public class GloriaRomanusController{
     }
   }
 
- public String getCurPhase() {
+  /**
+   * Shows the summary for a phase
+   * @param msg msg to display
+   */
+  private void showSummary(String msg) {
+    //Popup summary
+    Stage stage = (Stage)stackPaneMain.getScene().getWindow();
+    Stage popupStage = new Stage();
+    popupStage.initStyle(StageStyle.UNDECORATED);
+    popupStage.initModality(Modality.APPLICATION_MODAL);
+    popupStage.initOwner(stage);
+    //Container
+    VBox row = new VBox();
+    row.setSpacing(15);
+    row.setAlignment(Pos.CENTER);
+    //msg
+    Label summary = new Label();
+    summary.setText(msg);
+    summary.setTextFill(Paint.valueOf("red"));
+    summary.setFont(Font.font("",30));
+    row.getChildren().add(summary);
+    //Set the popup size
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    double width = primaryScreenBounds.getWidth();
+    double height = primaryScreenBounds.getHeight();
+    popupStage.setScene(new Scene(row, width*0.5, height*0.5));
+    popupStage.show();
+    //Auto close after 3sec
+    PauseTransition delay = new PauseTransition(Duration.seconds(3));
+    delay.setOnFinished(e->popupStage.hide());
+    delay.play();
+  }
+
+  public String getCurPhase() {
    return game.getCurPhase().toString();
  }
 
