@@ -280,6 +280,13 @@ public class Region implements Observer {
         return save;
     }
 
+    /**
+     * Reset the trainer on ownership change
+     */
+    public void resetTrainer() {
+        trainer.reset();
+    }
+
     @Override
     public void update() {
         updateWealth();
