@@ -34,7 +34,7 @@ public class MovePhase implements GamePhase {
         String trainedMsg = "";
         for (Region region: game.getCurPlayer().getAllRegions()) {
             for(String unit: region.getRecentlyTrained()) {
-                trainedMsg += unit+" in "+region.getName()+" is trained\n";
+                trainedMsg += unit+" in "+region.getName()+" is ready to join the battle\n";
             }
             region.getRecentlyTrained().clear();
         }
