@@ -1,5 +1,6 @@
 package unsw.gloriaromanus.Controllers;
 
+import java.io.IOException;
 import java.util.*;
 
 import javafx.animation.PauseTransition;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -23,6 +25,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import unsw.gloriaromanus.MenuController;
 import unsw.gloriaromanus.Phase.MovePhase;
+import unsw.gloriaromanus.Phase.PreparationPhase;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
@@ -105,30 +108,35 @@ public class RegionMenuController extends MenuController {
    
 
     @FXML
-    private void handleTrain(){
+    private void handleTrain() {
+        if(selectedUnits.size()==0) {
+            showSummary("Please select unit to train");
+            return;
+        }
         List<String> train = new ArrayList<>();
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
-            for(UnitPaneController UPC : rightUnits.keySet() ) {
-                if(Objects.equals(rightUnits.get(UPC).getClassName(), u.getClassName())) {
-                    UPC.revertShowAmountAdded(u);
-                }
-            }
-            for(UnitPaneController UPC : leftUnits.keySet() ) {
-                if(Objects.equals(leftUnits.get(UPC).getClassName(), u.getClassName())) {
-                    UPC.revertShowAmountAdded(u);
-                }
-            }
         }
-
-        selectedUnits.clear();
-        String msg = this.getParent().regionConTrainRequest( train, leftProvinceLabel.getText());
+        String msg = this.getParent().regionConTrainRequest(train, leftProvinceLabel.getText());
         showSummary(msg);
-        rightProvinceLabel.setText("New " + leftProvinceLabel.getText());
+        this.getParent().resetSelections();
     }
 
     @FXML
     private void handleMove() {
+        //TODO:Handles when no target is selected
+        if(this.getParent().getCurrentlySelectedRightProvince()==null) {
+            showSummary("Please select a target region");
+            return;
+        }
+
+        //Handles when no unit is selected
+        if(selectedUnits.size()==0) {
+            showSummary("Please select unit to move");
+            return;
+        }
+
+        //Handles moving the units
         List<String> moveUnits = new ArrayList<>();
         for(Unit u : selectedUnits) {
             moveUnits.add(u.getClassName());
@@ -136,22 +144,40 @@ public class RegionMenuController extends MenuController {
 
         String origin = leftProvinceLabel.getText();
         String target = rightProvinceLabel.getText();
-        String msg = this.getParent().regionMoveRequest(origin, target, moveUnits);
-        showSummary(msg);
-        addLog("======Moving from "+origin+" to "+target+"======\n"+msg);
+        try {
+            String msg = this.getParent().regionMoveRequest(origin, target, moveUnits);
+            showSummary(msg);
+            addLog("======Moving from "+origin+" to "+target+"======\n"+msg);
+        } catch(IOException e) {
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR, "Unexpected move error");
+            a.show();
+        }
+        this.getParent().resetSelections();
     }
 
     @FXML
     private void handleAttack() {
+        if(selectedUnits.size()==0) {
+            showSummary("Please select unit to attack");
+            return;
+        }
         List<String> attackUnits = new ArrayList<>();
         for(Unit u : selectedUnits) {
             attackUnits.add(u.getClassName());
         }
         String origin = leftProvinceLabel.getText();
         String target = rightProvinceLabel.getText();
-        String msg = this.getParent().regionAttackRequest(origin, target, attackUnits);
-        showSummary(msg);
-        addLog("======Attacking from "+origin+" to "+target+"======\n"+msg);
+        try {
+            String msg = this.getParent().regionAttackRequest(origin, target, attackUnits);
+            showSummary(msg);
+            addLog("======Attacking from "+origin+" to "+target+"======\n"+msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR, "Unexpected attack error");
+            a.show();
+        }
+        this.getParent().resetSelections();
     }
 
     /**
@@ -230,7 +256,7 @@ public class RegionMenuController extends MenuController {
                 e.printStackTrace();
             }
         }
-        if(Objects.equals(this.getParent().getCurPhase(), "Preparation") ) {
+        if(this.getParent().getCurPhase() instanceof  PreparationPhase) {
             handleRightClick("After Training", units, false);
         }
         wealth.setText(Integer.toString(region.getWealth()));
@@ -263,7 +289,7 @@ public class RegionMenuController extends MenuController {
                     setAttackButton();
                 }else {
                     UPC.configure(u, true);
-                        if(Objects.equals(this.getParent().getCurPhase(), "Preparation") ) {
+                        if(this.getParent().getCurPhase() instanceof  PreparationPhase) {
                             setTrainButton();
                         } else {
                             setMoveButton();
@@ -277,17 +303,13 @@ public class RegionMenuController extends MenuController {
                 e.printStackTrace();
             }
         }
-
-        
-         
-        
     }
 
     public void selectUnit(Unit unit) {
         selectedUnits.add(unit);
         for(UnitPaneController UPC : rightUnits.keySet() ) {
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
-                if(Objects.equals(this.getParent().getCurPhase(), "Preparation")) {
+                if(this.getParent().getCurPhase() instanceof PreparationPhase) {
                     UPC.showAmountAdded(unit.getTrainAmount());
                 } else {
                     UPC.showAmountAdded(unit.getCurAmount());
