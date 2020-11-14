@@ -244,9 +244,20 @@ public class Game implements Observer {
             return "You have no regions left! You lost the game";
         } else if(campaignWinCond.player(getCurPlayer())) {
             try {
+                //Make the saves directory if it doesn't exists
+                File dir = new File(".","saves");
+                dir.mkdir();
+
                 //Auto save
-                save("Autosave");
-                return "You won the game! Game is saved!";
+                String name = "Autosave";
+                File file = new File(dir,name);
+                int i = 1;
+                while (file.exists()) {
+                    name = "Autosave"+i;
+                    file = new File(dir, name);
+                }
+                save(name);
+                return "You won the game! Game is saved as "+name;
             } catch(IOException e) {
                 e.printStackTrace();
                 return "You won the game! But game cannot be saved!";

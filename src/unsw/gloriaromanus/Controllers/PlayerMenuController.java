@@ -14,7 +14,7 @@ public class PlayerMenuController extends MenuController{
     private Label playerGold;
 
     public void updatePlayer(Player player) {
-        playerFaction.setText(player.getFaction());
+        playerFaction.setText(player.getFaction().toString());
         playerGold.setText(Integer.toString(player.getGold()));
     }
 }

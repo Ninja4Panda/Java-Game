@@ -38,7 +38,7 @@ public class MovePhase implements GamePhase {
             }
             region.getRecentlyTrained().clear();
         }
-        return game.getCurPlayer().getFaction()+"'s turn\n\n"+"Unit Trained: \n"+trainedMsg;
+        return game.getCurFaction()+"'s turn\n\n"+"Unit Trained: \n"+trainedMsg;
     }
 
     /**
