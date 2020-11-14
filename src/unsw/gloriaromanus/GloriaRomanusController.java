@@ -107,6 +107,14 @@ public class GloriaRomanusController{
 
   private Game game;
 
+  public Feature getCurrentlySelectedLeftProvince() {
+    return currentlySelectedLeftProvince;
+  }
+
+  public Feature getCurrentlySelectedRightProvince() {
+    return currentlySelectedRightProvince;
+  }
+
   @FXML
   private void initialize() throws JsonParseException, JsonMappingException, IOException, InterruptedException {
     // TODO = you should rely on an object oriented design to determine ownership
@@ -147,16 +155,10 @@ public class GloriaRomanusController{
     }
 
     initializeProvinceLayers();
-
   }
 
   public void endPhase() {
-    if(currentlySelectedLeftProvince != null) {
-      featureLayer_provinces.unselectFeature(currentlySelectedLeftProvince);
-    } 
-    if(currentlySelectedRightProvince != null) {
-      featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
-    }
+    resetSelections();
 
     //Display message
     String msg = game.endPhase();
@@ -467,19 +469,18 @@ public class GloriaRomanusController{
     return "(" + String.join(" OR ", l) + ")";
   }
 
-  private boolean confirmIfProvincesConnected(String province1, String province2) throws IOException {
-    String content = Files.readString(Paths.get("src/unsw/gloriaromanus/province_adjacency_matrix_fully_connected.json"));
-    JSONObject provinceAdjacencyMatrix = new JSONObject(content);
-    return provinceAdjacencyMatrix.getJSONObject(province1).getBoolean(province2);
-  }
-
-  private void resetSelections(){
-    featureLayer_provinces.unselectFeatures(Arrays.asList(currentlySelectedRightProvince, currentlySelectedLeftProvince));
+  public void resetSelections(){
+    if(currentlySelectedLeftProvince!=null) {
+      featureLayer_provinces.unselectFeature(currentlySelectedLeftProvince);
+    }
+    if(currentlySelectedRightProvince!=null) {
+      featureLayer_provinces.unselectFeature(currentlySelectedRightProvince);
+    }
     currentlySelectedRightProvince = null;
     currentlySelectedLeftProvince = null;
-    if (controllerParentPairs.get(0).getKey() instanceof InvasionMenuController){
-      ((InvasionMenuController)controllerParentPairs.get(0).getKey()).setInvadingProvince("");
-      ((InvasionMenuController)controllerParentPairs.get(0).getKey()).setOpponentProvince("");
+    if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
+      RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
+      regionControl.reset();
     }
   }
 
@@ -511,7 +512,7 @@ public class GloriaRomanusController{
   }
 
   public String regionConTrainRequest(List<String> train, String region) {
-    String msg  = game.train(region, train);
+    String msg = game.train(region, train);
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
@@ -522,23 +523,12 @@ public class GloriaRomanusController{
     game.getCurPlayer().getRegion(region).setTax(newTax);
   }
 
-  public String regionMoveRequest(String origin, String target, List<String> units) {
-    try{
+  public String regionMoveRequest(String origin, String target, List<String> units) throws IOException {
       return game.getCurPhase().move(origin, units,  target);
-
-    }catch (Exception e) {
-      e.printStackTrace(); 
-    }
-    return null;
   }
 
-  public String regionAttackRequest(String origin, String target, List<String> units ) {
-     try {
-        return game.invade(origin, units, target);
-     } catch (IOException e) {
-       e.printStackTrace();
-     }
-     return null;
+  public String regionAttackRequest(String origin, String target, List<String> units ) throws IOException {
+      return game.invade(origin, units, target);
   }
 
 }
