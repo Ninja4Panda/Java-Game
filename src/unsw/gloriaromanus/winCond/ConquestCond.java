@@ -13,4 +13,9 @@ public class ConquestCond implements WinCond{
         return false;
     }
 
+    @Override
+    public String getName() {
+        return "Conquest";
+    }
+
 }
