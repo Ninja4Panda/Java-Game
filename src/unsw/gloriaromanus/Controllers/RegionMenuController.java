@@ -109,6 +109,12 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleTrain() {
+        //Handles when no target is selected
+        if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
+            showSummary("Please select a origin region");
+            return;
+        }
+        //Handles when no unit is selected
         if(selectedUnits.size()==0) {
             showSummary("Please select unit to train");
             return;
@@ -124,7 +130,12 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleMove() {
-        //TODO:Handles when no target is selected
+        //Handles when no target is selected
+        if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
+            showSummary("Please select a origin region");
+            return;
+        }
+        //Handles when no target is selected
         if(this.getParent().getCurrentlySelectedRightProvince()==null) {
             showSummary("Please select a target region");
             return;
