@@ -1,9 +1,11 @@
 package unsw.gloriaromanus.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import unsw.gloriaromanus.scenes.ConfigScreen;
-import javafx.event.ActionEvent;
+import unsw.gloriaromanus.scenes.InfoScreen;
 import unsw.gloriaromanus.scenes.LoadSaveScreen;
 
 import java.io.IOException;
@@ -13,8 +15,11 @@ public class StartMenuController {
     private Button newGameBtn;
     @FXML
     private Button loadGameBtn;
+    @FXML
+    private Button infoBtn;
     private ConfigScreen configScreen;
     private LoadSaveScreen loadSaveScreen;
+    private InfoScreen infoScreen;
 
     public void setConfigScreen(ConfigScreen configScreen) {
         this.configScreen = configScreen;
@@ -24,13 +29,38 @@ public class StartMenuController {
         this.loadSaveScreen = loadSaveScreen;
     }
 
-    @FXML
-    void handleNewBtn(ActionEvent e) throws IOException {
-        configScreen.start();
+    public void setInfoScreen(InfoScreen infoScreen) {
+        this.infoScreen = infoScreen;
     }
 
     @FXML
-    void handleLoadBtn(ActionEvent e) throws IOException {
-        loadSaveScreen.start();
+    void handleNewBtn() {
+        System.out.println("ddd");
+        try {
+            configScreen.start();
+        } catch (IOException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
+        }
+    }
+
+    @FXML
+    void handleLoadBtn() {
+        try {
+            loadSaveScreen.start();
+        } catch (IOException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
+        }
+    }
+
+    @FXML
+    void handleInfoBtn() {
+        try {
+            infoScreen.start();
+        } catch (IOException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
+        }
     }
 }

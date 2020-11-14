@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import unsw.gloriaromanus.game.Game;
 import unsw.gloriaromanus.scenes.*;
 
 public class GloriaRomanusApplication extends Application {
@@ -15,16 +16,19 @@ public class GloriaRomanusApplication extends Application {
     StartScreen startScreen = new StartScreen(stage);
     ConfigScreen configScreen = new ConfigScreen(stage);
     LoadSaveScreen loadSaveScreen = new LoadSaveScreen(stage);
+    InfoScreen infoScreen = new InfoScreen(stage);
     GameScreen gameScreen = new GameScreen(stage);
     controller = gameScreen.getController();
 
     //Set up the switching between screens
     startScreen.getController().setConfigScreen(configScreen);
     startScreen.getController().setLoadSaveScreen(loadSaveScreen);
+    startScreen.getController().setInfoScreen(infoScreen);
     configScreen.getController().setStartScreen(startScreen);
     configScreen.getController().setGameScreen(gameScreen);
     loadSaveScreen.getController().setStartScreen(startScreen);
     loadSaveScreen.getController().setGameScreen(gameScreen);
+    infoScreen.getController().setStartScreen(startScreen);
 
     //Start the app
     startScreen.start();

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutX="40.0" layoutY="57.0" prefHeight="320.0" prefWidth="524.0" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="57.0">
+         <content>
+            <VBox prefHeight="269.0" prefWidth="522.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="506.0" text="About the Game:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This game is a recreation of the strategy board game Risk. Players play as different faction of Ancient Rome with the overall goal of conquering all provinces in the game map or succeeding at another grand victory objectives." wrappingWidth="1698.3984375">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Text>
+                  <Label prefHeight="43.0" prefWidth="522.0" text="Basic Controls:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Right mouse click on a region to select target. ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Left mouse click on a region to select origin. ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Phases:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The game is separated into 2 different phases: ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Perparation Phase - this is where troops are trainned &amp; tax are set.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Moving Phase - this is where troops movements and attack occurs.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Troops &amp; trainning:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Only 2 types of troops can be training in a region per turn. Think carefully before trainning!">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Different type of troops have different specs. Use them wisely to expand your land.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Movement:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movement points are required to move a type of troop from one region to another. ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Every region requires 4 movement points to travel across.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Attacks:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Win rate of an attacks are calculated using attacking troops' total attack strength and defending region's troops' strength.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="In sample terms the higher the total attack strength the better the odds">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If attack resulted in a win defending region will be conquered by the attacking region.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Note that another attack cannot be initiated from recently conquered region.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If attack resulted in a lost attacking troops that survived will move back to origin.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Troop lost will happened in both win and lost situation for both attacking and defending region.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Wealth &amp; Tax:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Province wealth represents the collective wealth of the people in the province.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treasury is the gold you spend on troops which is generated by tax.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The tax revenue generated is always equal to province wealth * province tax rate.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Higher tax rates reduce the growth of town-wealth in a region.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Maintain a good balance of wealth &amp; tax is recommended.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="25.0" prefWidth="522.0" text="Goals:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Goals are randomly generated on new game creation.">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ExampleLegion.png" />
+                           </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Conquest goal - Conquering all territories.">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="20.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/CS2511Sprites_No_Background/Terrain%20and%20Buildings/Buildings/Mine/Mine_NB.png" />
+                           </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treasury goal - Accumulating a treasury balance of 100,000 gold.">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="50.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/CS2511Sprites_No_Background/Terrain%20and%20Buildings/Walls/Wood/Horizontal%20Wooden%20Wall_NB.png" />
+                           </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wealth goal - Accumulating faction wealth of 400,000 gold.">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="100.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content></ScrollPane>
+        <GridPane layoutX="16.0" layoutY="14.0" prefHeight="30.0" prefWidth="572.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="backBtn" mnemonicParsing="false" onAction="#handleBackBtn" prefHeight="31.0" prefWidth="72.0" text="&lt; Back" />
+                <Label fx:id="gameLabel" text="How to Play" GridPane.columnIndex="1">
+                    <font>
+                        <Font size="26.0" />
+                    </font>
+                </Label>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
