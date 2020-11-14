@@ -225,11 +225,20 @@ public class Region implements Observer {
      */
     public String invade(int movementPoints, List<String> troops, Region target) {
         List<Unit> attackers = new ArrayList<>();
-        for (Unit unit: units) {
-            if(troops.contains(unit.getClassName())) attackers.add(unit);
+        System.out.println("MP:"+movementPoints);
+
+        //Check if every attackers has enough movement point
+        for (String name: troops) {
+            Unit unit = findUnit(name);
             if(unit.getCurMovementPoints()<movementPoints) return "Unsuccessful attack not enough movement Point";
+            attackers.add(unit);
+        }
+
+        //Reduce the movement point
+        for (Unit unit:attackers) {
             unit.reduceMovementPoints(movementPoints);
         }
+
         return BattleResolver.resolve(attackers, target, this);
     }
 

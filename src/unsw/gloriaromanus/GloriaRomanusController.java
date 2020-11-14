@@ -452,7 +452,6 @@ public class GloriaRomanusController{
   public String regionConTrainRequest(List<String> train, String region) {
     String msg = game.train(region, train);
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
-      System.out.println("sss");
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
     return msg;

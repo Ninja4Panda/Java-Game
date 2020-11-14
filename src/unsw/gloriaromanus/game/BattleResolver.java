@@ -136,7 +136,7 @@ public class BattleResolver implements Subject {
 
         String msg = "";
         for(String unit: killMap.keySet()) {
-            msg += "Lose "+killMap.get(unit)+" "+unit+" in the battle\n";
+            msg += "Lost "+killMap.get(unit)+" "+unit+" in the battle\n";
         }
         return msg;
     }
