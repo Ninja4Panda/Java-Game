@@ -2,6 +2,8 @@ package unsw.gloriaromanus.units;
 
 import unsw.gloriaromanus.units.attack.Melee;
 
+import java.io.InputStream;
+
 public class Spearman extends Unit{
     public Spearman() {
         this(10,0);
@@ -20,5 +22,10 @@ public class Spearman extends Unit{
         // 15 health and maxhealth
         // 3 range
         // 1 defense skill and shieldDefense
+    }
+
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Spearman/Spearman_NB.png");
     }
 }

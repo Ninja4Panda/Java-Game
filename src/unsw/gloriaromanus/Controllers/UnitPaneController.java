@@ -78,15 +78,15 @@ public class UnitPaneController {
     public void configure(Unit unit, boolean isRightPanel) {
         this.unit = unit;
         unitName.setText(unit.getClassName());
-        unitHealth.setText("HP : " + Integer.toString(unit.getHealth()));
-        unitAttack.setText("Attack : " + Integer.toString(unit.getAttackValue()));
-        unitArmour.setText("Armour : " + Integer.toString(unit.getDefenseSkill()));
-        unitMoveSpeed.setText("MS : " + Integer.toString(unit.getCurMovementPoints()));
+        unitHealth.setText("HP : " + unit.getHealth());
+        unitAttack.setText("Attack : " + unit.getAttackValue());
+        unitArmour.setText("Armour : " +unit.getDefenseSkill());
+        unitMoveSpeed.setText("MS : " + unit.getCurMovementPoints());
         if(!isRightPanel) {
             unitPane.setOnMouseClicked(event -> unitSelected());
         }
-        unitAmount.setText("Amount : " + Integer.toString(unit.getCurAmount()));
-        setImage(unit.getClassName());
+        unitAmount.setText("Amount : " +unit.getCurAmount());
+        unitImage.setImage(new Image(unit.getImage()));
        
     }
 
@@ -97,34 +97,6 @@ public class UnitPaneController {
         unitArmour.setText("Armour : ???");
         unitMoveSpeed.setText("MS : ???");
         unitAmount.setText("Amount : ???");
-        setImage(unit.getClassName());
-       
+        unitImage.setImage(new Image(unit.getImage()));
     }
-
-    private void setImage(String unit) {
-        switch (unit) {
-            case "Archerman":
-                unitImage.setImage(new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/ArcherMan/Archer_Man_NB.png")));
-                
-                break;
-            case "Cavalry" :
-                unitImage.setImage(new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Horse/Horse_Heavy_Cavalry/Horse_Heavy_Cavalry_NB.png")));
-                break;
-            case "Slingerman" :
-                unitImage.setImage( new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Slingerman/Slinger_Man_NB.png")));
-               
-                break;
-            case "Spearman" :
-                unitImage.setImage( new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Spearman/Spearman_NB.png")));
-                
-                break;
-            case "Swordsman" :
-                unitImage.setImage(  new Image(getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Swordsman/Swordsman_NB.png")));
-
-                break;
-            default:
-                break;
-        }
-    }
-
 }
