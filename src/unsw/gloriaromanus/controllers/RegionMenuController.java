@@ -31,7 +31,6 @@ import unsw.gloriaromanus.units.Unit;
 
 public class RegionMenuController extends MenuController {
 
-
     @FXML
     private MenuButton taxDropDown; 
     
@@ -366,7 +365,7 @@ public class RegionMenuController extends MenuController {
         
     }
 
-    private void setMoveButton() {
+    public void setMoveButton() {
         interactionButton.setText("Move");
         interactionButton.setOnAction(event -> handleMove() );
     }
@@ -376,10 +375,9 @@ public class RegionMenuController extends MenuController {
         interactionButton.setOnAction(event -> handleAttack() );
     }
 
-    private void setTrainButton() {
+    public void setTrainButton() {
         interactionButton.setText("Train");
         interactionButton.setOnAction(event -> handleTrain() );
-
     }
 
     public void reset() {
