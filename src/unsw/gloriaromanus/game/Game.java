@@ -385,4 +385,8 @@ public class Game implements Observer {
         }
         return null;
     }
+
+    public Check getCampaignWinCond() {
+        return campaignWinCond;
+    }
 }

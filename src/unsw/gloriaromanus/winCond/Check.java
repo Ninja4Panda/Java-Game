@@ -97,5 +97,15 @@ public class Check {
         return save;
 
     }
+
+    public Junction getCheckType(){
+        return checkType;
+    }
+
+    public WinCond getGoal() {
+        return goal;
+    }
+    public Check getsubCheck() {
+        return subCheck;
+    }
 }
- 
