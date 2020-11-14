@@ -87,16 +87,9 @@ public class GloriaRomanusController{
   @FXML
   private StackPane stackPaneMain;
 
-  // could use ControllerFactory?
   private ArrayList<Pair<MenuController, VBox>> controllerParentPairs;
 
   private ArcGISMap map;
-
-  private Map<String, String> provinceToOwningFactionMap;
-
-  private Map<String, Integer> provinceToNumberTroopsMap;
-
-  // private String humanFaction;
 
   private Feature currentlySelectedLeftProvince;
   private Feature currentlySelectedRightProvince;
@@ -115,19 +108,6 @@ public class GloriaRomanusController{
 
   @FXML
   private void initialize() throws JsonParseException, JsonMappingException, IOException, InterruptedException {
-    // TODO = you should rely on an object oriented design to determine ownership
-    provinceToOwningFactionMap = getProvinceToOwningFactionMap();
-
-    provinceToNumberTroopsMap = new HashMap<String, Integer>();
-    Random r = new Random();
-    for (String provinceName : provinceToOwningFactionMap.keySet()) {
-      provinceToNumberTroopsMap.put(provinceName, r.nextInt(500));
-    }
-
-    // TODO = load this from a configuration file you create (user should be able to
-    // select in loading screen)
-    // humanFaction = "Rome";
-
     currentlySelectedLeftProvince = null;
     currentlySelectedRightProvince = null;
 
@@ -141,9 +121,7 @@ public class GloriaRomanusController{
       menuController.setParent(this);
       controllerParentPairs.add(new Pair<MenuController, VBox>(menuController, root));
     }
-  
 
-    
     stackPaneMain.getChildren().add(controllerParentPairs.get(1).getValue());
     stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
     stackPaneMain.getChildren().add(controllerParentPairs.get(2).getValue());
@@ -267,11 +245,13 @@ public class GloriaRomanusController{
 
         Player player = game.findPlayer(province);
         Region region = player.getRegion(province);
+        Faction faction = player.getFaction();
+
         TextSymbol t = new TextSymbol(10,
             player.getFaction() + "\n" + province + "\n" + region.getTotalUnits(), 0xFFFF0000,
             HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 
-        Image image = new Image(player.getFaction().getFlagPath(),50,50,false,false);
+        Image image = new Image(faction.getFlagPath(),50,50,false,false);
         PictureMarkerSymbol s = new PictureMarkerSymbol(image);
 
         t.setHaloColor(0xFFFFFFFF);
@@ -428,43 +408,6 @@ public class GloriaRomanusController{
       } 
     });
     return flp;
-  }
-
-  private Map<String, String> getProvinceToOwningFactionMap() throws IOException {
-    String content = Files.readString(Paths.get("src/unsw/gloriaromanus/initial_province_ownership.json"));
-    JSONObject ownership = new JSONObject(content);
-    Map<String, String> m = new HashMap<String, String>();
-    for (String key : ownership.keySet()) {
-      // key will be the faction name
-      JSONArray ja = ownership.getJSONArray(key);
-      // value is province name
-      for (int i = 0; i < ja.length(); i++) {
-        String value = ja.getString(i);
-        m.put(value, key);
-      }
-    }
-    return m;
-  }
-
-  private ArrayList<String> getHumanProvincesList() throws IOException {
-    // https://developers.arcgis.com/labs/java/query-a-feature-layer/
-
-    String content = Files.readString(Paths.get("src/unsw/gloriaromanus/initial_province_ownership.json"));
-    JSONObject ownership = new JSONObject(content);
-    return ArrayUtil.convert(ownership.getJSONArray(game.getCurFaction()));
-  }
-
-  /**
-   * returns query for arcgis to get features representing human provinces can
-   * apply this to FeatureTable.queryFeaturesAsync() pass string to
-   * QueryParameters.setWhereClause() as the query string
-   */
-  private String getHumanProvincesQuery() throws IOException {
-    LinkedList<String> l = new LinkedList<String>();
-    for (String hp : getHumanProvincesList()) {
-      l.add("name='" + hp + "'");
-    }
-    return "(" + String.join(" OR ", l) + ")";
   }
 
   /**
