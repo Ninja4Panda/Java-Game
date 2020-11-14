@@ -3,7 +3,6 @@ package unsw.gloriaromanus.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import unsw.gloriaromanus.scenes.ConfigScreen;
 import unsw.gloriaromanus.scenes.InfoScreen;
 import unsw.gloriaromanus.scenes.LoadSaveScreen;
@@ -35,7 +34,6 @@ public class StartMenuController {
 
     @FXML
     void handleNewBtn() {
-        System.out.println("ddd");
         try {
             configScreen.start();
         } catch (IOException e) {
