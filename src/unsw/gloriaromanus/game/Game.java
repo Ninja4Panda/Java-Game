@@ -369,7 +369,7 @@ public class Game implements Observer {
         for(Player player: playerList) {
             if(player.removeRegion(defeated)) break;
         }
-        System.out.println(curPlayer.toString());
+        System.out.println("curPlayer"+curPlayer.toString());
         defeated.resetTrainer();
         curPlayer.addRegion(defeated);
     }
