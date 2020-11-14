@@ -473,11 +473,16 @@ public class GloriaRomanusController{
   }
 
   public String regionMoveRequest(String origin, String target, List<String> units) throws IOException {
-      return game.getCurPhase().move(origin, units,  target);
+    return game.getCurPhase().move(origin, units,  target);
+  
   }
 
   public String regionAttackRequest(String origin, String target, List<String> units ) throws IOException {
-      return game.invade(origin, units, target);
+    String msg = game.invade(origin, units, target);
+    if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
+      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
+    }
+    return msg;
   }
   public Check getCampaignWinCond() {
     return game.getCampaignWinCond();
