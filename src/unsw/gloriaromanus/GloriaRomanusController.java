@@ -159,7 +159,6 @@ public class GloriaRomanusController{
     }
 
     //Display message
-    //TODO:LOG
     String msg = game.endPhase();
     showSummary(msg);
 

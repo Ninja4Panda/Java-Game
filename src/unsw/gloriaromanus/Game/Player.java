@@ -55,8 +55,8 @@ public class Player implements Observer {
     /**
      * @return the faction of the player
      */
-    public String getFaction() {
-        return faction.toString();
+    public Faction getFaction() {
+        return faction;
     }
 
     /**
