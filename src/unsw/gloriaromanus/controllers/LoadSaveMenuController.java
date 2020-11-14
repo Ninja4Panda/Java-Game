@@ -160,8 +160,13 @@ public class LoadSaveMenuController {
     }
 
     @FXML
-    void handleBackBtn(ActionEvent e) throws IOException {
-        startScreen.start();
+    void handleBackBtn() {
+        try {
+            startScreen.start();
+        } catch (IOException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
+        }
     }
 
 }
