@@ -125,7 +125,13 @@ public class RegionMenuController extends MenuController {
         }
         String msg = this.getParent().regionConTrainRequest(train, leftProvinceLabel.getText());
         showSummary(msg);
-        this.getParent().resetSelections();
+        try {
+            this.getParent().resetSelections();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR, "Error occurred when resetting graphics");
+            a.show();
+        }
     }
 
     @FXML
@@ -159,12 +165,12 @@ public class RegionMenuController extends MenuController {
             String msg = this.getParent().regionMoveRequest(origin, target, moveUnits);
             showSummary(msg);
             addLog("======Moving from "+origin+" to "+target+"======\n"+msg);
+            this.getParent().resetSelections();
         } catch(IOException e) {
             e.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR, "Unexpected move error");
             a.show();
         }
-        this.getParent().resetSelections();
     }
 
     @FXML
@@ -188,12 +194,12 @@ public class RegionMenuController extends MenuController {
             String msg = this.getParent().regionAttackRequest(origin, target, attackUnits);
             showSummary(msg);
             addLog("======Attacking from "+origin+" to "+target+"======\n"+msg);
+            this.getParent().resetSelections();
         } catch (IOException e) {
             e.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR, "Unexpected attack error");
             a.show();
         }
-        this.getParent().resetSelections();
     }
 
     /**
