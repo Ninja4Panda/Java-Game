@@ -8,6 +8,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import unsw.gloriaromanus.faction.Faction;
 import unsw.gloriaromanus.MenuController;
@@ -48,15 +50,13 @@ public class PlayerMenuController extends MenuController{
     @FXML
     private GridPane winConGrid;
 
-    
-
     public void updatePlayer(Player player) {
         Faction faction = player.getFaction();
         factionImage.setImage(new Image(faction.getFlagPath()));
         playerFaction.setText(faction.toString());
         playerGold.setText(Integer.toString(player.getGold()));
-        treasuryCondProg.setText(Integer.toString(player.getGold()) + "/" + 5000 );
-        conquestCondProg.setText(Integer.toString(player.getAllRegions().size()) + "/" + 58);
+        treasuryCondProg.setText(player.getGold() + "/" + 100000 );
+        conquestCondProg.setText(player.getAllRegions().size() + "/" + 58);
         int totalWealth = 0;
         for( Region region : player.getAllRegions() ) {
             totalWealth += region.getWealth();
@@ -66,14 +66,12 @@ public class PlayerMenuController extends MenuController{
 
     public void initializeWinCond() {
         Check check = this.getParent().getCampaignWinCond();
-        System.out.println(check.getGoal().getName());
-        System.out.println(check.getCheckType().getName());
-        while(check != null) {
+        while(check.getGoal() != null) {
             Text conjunction = new Text( check.getCheckType().getName());
-            ImageView image = new ImageView(new Image(check.getGoal().getImage()) );
+            conjunction.setFont(Font.font("", FontWeight.BOLD,20));
+            ImageView image = new ImageView(new Image(check.getGoal().getImage(),70,70,false,false));
             winCond.getChildren().add(image);
-            winCond.getChildren().add(conjunction);
-
+            if(check.getsubCheck().getGoal()!=null) winCond.getChildren().add(conjunction);
             check = check.getsubCheck();
         }
     }
