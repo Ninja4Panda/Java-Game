@@ -81,7 +81,7 @@ public class UnitPaneController {
         unitHealth.setText("HP : " + unit.getHealth());
         unitAttack.setText("Attack : " + unit.getAttackValue());
         unitArmour.setText("Armour : " +unit.getDefenseSkill());
-        unitMoveSpeed.setText("MS : " + unit.getCurMovementPoints());
+        unitMoveSpeed.setText("MP : " + unit.getCurMovementPoints());
         if(!isRightPanel) {
             unitPane.setOnMouseClicked(event -> unitSelected());
         }

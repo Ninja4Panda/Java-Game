@@ -23,7 +23,6 @@ public class PlayerMenuController extends MenuController{
         Faction faction = player.getFaction();
         factionImage.setImage(new Image(faction.getFlagPath()));
         playerFaction.setText(faction.toString());
-        System.out.println(player.getGold());
         playerGold.setText(Integer.toString(player.getGold()));
     }
 }

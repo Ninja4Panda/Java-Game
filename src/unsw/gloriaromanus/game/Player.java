@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Player implements Observer {
     private Map<String, Region> regionsMap; //Key:Region Name, Value:Region object
-    private List<Region> recentlyConquered;
+    private List<String> recentlyConquered;
     private Faction faction;
     private int gold;
 
@@ -30,7 +30,11 @@ public class Player implements Observer {
 
     public Player(JSONObject playerData, GameTurn gameTurn) throws JSONException {
         gameTurn.attach(this);
+        JSONArray conList = playerData.getJSONArray("RecentlyConquered");
         recentlyConquered = new ArrayList<>();
+        for(int i = 0; i<conList.length(); i++) {
+            recentlyConquered.add(conList.getString(i));
+        }
         JSONArray regions = playerData.getJSONArray("Regions");
         String factionName = playerData.getString("Faction");
         faction = Faction.find(factionName);
@@ -48,7 +52,7 @@ public class Player implements Observer {
     /**
      * @return list of recently conquered region
      */
-    public List<Region> getRecentlyConquered() {
+    public List<String> getRecentlyConquered() {
         return recentlyConquered;
     }
 
@@ -89,7 +93,7 @@ public class Player implements Observer {
      */
     public void addRegion(Region defeated) {
         regionsMap.put(defeated.getName(), defeated);
-        recentlyConquered.add(defeated);
+        recentlyConquered.add(defeated.getName());
     }
 
     /**
@@ -114,12 +118,12 @@ public class Player implements Observer {
      */
     public String invade(List<String> path, Region origin, List<String> troops, Region target) {
         int attackFrom = path.size()-2;
-        for(Region region: recentlyConquered) {
-            if(region.getName().equals(path.get(attackFrom))) {
+        for(String region: recentlyConquered) {
+            if(region.equals(path.get(attackFrom))) {
                 return "Cannot attack from region that was recently conquered";
             }
         }
-        int movementPoints = path.size()-4;
+        int movementPoints = path.size()*4-4;
         return origin.invade(movementPoints, troops, target);
     }
 
@@ -166,6 +170,9 @@ public class Player implements Observer {
             regionSave.put(region.getSave());
         }
         save.put("Regions", regionSave);
+
+        JSONArray recentCon = new JSONArray(recentlyConquered);
+        save.put("RecentlyConquered",recentCon);
 
         return save;
     }
