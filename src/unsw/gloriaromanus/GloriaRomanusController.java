@@ -120,7 +120,9 @@ public class GloriaRomanusController{
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
-
+    if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
+      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase());
+    }
     initializeProvinceLayers();
   }
 
