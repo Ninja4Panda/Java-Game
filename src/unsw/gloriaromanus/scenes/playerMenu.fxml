@@ -96,7 +96,7 @@
                </rowConstraints>
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To Win Achieve : " wrappingWidth="113.08984375" GridPane.rowIndex="1" />
-                  <Text fx:id="winCond" strokeType="OUTSIDE" strokeWidth="0.0" text="condition" wrappingWidth="389.10595703125" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <HBox fx:id="winCond" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>

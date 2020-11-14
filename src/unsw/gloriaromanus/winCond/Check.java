@@ -98,17 +98,14 @@ public class Check {
 
     }
 
-    public boolean stopRecursion() {
-        if(subCheck == null && checkType == null && goal == null) {
-            return true;
-        }
-        return false;
+    public Junction getCheckType(){
+        return checkType;
     }
-    @Override
-    public String toString() {
-        if(subCheck.stopRecursion()) {
-            return goal.getName();
-        }
-        return " " + goal.getName() + " " + checkType.getName() +" " + subCheck.toString() ;
+
+    public WinCond getGoal() {
+        return goal;
+    }
+    public Check getsubCheck() {
+        return subCheck;
     }
 }
