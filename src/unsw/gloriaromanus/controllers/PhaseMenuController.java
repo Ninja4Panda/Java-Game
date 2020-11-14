@@ -28,11 +28,6 @@ public class PhaseMenuController extends MenuController{
         }
     }
 
-    @FXML
-    private void initialize() {
-//        phase.setText(this.getParent().getCurPhase().toString());
-    }
-
     public void update(GamePhase phase) {
         this.phase.setText(phase.toString());
         if(phase instanceof PreparationPhase) {
