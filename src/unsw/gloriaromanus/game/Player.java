@@ -133,7 +133,7 @@ public class Player implements Observer {
         int cost = getCost(origin, troops);
         if(cost>gold) return "Not enough gold!";
         String msg = origin.train(troops);
-        if("Success".equals(msg)) gold -= cost;
+        if("Success!".equals(msg)) gold -= cost;
         return msg;
     }
 
