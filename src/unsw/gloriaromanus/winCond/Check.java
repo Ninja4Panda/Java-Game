@@ -97,5 +97,18 @@ public class Check {
         return save;
 
     }
+
+    public boolean stopRecursion() {
+        if(subCheck == null && checkType == null && goal == null) {
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public String toString() {
+        if(subCheck.stopRecursion()) {
+            return goal.getName();
+        }
+        return " " + goal.getName() + " " + checkType.getName() +" " + subCheck.toString() ;
+    }
 }
- 

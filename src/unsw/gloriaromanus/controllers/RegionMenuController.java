@@ -308,22 +308,25 @@ public class RegionMenuController extends MenuController {
                 if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
                     if(isEnemy) { 
                         UPC.configureEnemy(u);
-                        setAttackButton();
                     }else {
                         UPC.configure(u, true);
-                        if(this.getParent().getCurPhase() instanceof PreparationPhase) {
-                            setTrainButton();
-                        } else {
-                            setMoveButton();
-                        }
-                    }
                     UPC.setParent(this);
                     rightScrollVbox.getChildren().add(root);
                     rightUnits.put(UPC, u);
                 } 
+
+                
+            }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        if(this.getParent().getCurPhase() instanceof PreparationPhase) {
+            setTrainButton();
+        } else if(isEnemy){
+            setAttackButton();
+        } else {
+            setMoveButton();
         }
 
     }

@@ -4,12 +4,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import unsw.gloriaromanus.faction.Faction;
 import unsw.gloriaromanus.MenuController;
 import unsw.gloriaromanus.game.Player;
+import unsw.gloriaromanus.region.Region;
 
 
 public class PlayerMenuController extends MenuController{
+
+    @FXML
+    private VBox topBox;
+
     @FXML
     private Label playerFaction;
 
@@ -17,7 +26,27 @@ public class PlayerMenuController extends MenuController{
     private ImageView factionImage;
 
     @FXML
+    private Label treasuryCondProg;
+
+    @FXML
+    private Label conquestCondProg;
+
+    @FXML
+    private Label wealthCondProg;
+
+    @FXML
+    private Text winCond;
+
+    @FXML
     private Label playerGold;
+
+    @FXML
+    private GridPane playerProgGrid;
+
+    @FXML
+    private GridPane winConGrid;
+
+    
 
     public void updatePlayer(Player player) {
         Faction faction = player.getFaction();
@@ -25,5 +54,34 @@ public class PlayerMenuController extends MenuController{
         playerFaction.setText(faction.toString());
         System.out.println(player.getGold());
         playerGold.setText(Integer.toString(player.getGold()));
+        treasuryCondProg.setText(Integer.toString(player.getGold()) + "/" + 5000 );
+        conquestCondProg.setText(Integer.toString(player.getAllRegions().size()) + "/" + 58);
+        int totalWealth = 0;
+        for( Region region : player.getAllRegions() ) {
+            totalWealth += region.getWealth();
+        }
+        wealthCondProg.setText(totalWealth + "/" + 10000);
+    }
+
+    public void initializeWinCond() {
+        if(this.getParent() != null) {
+            winCond.setText(this.getParent().getCampaignWinCond().toString());
+
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        // double width = topBox.getWidth();
+        playerProgGrid.setTranslateX(500);
+        winConGrid.setTranslateX(500);
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setMaxWidth(200);
+        col0.setPrefWidth(150);
+        // ColumnConstraints col1 = new ColumnConstraints();
+        // col1.setMaxWidth(1000);
+        // col1.setPrefWidth(1000);
+        winConGrid.getColumnConstraints().add(col0);
+        // winConGrid.getColumnConstraints().add(col1);
     }
 }

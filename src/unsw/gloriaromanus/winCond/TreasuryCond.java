@@ -8,5 +8,10 @@ public class TreasuryCond implements WinCond {
     public boolean playerWin(Player player) {
         return player.getGold() >= 100000;
     }
+
+    @Override
+    public String getName() {
+        return "Treasury";
+    }
     
 }

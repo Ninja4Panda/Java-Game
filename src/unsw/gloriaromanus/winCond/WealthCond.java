@@ -16,5 +16,10 @@ public class WealthCond implements WinCond {
         }
         return totalWealth >= 400000;
     }
+
+    @Override
+    public String getName() {
+        return "Wealth";
+    }
     
 }
