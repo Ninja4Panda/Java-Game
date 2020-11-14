@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Phase;
+package unsw.gloriaromanus.phase;
 
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
@@ -9,7 +9,6 @@ import java.util.List;
 public interface GamePhase {
     /**
      * Get the appropriate region data
-     *
      * @param region region object
      * @return list of units
      */

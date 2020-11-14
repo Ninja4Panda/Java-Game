@@ -1,7 +1,7 @@
 package unsw.gloriaromanus.winCond;
 
 
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 
 public class ConquestCond implements WinCond{
 

@@ -1,9 +1,9 @@
-package unsw.gloriaromanus.Phase;
+package unsw.gloriaromanus.phase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Game.Game;
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.game.Player;
 import unsw.gloriaromanus.region.Region;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class MovePhase implements GamePhase {
 
     @Override
     public String toString() {
-        return "Move";
+        return "Move Phase";
     }
 
     @Override

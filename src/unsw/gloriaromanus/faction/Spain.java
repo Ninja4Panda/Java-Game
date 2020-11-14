@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Faction;
+package unsw.gloriaromanus.faction;
 
 import java.io.File;
 

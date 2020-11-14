@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import java.util.Objects;
 

@@ -1,10 +1,12 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import unsw.gloriaromanus.MenuController;
+import unsw.gloriaromanus.phase.GamePhase;
+import unsw.gloriaromanus.phase.PreparationPhase;
 
 import java.io.IOException;
 
@@ -26,22 +28,17 @@ public class PhaseMenuController extends MenuController{
         }
     }
 
-    public void update(String phase) {
-        switch (phase) {
-            case "Preparation":
-                this.phase.setText("Preparation");
-                changePhase.setText("Next Phase");
-                break;
-            case "Move":
-                this.phase.setText("Move Phase");
-                changePhase.setText("End Turn");
-            default:
-                break;
-        }
-    }
-
     @FXML
     private void initialize() {
-        
+//        phase.setText(this.getParent().getCurPhase().toString());
+    }
+
+    public void update(GamePhase phase) {
+        this.phase.setText(phase.toString());
+        if(phase instanceof PreparationPhase) {
+            changePhase.setText("Next Phase");
+        } else {
+            changePhase.setText("End Turn");
+        }
     }
 }

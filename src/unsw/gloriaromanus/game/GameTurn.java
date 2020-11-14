@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Game;
+package unsw.gloriaromanus.game;
 
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.Subject;

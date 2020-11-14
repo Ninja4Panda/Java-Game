@@ -1,10 +1,10 @@
-package unsw.gloriaromanus.Game;
+package unsw.gloriaromanus.game;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import unsw.gloriaromanus.Observer;
-import unsw.gloriaromanus.Phase.*;
+import unsw.gloriaromanus.phase.*;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 import unsw.gloriaromanus.winCond.Check;

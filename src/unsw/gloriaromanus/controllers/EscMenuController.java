@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -11,7 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.game.Game;
 import unsw.gloriaromanus.scenes.SaveScreen;
 
 import java.io.IOException;

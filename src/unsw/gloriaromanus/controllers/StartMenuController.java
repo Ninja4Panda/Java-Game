@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

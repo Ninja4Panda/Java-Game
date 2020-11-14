@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import unsw.gloriaromanus.Controllers.StartMenuController;
+import unsw.gloriaromanus.controllers.StartMenuController;
 
 import java.io.IOException;
 

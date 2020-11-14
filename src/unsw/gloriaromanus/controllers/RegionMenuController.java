@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,8 +24,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import unsw.gloriaromanus.MenuController;
-import unsw.gloriaromanus.Phase.MovePhase;
-import unsw.gloriaromanus.Phase.PreparationPhase;
+import unsw.gloriaromanus.phase.MovePhase;
+import unsw.gloriaromanus.phase.PreparationPhase;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
@@ -305,16 +305,15 @@ public class RegionMenuController extends MenuController {
                     setAttackButton();
                 }else {
                     UPC.configure(u, true);
-                        if(this.getParent().getCurPhase() instanceof  PreparationPhase) {
-                            setTrainButton();
-                        } else {
-                            setMoveButton();
-                        }
+                    if(this.getParent().getCurPhase() instanceof PreparationPhase) {
+                        setTrainButton();
+                    } else {
+                        setMoveButton();
+                    }
                 }
                 UPC.setParent(this);
                 rightScrollVbox.getChildren().add(root);
                 rightUnits.put(UPC, u);
-                
             } catch (Exception e) {
                 e.printStackTrace();
             }

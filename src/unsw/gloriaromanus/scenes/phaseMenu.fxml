@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="600.0"  translateY="-100.0" translateX="100.0" StackPane.alignment="BOTTOM_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.PhaseMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="600.0"  translateY="-100.0" translateX="100.0" StackPane.alignment="BOTTOM_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.controllers.PhaseMenuController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>

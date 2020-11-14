@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +11,8 @@ import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Faction.Faction;
-import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.faction.Faction;
+import unsw.gloriaromanus.game.Game;
 import unsw.gloriaromanus.scenes.GameScreen;
 import unsw.gloriaromanus.scenes.StartScreen;
 

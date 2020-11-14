@@ -5,7 +5,7 @@ import java.util.Random;
 
 import org.json.JSONObject;
 
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 
 public class Check {
     private Check subCheck;

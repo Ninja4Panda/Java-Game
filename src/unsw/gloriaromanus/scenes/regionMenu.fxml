@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxWidth="392.0" prefHeight="535.0" prefWidth="392.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" translateY="55" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.RegionMenuController">
+<VBox maxWidth="392.0" prefHeight="535.0" prefWidth="392.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" translateY="55" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.controllers.RegionMenuController">
     <padding>
         <Insets topRightBottomLeft="10" />
     </padding>

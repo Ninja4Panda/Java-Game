@@ -1,7 +1,7 @@
-package unsw.gloriaromanus.Phase;
+package unsw.gloriaromanus.phase;
 
-import unsw.gloriaromanus.Game.Game;
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.game.Player;
 import unsw.gloriaromanus.region.Region;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class PreparationPhase implements GamePhase {
 
     @Override
     public String toString() {
-        return "Preparation";
+        return "Preparation Phase";
     }
 
     @Override
