@@ -261,6 +261,8 @@ public class RegionMenuController extends MenuController {
         
         leftProvinceLabel.setText(region.getName());
         leftScrollVbox.getChildren().clear();
+        selectedUnits.clear();
+        leftUnits.clear();
         List<Unit> units = region.getUnits();
 
         for(Unit u : units) {
@@ -289,6 +291,7 @@ public class RegionMenuController extends MenuController {
     public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
         rightProvinceLabel.setText(name);
         rightScrollVbox.getChildren().clear();
+        rightUnits.clear();
         
         if(units == null) {
             units = new ArrayList<>();
@@ -318,6 +321,7 @@ public class RegionMenuController extends MenuController {
                 e.printStackTrace();
             }
         }
+
     }
 
     public void selectUnit(Unit unit) {
@@ -377,6 +381,8 @@ public class RegionMenuController extends MenuController {
         leftProvinceLabel.setText("Select Region");
         rightProvinceLabel.setText("Select Region");
         selectedUnits.clear();
+        leftUnits.clear();
+        rightUnits.clear();
         if(this.getParent().getCurPhase() instanceof MovePhase) {
             setMoveButton();
         } else {
