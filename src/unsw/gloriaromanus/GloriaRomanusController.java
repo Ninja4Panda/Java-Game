@@ -4,16 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -63,19 +57,16 @@ import javafx.util.Duration;
 import org.geojson.FeatureCollection;
 import org.geojson.LngLatAlt;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import javafx.util.Pair;
-import unsw.gloriaromanus.Controllers.PhaseMenuController;
-import unsw.gloriaromanus.Controllers.PlayerMenuController;
-import unsw.gloriaromanus.Controllers.RegionMenuController;
-import unsw.gloriaromanus.Faction.Faction;
-import unsw.gloriaromanus.Game.Game;
-import unsw.gloriaromanus.Game.Player;
-import unsw.gloriaromanus.Phase.GamePhase;
-import unsw.gloriaromanus.Phase.MovePhase;
-import unsw.gloriaromanus.Phase.PreparationPhase;
+import unsw.gloriaromanus.controllers.PhaseMenuController;
+import unsw.gloriaromanus.controllers.PlayerMenuController;
+import unsw.gloriaromanus.controllers.RegionMenuController;
+import unsw.gloriaromanus.faction.Faction;
+import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.game.Player;
+import unsw.gloriaromanus.phase.GamePhase;
+import unsw.gloriaromanus.phase.MovePhase;
+import unsw.gloriaromanus.phase.PreparationPhase;
 import unsw.gloriaromanus.region.Region;
 
 
@@ -142,7 +133,7 @@ public class GloriaRomanusController{
     resetSelections();
 
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
-      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase().toString());
+      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase());
     }
     if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
       RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
@@ -343,7 +334,7 @@ public class GloriaRomanusController{
             System.out.println("InterruptedException occurred");
           }
         });
-      } else if (e.getButton() == MouseButton.SECONDARY && Objects.equals(game.getCurPhase().toString(), "Move")) {
+      } else if (e.getButton() == MouseButton.SECONDARY && game.getCurPhase() instanceof MovePhase) {
         // get the screen point where the user clicked or tapped
         Point2D screenPoint = new Point2D(e.getX(), e.getY());
 

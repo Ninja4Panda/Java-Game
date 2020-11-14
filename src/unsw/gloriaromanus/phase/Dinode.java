@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Phase;
+package unsw.gloriaromanus.phase;
 
 public class Dinode {
     private String id;

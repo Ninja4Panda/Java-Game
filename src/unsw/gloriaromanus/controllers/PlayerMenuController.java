@@ -1,12 +1,12 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import unsw.gloriaromanus.Faction.Faction;
+import unsw.gloriaromanus.faction.Faction;
 import unsw.gloriaromanus.MenuController;
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 
 
 public class PlayerMenuController extends MenuController{

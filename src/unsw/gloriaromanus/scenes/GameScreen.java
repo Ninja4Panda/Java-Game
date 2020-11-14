@@ -11,9 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import unsw.gloriaromanus.Controllers.EscMenuController;
+import unsw.gloriaromanus.controllers.EscMenuController;
 import unsw.gloriaromanus.GloriaRomanusController;
-import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.game.Game;
 
 import java.io.IOException;
 

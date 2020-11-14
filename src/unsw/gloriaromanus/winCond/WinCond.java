@@ -1,6 +1,6 @@
 package unsw.gloriaromanus.winCond;
 
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 
 public interface WinCond {
     public boolean playerWin(Player player);

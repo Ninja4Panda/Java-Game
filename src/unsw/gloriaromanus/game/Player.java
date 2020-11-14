@@ -1,9 +1,9 @@
-package unsw.gloriaromanus.Game;
+package unsw.gloriaromanus.game;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Faction.Faction;
+import unsw.gloriaromanus.faction.Faction;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;

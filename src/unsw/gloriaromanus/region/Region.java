@@ -4,8 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import unsw.gloriaromanus.Game.BattleResolver;
-import unsw.gloriaromanus.Game.GameTurn;
+import unsw.gloriaromanus.game.BattleResolver;
+import unsw.gloriaromanus.game.GameTurn;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 

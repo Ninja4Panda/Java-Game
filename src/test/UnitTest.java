@@ -14,11 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import unsw.gloriaromanus.Game.BattleResolver;
-import unsw.gloriaromanus.Game.Game;
-import unsw.gloriaromanus.Game.GameTurn;
-import unsw.gloriaromanus.Phase.MovePhase;
-import unsw.gloriaromanus.Phase.PreparationPhase;
+import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.game.GameTurn;
+import unsw.gloriaromanus.phase.MovePhase;
+import unsw.gloriaromanus.phase.PreparationPhase;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Archerman;
 import unsw.gloriaromanus.units.Spearman;

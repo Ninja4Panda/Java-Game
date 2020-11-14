@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Faction;
+package unsw.gloriaromanus.faction;
 
 public interface Faction {
     static Faction find(String factionName) {

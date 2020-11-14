@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Game;
+package unsw.gloriaromanus.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +52,7 @@ public class BattleResolver implements Subject {
                 attacking.moveTroops(unit, defending) ;
             }
             BattleResolver resolver = getINSTANCE();
+            System.out.println(defending);
             resolver.setDefender(defending);
             resolver.notifyObservers();
             return "You won! Region has been conquered\n\nNo Lost and all unit was moved to "+defending.getName();

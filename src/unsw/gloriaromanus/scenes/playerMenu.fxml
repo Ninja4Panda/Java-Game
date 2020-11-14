@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="55.0" prefHeight="55.0" prefWidth="480.0" style="-fx-background-color: pink;" StackPane.alignment="TOP_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.Controllers.PlayerMenuController">
+<VBox maxHeight="55.0" prefHeight="55.0" prefWidth="480.0" style="-fx-background-color: pink;" StackPane.alignment="TOP_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.controllers.PlayerMenuController">
    <children>
       <HBox prefHeight="38.0" prefWidth="635.0">
          <children>

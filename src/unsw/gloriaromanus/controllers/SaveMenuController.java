@@ -1,4 +1,4 @@
-package unsw.gloriaromanus.Controllers;
+package unsw.gloriaromanus.controllers;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -22,8 +22,8 @@ import javafx.util.Duration;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import unsw.gloriaromanus.Faction.Faction;
-import unsw.gloriaromanus.Game.Game;
+import unsw.gloriaromanus.faction.Faction;
+import unsw.gloriaromanus.game.Game;
 
 import java.io.File;
 import java.io.IOException;
