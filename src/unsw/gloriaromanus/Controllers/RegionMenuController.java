@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -16,12 +15,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import unsw.gloriaromanus.MenuController;
+import unsw.gloriaromanus.Phase.MovePhase;
 import unsw.gloriaromanus.region.Region;
 import unsw.gloriaromanus.units.Unit;
 
@@ -40,6 +41,8 @@ public class RegionMenuController extends MenuController {
     @FXML 
     private Label taxMirror;
 
+    @FXML
+    private VBox logBox;
 
     @FXML
     public void setFirstTaxBracket(){
@@ -102,7 +105,7 @@ public class RegionMenuController extends MenuController {
    
 
     @FXML
-    private void handleInteraction(){
+    private void handleTrain(){
         List<String> train = new ArrayList<>();
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
@@ -131,8 +134,11 @@ public class RegionMenuController extends MenuController {
             moveUnits.add(u.getClassName());
         }
 
-        String msg = this.getParent().regionMoveRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), moveUnits);
+        String origin = leftProvinceLabel.getText();
+        String target = rightProvinceLabel.getText();
+        String msg = this.getParent().regionMoveRequest(origin, target, moveUnits);
         showSummary(msg);
+        addLog("======Moving from "+origin+" to "+target+"======\n"+msg);
     }
 
     @FXML
@@ -141,8 +147,25 @@ public class RegionMenuController extends MenuController {
         for(Unit u : selectedUnits) {
             attackUnits.add(u.getClassName());
         }
-        String msg = this.getParent().regionAttackRequest(leftProvinceLabel.getText(), rightProvinceLabel.getText(), attackUnits);
+        String origin = leftProvinceLabel.getText();
+        String target = rightProvinceLabel.getText();
+        String msg = this.getParent().regionAttackRequest(origin, target, attackUnits);
         showSummary(msg);
+        addLog("======Attacking from "+origin+" to "+target+"======\n"+msg);
+    }
+
+    /**
+     * Add to log box
+     */
+    public void addLog(String msg) {
+        logBox.getChildren().add(new Text(msg));
+    }
+
+    /**
+     * Clear the log
+     */
+    public void clearLog() {
+        logBox.getChildren().clear();
     }
 
     /**
@@ -172,8 +195,8 @@ public class RegionMenuController extends MenuController {
         double height = primaryScreenBounds.getHeight();
         popupStage.setScene(new Scene(row, width*0.5, height*0.5));
         popupStage.show();
-        //Auto close after 3sec
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        //Auto close after 1sec
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(e->popupStage.hide());
         delay.play();
     }
@@ -307,7 +330,7 @@ public class RegionMenuController extends MenuController {
 
     private void setTrainButton() {
         interactionButton.setText("Train");
-        interactionButton.setOnAction(event -> handleInteraction() );
+        interactionButton.setOnAction(event -> handleTrain() );
 
     }
 
@@ -317,8 +340,8 @@ public class RegionMenuController extends MenuController {
         leftProvinceLabel.setText("Select Region");
         rightProvinceLabel.setText("Select Region");
         selectedUnits.clear();
-        if(Objects.equals(this.getParent().getCurPhase(), "Move Phase")) {
-            setAttackButton();
+        if(this.getParent().getCurPhase() instanceof MovePhase) {
+            setMoveButton();
         } else {
             setTrainButton();
         }
