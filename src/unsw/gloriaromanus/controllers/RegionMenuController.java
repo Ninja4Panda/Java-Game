@@ -270,10 +270,12 @@ public class RegionMenuController extends MenuController {
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                UPC.configure(u, false);
-                UPC.setParent(this);
-                leftScrollVbox.getChildren().add(root);
-                leftUnits.put(UPC, u);
+                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                    UPC.configure(u, false);
+                    UPC.setParent(this);
+                    leftScrollVbox.getChildren().add(root);
+                    leftUnits.put(UPC, u);
+                } 
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -303,20 +305,22 @@ public class RegionMenuController extends MenuController {
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                if(isEnemy) { 
-                    UPC.configureEnemy(u);
-                    setAttackButton();
-                }else {
-                    UPC.configure(u, true);
-                    if(this.getParent().getCurPhase() instanceof PreparationPhase) {
-                        setTrainButton();
-                    } else {
-                        setMoveButton();
+                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                    if(isEnemy) { 
+                        UPC.configureEnemy(u);
+                        setAttackButton();
+                    }else {
+                        UPC.configure(u, true);
+                        if(this.getParent().getCurPhase() instanceof PreparationPhase) {
+                            setTrainButton();
+                        } else {
+                            setMoveButton();
+                        }
                     }
-                }
-                UPC.setParent(this);
-                rightScrollVbox.getChildren().add(root);
-                rightUnits.put(UPC, u);
+                    UPC.setParent(this);
+                    rightScrollVbox.getChildren().add(root);
+                    rightUnits.put(UPC, u);
+                } 
             } catch (Exception e) {
                 e.printStackTrace();
             }
