@@ -198,6 +198,11 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Required goals are located on the top right corner in game. Achieve required goals first to win the game!">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">

@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="291.0" spacing="30.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="294.0" spacing="30.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" prefHeight="46.0" prefWidth="268.0" text="Pause Menu" textAlignment="CENTER">
          <font>
@@ -21,6 +20,11 @@
       <Button fx:id="quitGamebtn" mnemonicParsing="false" onAction="#handleQuitBtn" prefHeight="45.0" prefWidth="143.0" text="Quit Game">
          <font>
             <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="infoBtn" mnemonicParsing="false" onAction="#handleInfoBtn" prefHeight="45.0" prefWidth="143.0" text="How to Play">
+         <font>
+            <Font size="19.0" />
          </font>
       </Button>
       <Button fx:id="backBtn" mnemonicParsing="false" onAction="#handleBackBtn" prefHeight="26.0" prefWidth="109.0" text="back to game" />

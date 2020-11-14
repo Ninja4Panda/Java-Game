@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.scenes.InfoScreen;
+import unsw.gloriaromanus.scenes.PopUpInfoScreen;
 import unsw.gloriaromanus.scenes.SaveScreen;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ public class EscMenuController {
     private Parent root;
     private Stage stage;
     private SaveScreen saveScreen;
+    private PopUpInfoScreen infoScreen;
     private Game game;
 
     public EscMenuController(Parent root, Stage popupStage, Game game) {
@@ -34,6 +38,18 @@ public class EscMenuController {
         this.stage = popupStage;
         this.game = game;
         this.saveScreen = new SaveScreen(popupStage);
+        this.infoScreen = new PopUpInfoScreen(popupStage);
+    }
+
+    @FXML
+    void handleInfoBtn() {
+        try {
+            infoScreen.start();
+        } catch (IOException error) {
+            error.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
+        }
     }
 
     @FXML
@@ -47,26 +63,9 @@ public class EscMenuController {
         try {
             saveScreen.start(game);
         } catch (IOException error) {
-            //Unable to load save
             error.printStackTrace();
-
-            //Modal
-            Stage errorStage = new Stage();
-            errorStage.initStyle(StageStyle.UNDECORATED);
-            errorStage.initModality(Modality.APPLICATION_MODAL);
-            errorStage.initOwner(stage);
-
-            //Error msg
-            Label errorMsg = new Label();
-            errorMsg.setText("Failed to load saves!");
-            errorMsg.setStyle("-fx-font-size: 24; -fx-text-fill: red");
-            errorStage.setScene(new Scene(errorMsg));
-            errorStage.show();
-
-            //Auto close after 3sec
-            PauseTransition delay = new PauseTransition(Duration.seconds(3));
-            delay.setOnFinished(e->errorStage.hide());
-            delay.play();
+            Alert a = new Alert(Alert.AlertType.ERROR, "Fxml loading Error! Please restart program");
+            a.show();
         }
     }
 
