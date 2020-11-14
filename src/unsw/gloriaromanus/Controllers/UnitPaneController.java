@@ -61,7 +61,7 @@ public class UnitPaneController {
 
     public void showAmountAdded(int amount) {
         if(!Objects.equals(unitName.getText(), "???")) {
-            setAmount("Amount : " + Integer.toString(unit.getCurAmount()) + " + " + amount);
+            setAmount("Amount : " + unit.getCurAmount() + " + " + amount);
             unitPane.setStyle("-fx-background-color: #0416f9; -fx-border-color:black;-fx-border-width: 5;");
         }
     }
@@ -71,7 +71,7 @@ public class UnitPaneController {
     }
 
     public void revertShowAmountAdded(Unit unit) {
-        unitAmount.setText("Amount : " + Integer.toString(unit.getCurAmount()) );
+        unitAmount.setText("Amount : " + unit.getCurAmount());
         unitPane.setStyle("-fx-background-color: #f4f4f4; -fx-border-color:black;-fx-border-width: 5;");
     }
 

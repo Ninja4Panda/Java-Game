@@ -14,7 +14,7 @@
       <HBox prefHeight="38.0" prefWidth="635.0">
          <children>
             <ImageView fx:id="factionImage" fitHeight="72.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="playerFaction" prefHeight="55.0" prefWidth="189.0" text="Faction" textAlignment="CENTER">
+            <Label fx:id="playerFaction" prefHeight="55.0" prefWidth="252.0" text="Faction" textAlignment="CENTER">
                <font>
                   <Font size="45.0" />
                </font>

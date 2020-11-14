@@ -214,7 +214,6 @@ public class GloriaRomanusController{
    return game.getCurPhase();
  }
 
-
   /**
    * run this initially to update province owner, change feature in each
    * FeatureLayer to be visible/invisible depending on owner. Can also update
