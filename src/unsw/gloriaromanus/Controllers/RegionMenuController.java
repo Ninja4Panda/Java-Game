@@ -169,6 +169,11 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleAttack() {
+        //Handles when no target is selected
+        if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
+            showSummary("Please select a origin region");
+            return;
+        }
         if(selectedUnits.size()==0) {
             showSummary("Please select unit to attack");
             return;
@@ -252,7 +257,6 @@ public class RegionMenuController extends MenuController {
         leftScrollVbox.getChildren().clear();
         List<Unit> units = region.getUnits();
 
-
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
@@ -281,13 +285,8 @@ public class RegionMenuController extends MenuController {
         rightScrollVbox.getChildren().clear();
         
         if(units == null) {
-            if(leftUnits == null) {
-                // error msg "please select attacking region first"
-                return;
-            } else {
             units = new ArrayList<>();
             units.addAll(leftUnits.values());
-            }
         }
        
         for(Unit u : units) {
