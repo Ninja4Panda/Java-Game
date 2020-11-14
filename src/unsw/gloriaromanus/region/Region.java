@@ -167,8 +167,13 @@ public class Region implements Observer {
      */
     public void moveTroops(Unit unit, Region end) {
         Unit target = end.findUnit(unit.getClassName());
+        System.out.println(end.getName()+" "+target.getClassName()+" amt:"+target.getCurAmount()+" MP:"+target.getCurMovementPoints());
+        System.out.println(this.getName()+" "+unit.getClassName()+" amt:"+unit.getCurAmount()+" MP:"+unit.getCurMovementPoints());
+        System.out.println("==========================================");
+
         //Set the MP of the troop
         if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
+            System.out.println("sss");
             target.setCurMovementPoints(unit.getCurMovementPoints());
         }
         int amt = unit.getCurAmount();
