@@ -38,6 +38,13 @@ public class RegionTrainer {
     }
 
     /**
+     * Reset the trainer on ownership change
+     */
+    public void reset() {
+        trainingUnits.clear();
+    }
+
+    /**
      * Adds the appropriate unit into the trainingUnits hashtable.
      * @param troops list of units
      * @return msg to display

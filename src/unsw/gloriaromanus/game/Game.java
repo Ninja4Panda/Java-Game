@@ -195,6 +195,7 @@ public class Game implements Observer {
     public void nextPlayerTurn() {
         Iterator<Player> it = playerList.iterator();
         Player firstPlayer = playerList.get(0);
+        System.out.println("Before "+curPlayer.getFaction());
 
         while (it.hasNext()) {
             Player player = it.next();
@@ -204,6 +205,7 @@ public class Game implements Observer {
                 break;
             }
         }
+        System.out.println("After "+curPlayer.getFaction());
 
         gameTurn.nextTurn();
     }
@@ -367,6 +369,8 @@ public class Game implements Observer {
         for(Player player: playerList) {
             if(player.removeRegion(defeated)) break;
         }
+        System.out.println(curPlayer.toString());
+        defeated.resetTrainer();
         curPlayer.addRegion(defeated);
     }
 
