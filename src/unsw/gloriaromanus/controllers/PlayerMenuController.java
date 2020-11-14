@@ -6,12 +6,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import unsw.gloriaromanus.faction.Faction;
 import unsw.gloriaromanus.MenuController;
 import unsw.gloriaromanus.game.Player;
 import unsw.gloriaromanus.region.Region;
+import unsw.gloriaromanus.winCond.Check;
 
 
 public class PlayerMenuController extends MenuController{
@@ -35,7 +37,7 @@ public class PlayerMenuController extends MenuController{
     private Label wealthCondProg;
 
     @FXML
-    private Text winCond;
+    private HBox winCond;
 
     @FXML
     private Label playerGold;
@@ -64,9 +66,16 @@ public class PlayerMenuController extends MenuController{
     }
 
     public void initializeWinCond() {
-        if(this.getParent() != null) {
-            winCond.setText(this.getParent().getCampaignWinCond().toString());
+        Check check = this.getParent().getCampaignWinCond();
+        System.out.println(check.getGoal().getName());
+        System.out.println(check.getCheckType().getName());
+        while(check != null) {
+            Text conjunction = new Text( check.getCheckType().getName());
+            ImageView image = new ImageView(new Image(check.getGoal().getImage()) );
+            winCond.getChildren().add(image);
+            winCond.getChildren().add(conjunction);
 
+            check = check.getsubCheck();
         }
     }
 
