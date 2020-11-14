@@ -18,7 +18,9 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
@@ -314,6 +316,7 @@ public class GloriaRomanusController{
                 if (game.getCurPlayer().getRegion(province)!=null){
                   // province owned by human
                   if (currentlySelectedLeftProvince != null){
+                   
                     featureLayer.unselectFeature(currentlySelectedLeftProvince);
                   }
                   currentlySelectedLeftProvince = f;
@@ -322,8 +325,12 @@ public class GloriaRomanusController{
                   }
                   featureLayer.selectFeature(f);                
 
+                }else {
+                  Alert a = new Alert(AlertType.WARNING);
+                  a.setTitle("SELECTION ERROR");
+                  a.setContentText("Please select ally region");
+                  a.show();
                 }
-                // Have an Else clause to show the player that it's not his region that's why he cant select
                 
 
               }
@@ -375,13 +382,14 @@ public class GloriaRomanusController{
 
                 if (game.getCurPlayer().getRegion(province)!=null){
                   // province owned by human
-                  if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
+                  if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController ){
                     ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), false);
-                  }
+                  } 
 
                   
                 } else {
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
+                    System.out.println(game.displayRegion(province));
                     ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), true);
                     
                   }
