@@ -3,9 +3,10 @@ package unsw.gloriaromanus.winCond;
 import java.util.List;
 import java.util.Random;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 
 public class Check {
     private Check subCheck;
@@ -31,41 +32,36 @@ public class Check {
         }
     }
 
-    public Check(String goal, String checkType, JSONObject subCheck) {
-        if(goal.compareTo("null") == 0) {
-           this.subCheck = null;
-           this.goal = null;
-           this.checkType = null;
+    public Check(String goal, String checkType, JSONObject subCheck) throws JSONException {
+        if("".equals(goal)) {
+            this.subCheck = null;
+            this.goal = null;
+            this.checkType = null;
         } else {
             switch (goal) {
-                case "WealthCond":
+                case "Wealth":
                     this.goal = new WealthCond();
                     break;
-                case "TreasuryCond":
+                case "Treasury":
                     this.goal = new TreasuryCond();
                     break;
-                case "ConquestCond":
+                case "Conquest":
                     this.goal = new ConquestCond();
                     break;
                 default:
-                    break;
+                    throw new JSONException("Invalid Goal");
             }
 
-            if(checkType.compareTo("OrCheck") == 0) {
+            if("or".equals(checkType)) {
                 this.checkType = new OrCheck();
-            } else if (checkType.compareTo("AndCheck") == 0){
+            } else if ("and".equals(checkType)) {
                 this.checkType = new AndCheck();
+            } else {
+                throw new JSONException("Invalid Junction");
             }
 
-            if(subCheck.getString("Goal").compareTo("null") == 0) {
-                JSONObject stopRecursion = new JSONObject();
-                stopRecursion.put("Goal", "null");
-                stopRecursion.put("Junction", "null");
-                stopRecursion.put("SubCheck", "null");
-                this.subCheck = new Check(subCheck.getString("Goal"), subCheck.getString("Junction"), stopRecursion);
-            } else {
-                this.subCheck = new Check(subCheck.getString("Goal"), subCheck.getString("Junction"), subCheck.getJSONObject("SubCheck"));
-            }
+            if(subCheck==null) throw new JSONException("Invalid subcheck");
+            this.subCheck = new Check(subCheck.optString("Goal"), subCheck.optString("Junction"), subCheck.optJSONObject("SubCheck"));
         }
     }
 
@@ -85,17 +81,26 @@ public class Check {
 
     public JSONObject getSave() {
         JSONObject save = new JSONObject();
-        if(goal == null) {
-            save.put("SubCheck", "null");
-            save.put("Goal", "null");
-            save.put("Junction", "null");
-        } else {
+        if(goal != null) {
             save.put("SubCheck", subCheck.getSave());
             save.put("Junction", checkType.getName());
             save.put("Goal", goal.getName());
         }
         return save;
+    }
 
+    public Junction getCheckType(){
+        return checkType;
+    }
+
+    public WinCond getGoal() {
+        return goal;
+    }
+    public Check getsubCheck() {
+        return subCheck;
+    }
+
+    public void reset() {
+        this.goal = null;
     }
 }
- 

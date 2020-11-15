@@ -1,8 +1,9 @@
 package unsw.gloriaromanus.winCond;
 
+import java.io.InputStream;
 import java.util.List;
 
-import unsw.gloriaromanus.Game.Player;
+import unsw.gloriaromanus.game.Player;
 import unsw.gloriaromanus.region.Region;
 
 public class WealthCond implements WinCond {
@@ -16,5 +17,15 @@ public class WealthCond implements WinCond {
         }
         return totalWealth >= 400000;
     }
+
+    @Override
+    public String getName() {
+        return "Wealth";
+    }
+
+    @Override
+    public InputStream getImage() {
+        return getClass().getResourceAsStream("../scenes/images/CS2511Sprites_No_Background/Terrain and Buildings/Buildings/Market/Market_NB.png");
+    } 
     
 }
