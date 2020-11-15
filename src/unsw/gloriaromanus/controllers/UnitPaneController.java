@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import unsw.gloriaromanus.units.Unit;
 
 public class UnitPaneController {
@@ -40,6 +41,9 @@ public class UnitPaneController {
 
     @FXML
     private Pane unitPane;
+
+    @FXML
+    private VBox infoBox;
 
     private RegionMenuController parent;
     private Unit unit;
@@ -108,9 +112,9 @@ public class UnitPaneController {
         if(trainingTurnsLeft != 0) {
             Label amountTraining = new Label("Training: " + Integer.toString(unit.getTrainAmount()));
             Label turnsLeft = new Label("Turns left : " + Integer.toString(trainingTurnsLeft));
-            HBox trainigInfo = new HBox(amountTraining, turnsLeft);
-            trainigInfo.setStyle("-fx-background-color: #100078");
-            unitPane.getChildren().add(trainigInfo);
+            VBox trainingInfo = new VBox(amountTraining, turnsLeft);
+            trainingInfo.setStyle("-fx-background-color: #15f801");
+            infoBox.getChildren().add(trainingInfo);
         }
 
         if(!isRightPanel) {

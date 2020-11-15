@@ -307,14 +307,6 @@ public class RegionMenuController extends MenuController {
                 leftScrollVbox.getChildren().add(root);
                 leftUnits.put(UPC, u);
 
-                // if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                //     if(region.getUnitsTraining().containsKey(u.getClassName()) ) {
-                //         UPC.configure(u, region.getUnitsTraining().get(u.getClassName()), false);
-                //     } else {
-                //         UPC.configure(u, 0, false);
-
-                //     }
-                // } 
                 
             } catch (Exception e) {
                 e.printStackTrace();
