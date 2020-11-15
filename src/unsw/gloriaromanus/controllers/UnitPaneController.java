@@ -59,6 +59,10 @@ public class UnitPaneController {
         this.parent = parent;
     }
 
+    /**
+     * Shows the user how many units will be added after training
+     * @param amount to be trained
+     */
     public void showAmountAdded(int amount) {
         if(!Objects.equals(unitName.getText(), "???")) {
             setAmount("Amount : " + unit.getCurAmount() + " + " + amount);
@@ -70,11 +74,20 @@ public class UnitPaneController {
         unitAmount.setText(msg);
     }
 
+    /**
+     * Reverts the unit back to just showing its amount
+     * @param unit to be reverted
+     */
     public void revertShowAmountAdded(Unit unit) {
         unitAmount.setText("Amount : " + unit.getCurAmount());
         unitPane.setStyle("-fx-background-color: #f4f4f4; -fx-border-color:black;-fx-border-width: 5;");
     }
 
+    /**
+     * Sets up the unit Pane 
+     * @param unit is what is presented by the Pane
+     * @param isRightPanel the intended location of the unit Pane, a right unit Pane is unclickable
+     */
     public void configure(Unit unit, boolean isRightPanel) {
         this.unit = unit;
         unitName.setText(unit.getClassName());
@@ -90,6 +103,10 @@ public class UnitPaneController {
        
     }
 
+    /**
+     * Sets up an Enemy unit Pane
+     * @param unit used to get the picture
+     */
     public void configureEnemy(Unit unit) {
         unitName.setText("???");
         unitHealth.setText("HP : ???");
