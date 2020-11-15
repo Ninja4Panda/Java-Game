@@ -392,4 +392,13 @@ public class Game implements Observer {
     public Check getCampaignWinCond() {
         return campaignWinCond;
     }
+
+    public Region getRegion(String region) {
+        for(Player p : playerList ) {
+            if(p.getRegion(region) != null) {
+                return p.getRegion(region);
+            }
+        }
+        return null;
+    }
 }
