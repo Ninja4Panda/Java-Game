@@ -42,7 +42,7 @@ public class Game implements Observer {
         movePhase = new MovePhase(this);
         playerList = new ArrayList<>();
         curPhase = preparationPhase;
-        gameTurn = new GameTurn(0,0, factions.size());
+        gameTurn = new GameTurn(0,0, factions.size()-1);
 
         //Read the ownership
         String content = Files.readString(Paths.get("src/unsw/gloriaromanus/initial_province_ownership.json"));
@@ -263,10 +263,10 @@ public class Game implements Observer {
      */
     public void removePlayer() {
         Player targetPlayer = curPlayer;
+        gameTurn.removePlayer();
         curPhase.endPhase();
         curPhase.endPhase();
         playerList.remove(targetPlayer);
-        gameTurn.removePlayer();
     }
 
     /**
