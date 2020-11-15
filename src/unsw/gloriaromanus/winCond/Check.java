@@ -57,7 +57,7 @@ public class Check {
             } else if ("and".equals(checkType)) {
                 this.checkType = new AndCheck();
             }
-            this.subCheck = new Check(subCheck.getString("Goal"), subCheck.getString("Junction"), subCheck.optJSONObject("SubCheck"));
+            this.subCheck = new Check(subCheck.optString("Goal"), subCheck.optString("Junction"), subCheck.optJSONObject("SubCheck"));
         }
     }
 
