@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -129,7 +130,7 @@ public class ConfigMenuController {
         } catch (IOException error) {
             //Should this be caught?
             error.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.NONE, "Cannot go back to main menu!", ButtonType.CLOSE);
+            Alert a = new Alert(AlertType.ERROR, "Cannot go back to main menu!", ButtonType.CLOSE);
             a.show();
         }
     }
@@ -146,7 +147,7 @@ public class ConfigMenuController {
 
                 //Check if two players has the same faction
                 if(factions.contains(faction)) {
-                    Alert a = new Alert(Alert.AlertType.NONE, "Two players cannot have the same factions!", ButtonType.CLOSE);
+                    Alert a = new Alert(AlertType.ERROR, "Two players cannot have the same factions!", ButtonType.CLOSE);
                     a.show();
                     return;
                 }
@@ -158,7 +159,7 @@ public class ConfigMenuController {
         } catch (IOException error) {
             //Should this be caught?
             error.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.NONE, "Cannot start game!", ButtonType.CLOSE);
+            Alert a = new Alert(AlertType.ERROR, "Cannot start game!", ButtonType.CLOSE);
             a.show();
         }
     }
@@ -214,7 +215,7 @@ public class ConfigMenuController {
     @FXML
     void handleAddBtn(ActionEvent e) {
         if(gridPane.getChildren().size()==MAX_PLAYERS) {
-            Alert a = new Alert(Alert.AlertType.NONE, "Too many players!", ButtonType.CLOSE);
+            Alert a = new Alert(AlertType.ERROR, "Too many players!", ButtonType.CLOSE);
             a.show();
         } else {
             addPlayer();

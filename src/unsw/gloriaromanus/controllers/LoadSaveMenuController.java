@@ -150,11 +150,11 @@ public class LoadSaveMenuController {
             gameScreen.start(game);
         } catch (IOException e) {
             e.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.NONE, "Cannot load save!", ButtonType.CLOSE);
+            Alert a = new Alert(Alert.AlertType.ERROR, "Cannot load save!", ButtonType.CLOSE);
             a.show();
         } catch (JSONException e) {
             e.printStackTrace();
-            Alert a = new Alert(Alert.AlertType.NONE, "Corrupted save file!", ButtonType.CLOSE);
+            Alert a = new Alert(Alert.AlertType.ERROR, "Corrupted save file!", ButtonType.CLOSE);
             a.show();
         }
     }

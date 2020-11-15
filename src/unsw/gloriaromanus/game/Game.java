@@ -240,7 +240,7 @@ public class Game implements Observer {
     private String checkPlayerStatus() {
         //Make sure players can only win on movePhases
         if(curPhase instanceof PreparationPhase) return null;
-        if(curPlayer.getAllRegions().size()==0){
+        if(curPlayer.getAllRegions().size()==0) {
             gameTurn.removePlayer();
             playerList.remove(curPlayer);
             return "You have no regions left! You lost the game";
@@ -283,6 +283,7 @@ public class Game implements Observer {
      * Wrapper function for troops training
      * @param originRegion origin region initiated the training
      * @param troops list of troops to train
+     * @pre origin region is owned by current player
      * @return msg to display
      */
     public String train(String originRegion, List<String> troops) {
@@ -293,10 +294,11 @@ public class Game implements Observer {
      * Wrapper function for player movement.
      * Note that this function expects both origin region & target region to be current player's region.
      * @param originRegion origin region initiated the movement
-     * @param troops       list of troops moving
+     * @param troops list of troops moving
      * @param targetRegion target region to move to
+     * @pre origin region is owned by current player
      * @return msg to display
-     * @throws IOException
+     * @throws IOException throws IOException when adjacency matrix is not present
      */
     public String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
         return curPhase.move(originRegion,troops,targetRegion);
@@ -307,8 +309,9 @@ public class Game implements Observer {
      * @param originRegion origin region initiated the invade
      * @param troops list of troops invading
      * @param targetRegion target region to invade
+     * @pre origin region is owned by current player
      * @return msg to display
-     * @throws IOException
+     * @throws IOException throws IOException when adjacency matrix is not present
      */
     public String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
         return curPhase.invade(originRegion,troops,targetRegion);
