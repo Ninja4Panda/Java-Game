@@ -8,7 +8,7 @@ public class ConquestCond implements WinCond{
 
     @Override
     public boolean playerWin(Player player) {
-        if (player.getAllRegions().size() == 58) {
+        if (player.getAllRegions().size() == 53) {
             return true;
         }
         return false;

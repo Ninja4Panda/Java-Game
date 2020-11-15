@@ -36,4 +36,9 @@ public class PhaseMenuController extends MenuController{
             changePhase.setText("End Turn");
         }
     }
+
+    public void setLost() {
+        this.phase.setText("You Lost");
+        changePhase.setText("Great Game!");
+    }
 }

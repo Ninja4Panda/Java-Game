@@ -56,7 +56,7 @@ public class PlayerMenuController extends MenuController{
         playerFaction.setText(faction.toString());
         playerGold.setText(Integer.toString(player.getGold()));
         treasuryCondProg.setText(player.getGold() + "/" + 100000 );
-        conquestCondProg.setText(player.getAllRegions().size() + "/" + 58);
+        conquestCondProg.setText(player.getAllRegions().size() + "/" + 53);
         int totalWealth = 0;
         for( Region region : player.getAllRegions() ) {
             totalWealth += region.getWealth();

@@ -120,13 +120,24 @@ public class GloriaRomanusController{
     stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
     stackPaneMain.getChildren().add(controllerParentPairs.get(2).getValue());
 
+    //Initialise player menu controller
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
-      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
-      ((PlayerMenuController)controllerParentPairs.get(2).getKey()).initializeWinCond();
+      PlayerMenuController playerControl = (PlayerMenuController) controllerParentPairs.get(2).getKey();
+      playerControl.updatePlayer(game.getCurPlayer());
+      playerControl.initializeWinCond();
     }
+
+    //Initialise phase menu controller
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
-      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase());
+      PhaseMenuController phaseControl = (PhaseMenuController) controllerParentPairs.get(0).getKey();
+      if(game.getCurPlayer().getAllRegions().size()==0) {
+        phaseControl.setLost();
+      } else {
+        phaseControl.update(game.getCurPhase());
+      }
     }
+
+    //Initialise region menu controller
     if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
       RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
       if(game.getCurPhase() instanceof PreparationPhase) {
@@ -145,22 +156,29 @@ public class GloriaRomanusController{
   public void endPhase() throws IOException {
     //Display message
     String msg = game.endPhase();
-    showSummary(msg);
+    showMessage(msg);
 
     //Resets the left & right province selection & all related children
     resetSelections();
 
     if(controllerParentPairs.get(0).getKey() instanceof PhaseMenuController) {
-      ((PhaseMenuController) controllerParentPairs.get(0).getKey()).update(game.getCurPhase());
+      PhaseMenuController phaseControl = (PhaseMenuController) controllerParentPairs.get(0).getKey();
+      if(game.getCurPlayer().getAllRegions().size()==0) {
+        phaseControl.setLost();
+      } else {
+        phaseControl.update(game.getCurPhase());
+      }
     }
+
     if(controllerParentPairs.get(1).getKey() instanceof RegionMenuController) {
-      RegionMenuController regionControl = ((RegionMenuController) controllerParentPairs.get(1).getKey());
+      RegionMenuController regionControl = (RegionMenuController) controllerParentPairs.get(1).getKey();
       regionControl.reset();
       if(game.getCurPhase() instanceof PreparationPhase) {
         regionControl.clearLog();
         regionControl.addLog(msg);
       }
     }
+
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
@@ -170,7 +188,7 @@ public class GloriaRomanusController{
    * Shows the summary for a phase
    * @param msg msg to display
    */
-  private void showSummary(String msg) {
+  private void showMessage(String msg) {
     //Popup summary
     Stage stage = (Stage)stackPaneMain.getScene().getWindow();
     Stage popupStage = new Stage();
@@ -434,35 +452,6 @@ public class GloriaRomanusController{
       regionControl.reset();
     }
     addAllPointGraphics();
-  }
-
-  private void showMessage(String msg){
-    //Popup summary
-    Stage stage = (Stage)stackPaneMain.getScene().getWindow();
-    Stage popupStage = new Stage();
-    popupStage.initStyle(StageStyle.UNDECORATED);
-    popupStage.initModality(Modality.APPLICATION_MODAL);
-    popupStage.initOwner(stage);
-    //Container
-    VBox row = new VBox();
-    row.setSpacing(15);
-    row.setAlignment(Pos.CENTER);
-    //msg
-    Label summary = new Label();
-    summary.setText(msg);
-    summary.setTextFill(Paint.valueOf("red"));
-    summary.setFont(Font.font("",30));
-    row.getChildren().add(summary);
-    //Set the popup size
-    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-    double width = primaryScreenBounds.getWidth();
-    double height = primaryScreenBounds.getHeight();
-    popupStage.setScene(new Scene(row, width*0.5, height*0.5));
-    popupStage.show();
-    //Auto close after 1sec
-    PauseTransition delay = new PauseTransition(Duration.seconds(1));
-    delay.setOnFinished(e->popupStage.hide());
-    delay.play();
   }
 
   /**
