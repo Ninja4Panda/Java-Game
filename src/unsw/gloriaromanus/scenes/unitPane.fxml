@@ -13,7 +13,7 @@
    <children>
       <VBox layoutX="11.0" layoutY="14.0" prefHeight="216.0" prefWidth="134.0">
          <children>
-            <HBox prefHeight="64.0" prefWidth="134.0" style="-fx-background-color: pink;">
+            <HBox prefHeight="40.0" prefWidth="134.0" style="-fx-background-color: pink;">
                <children>
                   <Label fx:id="unitName" prefHeight="85.0" prefWidth="134.0" stylesheets="@../style.css" text="Unit" underline="true" wrapText="true">
                      <font>
@@ -29,7 +29,7 @@
                   </Label>
                </children>
             </HBox>
-            <VBox prefHeight="151.0" prefWidth="134.0">
+            <VBox fx:id="infoBox" prefHeight="176.0" prefWidth="134.0">
                <children>
                   <Label fx:id="unitHealth" prefHeight="35.0" prefWidth="114.0" text="Stats" />
                   <Label fx:id="unitAttack" prefHeight="30.0" prefWidth="122.0" text="Stats" />
