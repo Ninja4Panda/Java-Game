@@ -10,6 +10,7 @@ import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -311,7 +312,7 @@ public class Region implements Observer {
         switch (tax) {
             case 10:
                 wealth += 10;
-                break;
+                break; 
             case 15:
                 break;
             case 20:
@@ -322,5 +323,9 @@ public class Region implements Observer {
             default:
                 break;
         }
+    }
+
+    public Hashtable<String, Integer> getUnitsTraining() {
+        return trainer.getTrainingUnits();
     }
 }

@@ -14,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -116,8 +115,6 @@ public class RegionMenuController extends MenuController {
     @FXML
     private Button interactionButton;
 
-    private boolean isLeftSelected;
-    private boolean isRightSelected;
     
     private HashMap<UnitPaneController, Unit> leftUnits;
     private HashMap<UnitPaneController, Unit> rightUnits;
@@ -284,7 +281,7 @@ public class RegionMenuController extends MenuController {
         selectedUnits.clear();
         leftUnits.clear();
 
-
+        
         leftProvinceLabel.setText(region.getName());
         List<Unit> units = region.getUnits();
 
@@ -293,19 +290,38 @@ public class RegionMenuController extends MenuController {
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    UPC.configure(u, false);
-                    UPC.setParent(this);
-                    leftScrollVbox.getChildren().add(root);
-                    leftUnits.put(UPC, u);
-                } 
+
+                if(this.getParent().getCurPhase() instanceof  PreparationPhase ) {
+                    if(region.getUnitsTraining().containsKey(u.getClassName()) ) {
+                        UPC.configure(u, region.getUnitsTraining().get(u.getClassName()), false);
+                    } else {
+                        UPC.configure(u, 0, false);
+
+                    }
+                } else if (u.getCurAmount() != 0){
+                    UPC.configure(u, 0, false);
+                } else {
+                    continue;
+                }
+                UPC.setParent(this);
+                leftScrollVbox.getChildren().add(root);
+                leftUnits.put(UPC, u);
+
+                // if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                //     if(region.getUnitsTraining().containsKey(u.getClassName()) ) {
+                //         UPC.configure(u, region.getUnitsTraining().get(u.getClassName()), false);
+                //     } else {
+                //         UPC.configure(u, 0, false);
+
+                //     }
+                // } 
                 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         if(this.getParent().getCurPhase() instanceof  PreparationPhase) {
-            handleRightClick("After Training", units, false);
+            handleRightClick("After Training", units, region.getUnitsTraining(), false);
         }
         wealth.setText(Integer.toString(region.getWealth()));
         taxDropDown.setText(Integer.toString(region.getTax()));
@@ -319,7 +335,7 @@ public class RegionMenuController extends MenuController {
      * @param units Units list from backend
      * @param isEnemy true/false to indicate enemy or not
      */
-    public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
+    public void handleRightClick(String name, List<Unit> units, Hashtable<String, Integer> trainingUnits, boolean isEnemy) {
         // Ensures no information from previous clicks are retained
         rightScrollVbox.getChildren().clear();
         rightUnits.clear();
@@ -333,7 +349,11 @@ public class RegionMenuController extends MenuController {
                 if(isEnemy) {
                     UPC.configureEnemy(u);
                 } else if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    UPC.configure(u, true);
+                    if(trainingUnits != null && trainingUnits.containsKey(u.getClassName())) {
+                        UPC.configure(u, trainingUnits.get(u.getClassName()), true);
+                    } else {
+                        UPC.configure(u, 0, true);
+                    }
                 } else {
                     continue;
                 }
@@ -369,6 +389,7 @@ public class RegionMenuController extends MenuController {
         for(UnitPaneController UPC : rightUnits.keySet() ) {
             // if right unit is found, show the increased amount
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
+                
                 if(this.getParent().getCurPhase() instanceof PreparationPhase) {
                     UPC.showAmountAdded(unit.getTrainAmount());
                 } else {
@@ -376,6 +397,7 @@ public class RegionMenuController extends MenuController {
                 }
             }
         }
+        
     }
 
     /**
