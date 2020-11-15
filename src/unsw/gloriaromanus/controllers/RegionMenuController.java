@@ -327,23 +327,25 @@ public class RegionMenuController extends MenuController {
         if(units == null) {
             units = new ArrayList<>();
             units.addAll(leftUnits.values());
-        }
+        } 
        
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    if(isEnemy) {
-                        UPC.configureEnemy(u);
-                    }else {
-                        UPC.configure(u, true);
-                        UPC.setParent(this);
-                        rightScrollVbox.getChildren().add(root);
-                        rightUnits.put(UPC, u);
-                    }
+                if(isEnemy) {
+                    UPC.configureEnemy(u);
+                } else if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                    UPC.configure(u, true);
+                } else {
+                    continue;
                 }
+                UPC.setParent(this);
+                rightScrollVbox.getChildren().add(root);
+                rightUnits.put(UPC, u);
+                
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
