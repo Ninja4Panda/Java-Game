@@ -426,7 +426,6 @@ public class GloriaRomanusController{
                   
                 } else {
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
-                    System.out.println(game.getRegion(province).getUnits());
                     ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.getRegion(province).getUnits(), null, true);
                     
                   }
