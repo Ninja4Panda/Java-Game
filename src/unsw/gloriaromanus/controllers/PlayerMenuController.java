@@ -50,6 +50,10 @@ public class PlayerMenuController extends MenuController{
     @FXML
     private GridPane winConGrid;
 
+    /**
+     * Updates the top banner with the latest information on the player
+     * the @param player is where the information will be taken from
+     */
     public void updatePlayer(Player player) {
         Faction faction = player.getFaction();
         factionImage.setImage(new Image(faction.getFlagPath()));
@@ -64,6 +68,10 @@ public class PlayerMenuController extends MenuController{
         wealthCondProg.setText(totalWealth + "/" + 400000);
     }
 
+    /**
+     * Reads and presents a conjunction/disjunction of the winconditions
+     * made by the game.
+     */
     public void initializeWinCond() {
         Check check = this.getParent().getCampaignWinCond();
         while(check.getGoal() != null) {
