@@ -13,9 +13,9 @@
    <children>
       <VBox layoutX="11.0" layoutY="14.0" prefHeight="216.0" prefWidth="134.0">
          <children>
-            <HBox prefHeight="85.0" prefWidth="136.0" style="-fx-background-color: pink;">
+            <HBox prefHeight="64.0" prefWidth="134.0" style="-fx-background-color: pink;">
                <children>
-                  <Label fx:id="unitName" prefHeight="85.0" prefWidth="168.0" stylesheets="@../style.css" text="Unit" underline="true" wrapText="true">
+                  <Label fx:id="unitName" prefHeight="85.0" prefWidth="134.0" stylesheets="@../style.css" text="Unit" underline="true" wrapText="true">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -29,12 +29,14 @@
                   </Label>
                </children>
             </HBox>
-            <VBox prefHeight="125.0" prefWidth="115.0">
+            <VBox prefHeight="151.0" prefWidth="134.0">
                <children>
                   <Label fx:id="unitHealth" prefHeight="35.0" prefWidth="114.0" text="Stats" />
                   <Label fx:id="unitAttack" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                   <Label fx:id="unitArmour" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                   <Label fx:id="unitMoveSpeed" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                  <Label fx:id="unitTrainAmount" layoutX="10.0" layoutY="87.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                  <Label fx:id="unitTrainCost" layoutX="10.0" layoutY="75.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                   <Label fx:id="unitAmount" layoutX="10.0" layoutY="105.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                </children>
             </VBox>

@@ -30,6 +30,12 @@ public class UnitPaneController {
     private Label unitMoveSpeed;
 
     @FXML
+    private Label unitTrainAmount;
+
+    @FXML
+    private Label unitTrainCost;
+
+    @FXML
     private Label unitAmount;
 
     @FXML
@@ -96,6 +102,8 @@ public class UnitPaneController {
         unitAttack.setText("Attack : " + unit.getAttackValue());
         unitArmour.setText("Armour : " +unit.getDefenseSkill());
         unitMoveSpeed.setText("MP : " + unit.getCurMovementPoints());
+        unitTrainAmount.setText("Train amount : " + unit.getTrainAmount());
+        unitTrainCost.setText("Cost per Train : " + unit.getCost());
 
         if(trainingTurnsLeft != 0) {
             Label amountTraining = new Label("Training: " + Integer.toString(unit.getTrainAmount()));
