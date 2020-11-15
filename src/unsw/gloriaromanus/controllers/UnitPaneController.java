@@ -107,7 +107,7 @@ public class UnitPaneController {
         unitArmour.setText("Armour : " +unit.getDefenseSkill());
         unitMoveSpeed.setText("MP : " + unit.getCurMovementPoints());
         unitTrainAmount.setText("Train amount : " + unit.getTrainAmount());
-        unitTrainCost.setText("Cost per Train : " + unit.getCost());
+        unitTrainCost.setText("Train cost : " + unit.getCost());
 
         if(trainingTurnsLeft != 0) {
             Label amountTraining = new Label("Training: " + Integer.toString(unit.getTrainAmount()));
@@ -135,6 +135,8 @@ public class UnitPaneController {
         unitAttack.setText("Attack : ???" );
         unitArmour.setText("Armour : ???");
         unitMoveSpeed.setText("MS : ???");
+        unitTrainAmount.setText("Train amount : ???");
+        unitTrainCost.setText("Train cost : ???");
         unitAmount.setText("Amount : ???");
         unitImage.setImage(new Image(unit.getImage()));
     }

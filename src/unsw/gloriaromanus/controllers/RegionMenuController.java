@@ -340,20 +340,18 @@ public class RegionMenuController extends MenuController {
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
                 if(isEnemy) {
                     UPC.configureEnemy(u);
-                } else if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                } else {
                     if(trainingUnits != null && trainingUnits.containsKey(u.getClassName())) {
                         UPC.configure(u, trainingUnits.get(u.getClassName()), true);
                     } else {
                         UPC.configure(u, 0, true);
                     }
-                } else {
-                    continue;
                 }
                 UPC.setParent(this);
                 rightScrollVbox.getChildren().add(root);
                 rightUnits.put(UPC, u);
-                
-                
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -381,7 +379,7 @@ public class RegionMenuController extends MenuController {
         for(UnitPaneController UPC : rightUnits.keySet() ) {
             // if right unit is found, show the increased amount
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
-                
+
                 if(this.getParent().getCurPhase() instanceof PreparationPhase) {
                     UPC.showAmountAdded(unit.getTrainAmount());
                 } else {
