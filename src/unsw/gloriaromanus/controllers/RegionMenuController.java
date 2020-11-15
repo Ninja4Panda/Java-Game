@@ -128,21 +128,26 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleTrain() {
-        //Handles when no target is selected
+        // Handles when no target is selected
         if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
             showSummary("Please select a origin region");
             return;
         }
-        //Handles when no unit is selected
+        // Handles when no unit is selected
         if(selectedUnits.size()==0) {
             showSummary("Please select unit to train");
             return;
         }
+
+        // adds all selected units into a training list
         List<String> train = new ArrayList<>();
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
         }
+
+        // Sends the training list to backend
         String msg = this.getParent().regionConTrainRequest(train, leftProvinceLabel.getText());
+        // show a msg to user about results of the training
         showSummary(msg);
         try {
             this.getParent().resetSelections();
@@ -268,24 +273,19 @@ public class RegionMenuController extends MenuController {
         delay.play();
     }
 
-    public boolean isLeftSelected() {
-        return isLeftSelected;
-    }
-
-    public boolean isRightSelected() {
-        return isRightSelected;
-    }
-
     /**
      * Changes the left side panel when left clicked on a region
      * @param region region object
      * @pre region is owned by current player
      */
     public void handleLeftClick(Region region) {
-        leftProvinceLabel.setText(region.getName());
+        // Ensures no information from previous clicks are passed on
         leftScrollVbox.getChildren().clear();
         selectedUnits.clear();
         leftUnits.clear();
+
+
+        leftProvinceLabel.setText(region.getName());
         List<Unit> units = region.getUnits();
 
         for(Unit u : units) {
@@ -320,15 +320,11 @@ public class RegionMenuController extends MenuController {
      * @param isEnemy true/false to indicate enemy or not
      */
     public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
-        rightProvinceLabel.setText(name);
+        // Ensures no information from previous clicks are retained
         rightScrollVbox.getChildren().clear();
         rightUnits.clear();
         
-        if(units == null) {
-            units = new ArrayList<>();
-            units.addAll(leftUnits.values());
-        } 
-       
+        rightProvinceLabel.setText(name);
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
@@ -362,9 +358,16 @@ public class RegionMenuController extends MenuController {
 
     }
 
+    /**
+     * Adds the unit into the selected list  and shows information about what
+     * may happen to the unit
+     * @param unit
+     */
     public void selectUnit(Unit unit) {
         selectedUnits.add(unit);
+        // loops through the controllers
         for(UnitPaneController UPC : rightUnits.keySet() ) {
+            // if right unit is found, show the increased amount
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
                 if(this.getParent().getCurPhase() instanceof PreparationPhase) {
                     UPC.showAmountAdded(unit.getTrainAmount());
@@ -375,6 +378,11 @@ public class RegionMenuController extends MenuController {
         }
     }
 
+    /**
+     * Remove the unit from the selected list and remove any information 
+     * presented about what happens to a selected unit 
+     * @param unit
+     */
     public void deselectUnit(Unit unit) {
         selectedUnits.remove(unit);
         for(UnitPaneController UPC : rightUnits.keySet() ) {
@@ -412,6 +420,10 @@ public class RegionMenuController extends MenuController {
         interactionButton.setOnAction(event -> handleTrain() );
     }
 
+    /**
+     * Clears the Whole RegionMenuController, also updates the button
+     * accordingly
+     */
     public void reset() {
         leftScrollVbox.getChildren().clear();
         rightScrollVbox.getChildren().clear();
