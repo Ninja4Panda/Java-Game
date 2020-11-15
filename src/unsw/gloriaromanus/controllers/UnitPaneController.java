@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import unsw.gloriaromanus.units.Unit;
 
@@ -88,13 +89,22 @@ public class UnitPaneController {
      * @param unit is what is presented by the Pane
      * @param isRightPanel the intended location of the unit Pane, a right unit Pane is unclickable
      */
-    public void configure(Unit unit, boolean isRightPanel) {
+    public void configure(Unit unit, int trainingTurnsLeft, boolean isRightPanel) {
         this.unit = unit;
         unitName.setText(unit.getClassName());
         unitHealth.setText("HP : " + unit.getHealth());
         unitAttack.setText("Attack : " + unit.getAttackValue());
         unitArmour.setText("Armour : " +unit.getDefenseSkill());
         unitMoveSpeed.setText("MP : " + unit.getCurMovementPoints());
+
+        if(trainingTurnsLeft != 0) {
+            Label amountTraining = new Label("Training: " + Integer.toString(unit.getTrainAmount()));
+            Label turnsLeft = new Label("Turns left : " + Integer.toString(trainingTurnsLeft));
+            HBox trainigInfo = new HBox(amountTraining, turnsLeft);
+            trainigInfo.setStyle("-fx-background-color: #100078");
+            unitPane.getChildren().add(trainigInfo);
+        }
+
         if(!isRightPanel) {
             unitPane.setOnMouseClicked(event -> unitSelected());
         }
@@ -116,4 +126,5 @@ public class UnitPaneController {
         unitAmount.setText("Amount : ???");
         unitImage.setImage(new Image(unit.getImage()));
     }
+
 }

@@ -1,6 +1,5 @@
 package unsw.gloriaromanus.units;
 
-import javafx.scene.image.Image;
 import unsw.gloriaromanus.units.attack.Range;
 
 import java.io.InputStream;
