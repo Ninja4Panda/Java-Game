@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Region implements Observer {
     private String name;
@@ -168,20 +169,20 @@ public class Region implements Observer {
      */
     public void moveTroops(Unit unit, Region end) {
         Unit target = end.findUnit(unit.getClassName());
-        System.out.println(end.getName()+" "+target.getClassName()+" amt:"+target.getCurAmount()+" MP:"+target.getCurMovementPoints());
-        System.out.println(this.getName()+" "+unit.getClassName()+" amt:"+unit.getCurAmount()+" MP:"+unit.getCurMovementPoints());
-        System.out.println("==========================================");
+        // System.out.println(end.getName()+" "+target.getClassName()+" amt:"+target.getCurAmount()+" MP:"+target.getCurMovementPoints());
+        // System.out.println(this.getName()+" "+unit.getClassName()+" amt:"+unit.getCurAmount()+" MP:"+unit.getCurMovementPoints());
+        // System.out.println("==========================================");
 
         //Set the MP of the troop
         if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
-            System.out.println("sss");
+            // System.out.println("sss");
             target.setCurMovementPoints(unit.getCurMovementPoints());
         }
         int amt = unit.getCurAmount();
         target.addUnits(amt);
         unit.minusUnits(amt);
-        System.out.println(end.getName()+" "+target.getClassName()+" "+target.getCurAmount()+" "+target.getCurMovementPoints());
-        System.out.println(this.getName()+" "+unit.getClassName()+" "+unit.getCurAmount()+" "+unit.getCurMovementPoints());
+        // System.out.println(end.getName()+" "+target.getClassName()+" "+target.getCurAmount()+" "+target.getCurMovementPoints());
+        // System.out.println(this.getName()+" "+unit.getClassName()+" "+unit.getCurAmount()+" "+unit.getCurMovementPoints());
     }
 
     /**
@@ -192,27 +193,30 @@ public class Region implements Observer {
      * @return msg to display
      */
     public String move(List<Region> path, List<String> troops, Region target) {
+        System.out.println("========= inside move ============");
         //Loop through the path and remove
         String msg = "";
         System.out.println(troops);
-        for (Region region: path) {
-            System.out.println(path);
-            Iterator<String> it = troops.iterator();
-            while(it.hasNext()) {
-                Unit unit = findUnit(it.next());
-                if(region.equals(target)) {
+        for(String u : troops) {
+            Unit unit = findUnit(u);
+            for(Region region : path) {
+                if(unit.canReduceMovespeed(4)) {
+                    unit.reduceMovementPoints(4);
+                } else {
                     moveTroops(unit, region);
-                    msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
-                    continue;
+                    if(Objects.equals(region, path.get(0))) {
+                        msg += unit.getClassName() + " Does not have enough Movespeed\n" ;
+                    }  else {
+                        msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
+                    }
+                    break;
                 }
-                unit.reduceMovementPoints(4);
-                //Stop when no more MP
-                if(unit.getCurMovementPoints() == 0) {
-                    moveTroops(unit, region);
-                    msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
-                }
+                
             }
         }
+
+
+        System.out.println("========= finish move ============");
 
         return msg;
     }
