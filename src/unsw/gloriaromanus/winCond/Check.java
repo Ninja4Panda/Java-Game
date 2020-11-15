@@ -49,14 +49,18 @@ public class Check {
                     this.goal = new ConquestCond();
                     break;
                 default:
-                    break;
+                    throw new JSONException("Invalid Goal");
             }
 
             if("or".equals(checkType)) {
                 this.checkType = new OrCheck();
             } else if ("and".equals(checkType)) {
                 this.checkType = new AndCheck();
+            } else {
+                throw new JSONException("Invalid Junction");
             }
+
+            if(subCheck==null) throw new JSONException("Invalid subcheck");
             this.subCheck = new Check(subCheck.optString("Goal"), subCheck.optString("Junction"), subCheck.optJSONObject("SubCheck"));
         }
     }
