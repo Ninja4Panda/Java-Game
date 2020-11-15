@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -435,16 +436,14 @@ public class RegionMenuController extends MenuController {
      * @param b true/false
      */
     private void setTaxWealthVisible(boolean b) {
+        for (Node child :leftPane.getChildren()) {
+            child.setVisible(b);
+        }
+        for (Node child :rightPane.getChildren()) {
+            child.setVisible(b);
+        }
         leftPane.setVisible(b);
         rightPane.setVisible(b);
-        leftWealthLabel.setVisible(b);
-        leftTaxLabel.setVisible(b);
-        rightWealthLabel.setVisible(b);
-        rightTaxLabel.setVisible(b);
-        taxMirror.setVisible(b);
-        taxDropDown.setVisible(b);
-        wealth.setVisible(b);
-        wealthMirror.setVisible(b);
     }
 
 }
