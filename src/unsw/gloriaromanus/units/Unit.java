@@ -152,6 +152,11 @@ public abstract class Unit {
         return armour * attack.getAttackValue() * getCurAmount();
     }
 
+    public boolean canReduceMovespeed(int amount) {
+        if( curMovementPoints - amount < 0) return false;
+        return true;
+    }
+
     /**
      * This function must be override by class that
      * @return the image object
