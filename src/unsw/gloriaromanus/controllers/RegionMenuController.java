@@ -14,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -116,8 +115,6 @@ public class RegionMenuController extends MenuController {
     @FXML
     private Button interactionButton;
 
-    private boolean isLeftSelected;
-    private boolean isRightSelected;
     
     private HashMap<UnitPaneController, Unit> leftUnits;
     private HashMap<UnitPaneController, Unit> rightUnits;
@@ -128,21 +125,26 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleTrain() {
-        //Handles when no target is selected
+        // Handles when no target is selected
         if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
             showSummary("Please select a origin region");
             return;
         }
-        //Handles when no unit is selected
+        // Handles when no unit is selected
         if(selectedUnits.size()==0) {
             showSummary("Please select unit to train");
             return;
         }
+
+        // adds all selected units into a training list
         List<String> train = new ArrayList<>();
         for(Unit u : selectedUnits) {
             train.add(u.getClassName());
         }
+
+        // Sends the training list to backend
         String msg = this.getParent().regionConTrainRequest(train, leftProvinceLabel.getText());
+        // show a msg to user about results of the training
         showSummary(msg);
         try {
             this.getParent().resetSelections();
@@ -268,24 +270,19 @@ public class RegionMenuController extends MenuController {
         delay.play();
     }
 
-    public boolean isLeftSelected() {
-        return isLeftSelected;
-    }
-
-    public boolean isRightSelected() {
-        return isRightSelected;
-    }
-
     /**
      * Changes the left side panel when left clicked on a region
      * @param region region object
      * @pre region is owned by current player
      */
     public void handleLeftClick(Region region) {
-        leftProvinceLabel.setText(region.getName());
+        // Ensures no information from previous clicks are passed on
         leftScrollVbox.getChildren().clear();
         selectedUnits.clear();
         leftUnits.clear();
+
+        
+        leftProvinceLabel.setText(region.getName());
         List<Unit> units = region.getUnits();
 
         for(Unit u : units) {
@@ -293,19 +290,30 @@ public class RegionMenuController extends MenuController {
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    UPC.configure(u, false);
-                    UPC.setParent(this);
-                    leftScrollVbox.getChildren().add(root);
-                    leftUnits.put(UPC, u);
-                } 
+
+                if(this.getParent().getCurPhase() instanceof  PreparationPhase ) {
+                    if(region.getUnitsTraining().containsKey(u.getClassName()) ) {
+                        UPC.configure(u, region.getUnitsTraining().get(u.getClassName()), false);
+                    } else {
+                        UPC.configure(u, 0, false);
+
+                    }
+                } else if (u.getCurAmount() != 0){
+                    UPC.configure(u, 0, false);
+                } else {
+                    continue;
+                }
+                UPC.setParent(this);
+                leftScrollVbox.getChildren().add(root);
+                leftUnits.put(UPC, u);
+
                 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         if(this.getParent().getCurPhase() instanceof  PreparationPhase) {
-            handleRightClick("After Training", units, false);
+            handleRightClick("After Training", units, region.getUnitsTraining(), false);
         }
         wealth.setText(Integer.toString(region.getWealth()));
         taxDropDown.setText(Integer.toString(region.getTax()));
@@ -319,31 +327,33 @@ public class RegionMenuController extends MenuController {
      * @param units Units list from backend
      * @param isEnemy true/false to indicate enemy or not
      */
-    public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
-        rightProvinceLabel.setText(name);
+    public void handleRightClick(String name, List<Unit> units, Hashtable<String, Integer> trainingUnits, boolean isEnemy) {
+        // Ensures no information from previous clicks are retained
         rightScrollVbox.getChildren().clear();
         rightUnits.clear();
         
-        if(units == null) {
-            units = new ArrayList<>();
-            units.addAll(leftUnits.values());
-        }
-       
+        rightProvinceLabel.setText(name);
         for(Unit u : units) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../scenes/unitPane.fxml"));
             try {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
-                if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    if(isEnemy) {
-                        UPC.configureEnemy(u);
-                    }else {
-                        UPC.configure(u, true);
-                        UPC.setParent(this);
-                        rightScrollVbox.getChildren().add(root);
-                        rightUnits.put(UPC, u);
+                if(isEnemy) {
+                    UPC.configureEnemy(u);
+                } else if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
+                    if(trainingUnits != null && trainingUnits.containsKey(u.getClassName())) {
+                        UPC.configure(u, trainingUnits.get(u.getClassName()), true);
+                    } else {
+                        UPC.configure(u, 0, true);
                     }
+                } else {
+                    continue;
                 }
+                UPC.setParent(this);
+                rightScrollVbox.getChildren().add(root);
+                rightUnits.put(UPC, u);
+                
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -360,10 +370,18 @@ public class RegionMenuController extends MenuController {
 
     }
 
+    /**
+     * Adds the unit into the selected list  and shows information about what
+     * may happen to the unit
+     * @param unit
+     */
     public void selectUnit(Unit unit) {
         selectedUnits.add(unit);
+        // loops through the controllers
         for(UnitPaneController UPC : rightUnits.keySet() ) {
+            // if right unit is found, show the increased amount
             if(Objects.equals(rightUnits.get(UPC).getClassName(), unit.getClassName())) {
+                
                 if(this.getParent().getCurPhase() instanceof PreparationPhase) {
                     UPC.showAmountAdded(unit.getTrainAmount());
                 } else {
@@ -371,8 +389,14 @@ public class RegionMenuController extends MenuController {
                 }
             }
         }
+        
     }
 
+    /**
+     * Remove the unit from the selected list and remove any information 
+     * presented about what happens to a selected unit 
+     * @param unit
+     */
     public void deselectUnit(Unit unit) {
         selectedUnits.remove(unit);
         for(UnitPaneController UPC : rightUnits.keySet() ) {
@@ -410,6 +434,10 @@ public class RegionMenuController extends MenuController {
         interactionButton.setOnAction(event -> handleTrain() );
     }
 
+    /**
+     * Clears the Whole RegionMenuController, also updates the button
+     * accordingly
+     */
     public void reset() {
         leftScrollVbox.getChildren().clear();
         rightScrollVbox.getChildren().clear();

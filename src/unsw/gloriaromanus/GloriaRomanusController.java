@@ -407,14 +407,14 @@ public class GloriaRomanusController{
                 if (game.getCurPlayer().getRegion(province)!=null){
                   // province owned by human
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController ){
-                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), false);
+                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), null, false);
                   } 
 
                   
                 } else {
                   if (controllerParentPairs.get(1).getKey() instanceof RegionMenuController){
-                    System.out.println(game.displayRegion(province));
-                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.displayRegion(province), true);
+                    System.out.println(game.getRegion(province).getUnits());
+                    ((RegionMenuController)controllerParentPairs.get(1).getKey()).handleRightClick(province, game.getRegion(province).getUnits(), null, true);
                     
                   }
                 }

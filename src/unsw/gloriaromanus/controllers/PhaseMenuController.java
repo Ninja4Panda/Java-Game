@@ -28,6 +28,11 @@ public class PhaseMenuController extends MenuController{
         }
     }
 
+    /**
+     * Appropriately changes the Phase label to represent the current phase the game is in
+     * and changePhase button text to represent what will happen when the button is pressed
+     * @param phase current phase of the game
+     */
     public void update(GamePhase phase) {
         this.phase.setText(phase.toString());
         if(phase instanceof PreparationPhase) {
