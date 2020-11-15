@@ -96,4 +96,8 @@ public class RegionTrainer {
         return save;
     }
 
+    public Hashtable<String, Integer> getTrainingUnits() {
+        return trainingUnits;
+    }
+
 }
