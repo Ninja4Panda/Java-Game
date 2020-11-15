@@ -95,11 +95,7 @@ public class Game implements Observer {
 
         //Load the CampaignWinCond
         JSONObject loadWinCond = game.getJSONObject("CampaignWinCond");
-        try {
-            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), loadWinCond.getJSONObject("SubCheck"));
-        } catch (JSONException e) {
-            campaignWinCond = new Check(loadWinCond.getString("Goal"), loadWinCond.getString("Junction"), null);
-        }
+        campaignWinCond = new Check(loadWinCond.optString("Goal"), loadWinCond.optString("Junction"), loadWinCond.optJSONObject("SubCheck"));
 
         //Set up current phase
         String state = game.getString("Phase");
@@ -214,23 +210,14 @@ public class Game implements Observer {
      * Wrapper function to end a phase
      */
     public String endPhase() {
-        //Checks if player won after a phase
+        //Checks if player won/lost at the end of a phase
         String status = checkPlayerStatus();
         if(status!=null) {
-            //move on to the next player
-            curPhase.endPhase();
             return status;
         }
 
         //EndPhase
         String msg = curPhase.endPhase();
-
-        //Checks if player won at the beginning of a phase
-        status = checkPlayerStatus();
-        if(status!=null) {
-            curPhase.endPhase();
-            return status;
-        }
         return msg;
     }
 
@@ -238,26 +225,29 @@ public class Game implements Observer {
      * Checks the if current player conquered all region or lost
      */
     private String checkPlayerStatus() {
-        //Make sure players can only win on movePhases
-        if(curPhase instanceof PreparationPhase) return null;
         if(curPlayer.getAllRegions().size()==0) {
-            gameTurn.removePlayer();
-            playerList.remove(curPlayer);
-            return "You have no regions left! You lost the game";
-        } else if(campaignWinCond.player(getCurPlayer())) {
+            removePlayer();
+            return "You have no regions left! You lost the game!";
+        } else if(campaignWinCond.getGoal()!=null && campaignWinCond.player(getCurPlayer())) {
+            //Advance the turn
+            curPhase.endPhase();
+
+            //Auto save
             try {
                 //Make the saves directory if it doesn't exists
                 File dir = new File(".","saves");
                 dir.mkdir();
 
-                //Auto save
                 String name = "Autosave";
-                File file = new File(dir,name);
+                String json = ".json";
+                File file = new File(dir,name+json);
                 int i = 1;
                 while (file.exists()) {
                     name = "Autosave"+i;
-                    file = new File(dir, name);
+                    file = new File(dir, name+json);
+                    i++;
                 }
+                campaignWinCond.reset();
                 save(name);
                 return "You won the game! Game is saved as "+name;
             } catch(IOException e) {
@@ -266,6 +256,17 @@ public class Game implements Observer {
             }
         }
         return null;
+    }
+
+    /**
+     * Removes the current player
+     */
+    public void removePlayer() {
+        Player targetPlayer = curPlayer;
+        curPhase.endPhase();
+        curPhase.endPhase();
+        playerList.remove(targetPlayer);
+        gameTurn.removePlayer();
     }
 
     /**
