@@ -52,7 +52,6 @@ public class BattleResolver implements Subject {
                 attacking.moveTroops(unit, defending) ;
             }
             BattleResolver resolver = getINSTANCE();
-            System.out.println(defending);
             resolver.setDefender(defending);
             resolver.notifyObservers();
             return "You won! Region has been conquered\n\nNo Lost and all unit was moved to "+defending.getName();
@@ -87,10 +86,6 @@ public class BattleResolver implements Subject {
         } else {
             double winnersLoss = decider.nextDouble();
             AfterMath(defending.getUnits(), winnersLoss);
-
-            System.out.println(attackingStrength);
-            System.out.println(defendingStrength);
-            System.out.println(defendingWin);
             int randomExtraUnitsLoss = decider.nextInt(100- (int) (defendingWin*100));
 
             double losersLoss = attackingWin + (double) randomExtraUnitsLoss/100;

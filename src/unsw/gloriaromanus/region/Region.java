@@ -168,20 +168,14 @@ public class Region implements Observer {
      */
     public void moveTroops(Unit unit, Region end) {
         Unit target = end.findUnit(unit.getClassName());
-        // System.out.println(end.getName()+" "+target.getClassName()+" amt:"+target.getCurAmount()+" MP:"+target.getCurMovementPoints());
-        // System.out.println(this.getName()+" "+unit.getClassName()+" amt:"+unit.getCurAmount()+" MP:"+unit.getCurMovementPoints());
-        // System.out.println("==========================================");
 
         //Set the MP of the troop
         if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
-            // System.out.println("sss");
             target.setCurMovementPoints(unit.getCurMovementPoints());
         }
         int amt = unit.getCurAmount();
         target.addUnits(amt);
         unit.minusUnits(amt);
-        // System.out.println(end.getName()+" "+target.getClassName()+" "+target.getCurAmount()+" "+target.getCurMovementPoints());
-        // System.out.println(this.getName()+" "+unit.getClassName()+" "+unit.getCurAmount()+" "+unit.getCurMovementPoints());
     }
 
     /**
@@ -192,8 +186,6 @@ public class Region implements Observer {
      * @return msg to display
      */
     public String move(List<Region> path, List<String> troops, Region target) {
-        System.out.println("========= inside move ============");
-        //Loop through the path and remove
         String msg = "";
         for(String u : troops) {
             Unit unit = findUnit(u);
@@ -217,9 +209,6 @@ public class Region implements Observer {
             }
         }
 
-
-        System.out.println("========= finish move ============");
-
         return msg;
     }
 
@@ -232,8 +221,7 @@ public class Region implements Observer {
      */
     public String invade(int movementPoints, List<String> troops, Region target) {
         List<Unit> attackers = new ArrayList<>();
-        System.out.println("MP:"+movementPoints);
-
+        
         //Check if every attackers has enough movement point
         for (String name: troops) {
             Unit unit = findUnit(name);

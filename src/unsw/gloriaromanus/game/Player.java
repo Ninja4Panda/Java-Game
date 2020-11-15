@@ -118,7 +118,6 @@ public class Player implements Observer {
      */
     public String invade(List<String> path, Region origin, List<String> troops, Region target) {
         int attackFrom = path.size()-2;
-        System.out.println("path: "+path);
         for(String region: recentlyConquered) {
             if(region.equals(path.get(attackFrom))) {
                 return "Cannot attack from region that was recently conquered";
