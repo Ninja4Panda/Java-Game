@@ -416,10 +416,10 @@ public class RegionMenuController extends MenuController {
         selectedUnits = new ArrayList<>();
         leftUnits = new HashMap<>();
         rightUnits = new HashMap<>();
-        
     }
 
     public void setMoveButton() {
+        setTaxWealthVisible(false);
         interactionButton.setText("Move");
         interactionButton.setOnAction(event -> handleMove() );
     }
@@ -430,6 +430,7 @@ public class RegionMenuController extends MenuController {
     }
 
     public void setTrainButton() {
+        setTaxWealthVisible(true);
         interactionButton.setText("Train");
         interactionButton.setOnAction(event -> handleTrain() );
     }
@@ -451,10 +452,8 @@ public class RegionMenuController extends MenuController {
         leftUnits.clear();
         rightUnits.clear();
         if(this.getParent().getCurPhase() instanceof MovePhase) {
-            setTaxWealthVisible(false);
             setMoveButton();
         } else {
-            setTaxWealthVisible(true);
             setTrainButton();
         }
     }
