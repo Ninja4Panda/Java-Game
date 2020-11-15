@@ -53,7 +53,6 @@ public class MovePhase implements GamePhase {
     public String move(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
-        if(origin==null) return "Cannot move from non-friendly region";
         Region target = curPlayer.getRegion(targetRegion);
 
         //Convert string to regions
@@ -78,7 +77,6 @@ public class MovePhase implements GamePhase {
     public String invade(String originRegion, List<String> troops, String targetRegion) throws IOException {
         Player curPlayer = game.getCurPlayer();
         Region origin = curPlayer.getRegion(originRegion);
-        if(origin==null) return "Cannot initiate attack from non-friendly region";
 
         //Obtain target player object
         Player targetPlayer = game.findPlayer(targetRegion);

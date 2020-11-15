@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -45,6 +46,24 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private VBox logBox;
+
+    @FXML
+    private Pane leftPane;
+
+    @FXML
+    private Pane rightPane;
+
+    @FXML
+    private Label leftTaxLabel;
+
+    @FXML
+    private Label leftWealthLabel;
+
+    @FXML
+    private Label rightWealthLabel;
+
+    @FXML
+    private Label rightTaxLabel;
 
     @FXML
     public void setFirstTaxBracket(){
@@ -256,8 +275,12 @@ public class RegionMenuController extends MenuController {
         return isRightSelected;
     }
 
+    /**
+     * Changes the left side panel when left clicked on a region
+     * @param region region object
+     * @pre region is owned by current player
+     */
     public void handleLeftClick(Region region) {
-        
         leftProvinceLabel.setText(region.getName());
         leftScrollVbox.getChildren().clear();
         selectedUnits.clear();
@@ -289,6 +312,12 @@ public class RegionMenuController extends MenuController {
         taxMirror.setText(Integer.toString(region.getTax()));
     }
 
+    /**
+     * Changes the right side panel when right clicked on a region
+     * @param name name of the region
+     * @param units Units list from backend
+     * @param isEnemy true/false to indicate enemy or not
+     */
     public void handleRightClick(String name, List<Unit> units, boolean isEnemy) {
         rightProvinceLabel.setText(name);
         rightScrollVbox.getChildren().clear();
@@ -305,21 +334,21 @@ public class RegionMenuController extends MenuController {
                 Pane root = (Pane) loader.load();
                 UnitPaneController UPC = (UnitPaneController) loader.getController();
                 if(this.getParent().getCurPhase() instanceof  PreparationPhase || u.getCurAmount() != 0) {
-                    if(isEnemy) { 
+                    if(isEnemy) {
                         UPC.configureEnemy(u);
                     }else {
                         UPC.configure(u, true);
-                    UPC.setParent(this);
-                    rightScrollVbox.getChildren().add(root);
-                    rightUnits.put(UPC, u);
-                } 
-
-                
-            }
+                        UPC.setParent(this);
+                        rightScrollVbox.getChildren().add(root);
+                        rightUnits.put(UPC, u);
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        //Setting the button
         if(this.getParent().getCurPhase() instanceof PreparationPhase) {
             setTrainButton();
         } else if(isEnemy){
@@ -385,14 +414,37 @@ public class RegionMenuController extends MenuController {
         rightScrollVbox.getChildren().clear();
         leftProvinceLabel.setText("Select Region");
         rightProvinceLabel.setText("Select Region");
+        taxMirror.setText("???");
+        taxDropDown.setText("???");
+        wealth.setText("???");
+        wealthMirror.setText("???");
         selectedUnits.clear();
         leftUnits.clear();
         rightUnits.clear();
         if(this.getParent().getCurPhase() instanceof MovePhase) {
+            setTaxWealthVisible(false);
             setMoveButton();
         } else {
+            setTaxWealthVisible(true);
             setTrainButton();
         }
+    }
+
+    /**
+     * Set the visibility of tax and wealth
+     * @param b true/false
+     */
+    private void setTaxWealthVisible(boolean b) {
+        leftPane.setVisible(b);
+        rightPane.setVisible(b);
+        leftWealthLabel.setVisible(b);
+        leftTaxLabel.setVisible(b);
+        rightWealthLabel.setVisible(b);
+        rightTaxLabel.setVisible(b);
+        taxMirror.setVisible(b);
+        taxDropDown.setVisible(b);
+        wealth.setVisible(b);
+        wealthMirror.setVisible(b);
     }
 
 }

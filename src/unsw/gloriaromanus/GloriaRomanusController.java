@@ -138,6 +138,10 @@ public class GloriaRomanusController{
     initializeProvinceLayers();
   }
 
+  /**
+   * Handles the end phase button
+   * @throws IOException
+   */
   public void endPhase() throws IOException {
     //Display message
     String msg = game.endPhase();
@@ -223,7 +227,6 @@ public class GloriaRomanusController{
         // create province border feature
         featureLayer_provinces = createFeatureLayer(gpkg_provinces);
         map.getOperationalLayers().add(featureLayer_provinces);
-
       } else {
         System.out.println("load failure");
       }
@@ -316,7 +319,7 @@ public class GloriaRomanusController{
               List<Feature> features = identifyLayerResult.getElements().stream().map(f -> (Feature) f).collect(Collectors.toList());
 
               if (features.size() > 1){
-                printMessageToTerminal("Have more than 1 element - you might have clicked on boundary!");
+                showMessage("Have more than 1 element - you might have clicked on boundary!");
               }
               else if (features.size() == 1){
                 // note maybe best to track whether selected...
@@ -336,16 +339,9 @@ public class GloriaRomanusController{
                   featureLayer.selectFeature(f);                
 
                 }else {
-                  Alert a = new Alert(AlertType.WARNING);
-                  a.setTitle("SELECTION ERROR");
-                  a.setContentText("Please select ally region");
-                  a.show();
+                  showMessage("Please select ally region");
                 }
-                
-
               }
-
-              
             }
           } catch (InterruptedException | ExecutionException ex) {
             // ... must deal with checked exceptions thrown from the async identify
@@ -379,7 +375,7 @@ public class GloriaRomanusController{
               List<Feature> features = identifyLayerResult.getElements().stream().map(f -> (Feature) f).collect(Collectors.toList());
 
               if (features.size() > 1){
-                printMessageToTerminal("Have more than 1 element - you might have clicked on boundary!");
+                showMessage("Have more than 1 element - you might have clicked on boundary!");
               }
               else if (features.size() == 1){
                 // note maybe best to track whether selected...
@@ -440,10 +436,33 @@ public class GloriaRomanusController{
     addAllPointGraphics();
   }
 
-  private void printMessageToTerminal(String message){
-    if (controllerParentPairs.get(0).getKey() instanceof InvasionMenuController){
-      ((InvasionMenuController)controllerParentPairs.get(0).getKey()).appendToTerminal(message);
-    }
+  private void showMessage(String msg){
+    //Popup summary
+    Stage stage = (Stage)stackPaneMain.getScene().getWindow();
+    Stage popupStage = new Stage();
+    popupStage.initStyle(StageStyle.UNDECORATED);
+    popupStage.initModality(Modality.APPLICATION_MODAL);
+    popupStage.initOwner(stage);
+    //Container
+    VBox row = new VBox();
+    row.setSpacing(15);
+    row.setAlignment(Pos.CENTER);
+    //msg
+    Label summary = new Label();
+    summary.setText(msg);
+    summary.setTextFill(Paint.valueOf("red"));
+    summary.setFont(Font.font("",30));
+    row.getChildren().add(summary);
+    //Set the popup size
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    double width = primaryScreenBounds.getWidth();
+    double height = primaryScreenBounds.getHeight();
+    popupStage.setScene(new Scene(row, width*0.5, height*0.5));
+    popupStage.show();
+    //Auto close after 1sec
+    PauseTransition delay = new PauseTransition(Duration.seconds(1));
+    delay.setOnFinished(e->popupStage.hide());
+    delay.play();
   }
 
   /**
@@ -456,13 +475,6 @@ public class GloriaRomanusController{
     }
   }
 
-  public void switchMenu() throws JsonParseException, JsonMappingException, IOException {
-    System.out.println("trying to switch menu");
-    stackPaneMain.getChildren().remove(controllerParentPairs.get(0).getValue());
-    Collections.reverse(controllerParentPairs);
-    stackPaneMain.getChildren().add(controllerParentPairs.get(0).getValue());
-  }
-
   public void setGame(Game game) {
     this.game = game;
   }
@@ -470,7 +482,6 @@ public class GloriaRomanusController{
   public String regionConTrainRequest(List<String> train, String region) {
     String msg = game.train(region, train);
     if(controllerParentPairs.get(2).getKey() instanceof PlayerMenuController) {
-      System.out.println("sss");
       ((PlayerMenuController)controllerParentPairs.get(2).getKey()).updatePlayer(game.getCurPlayer());
     }
     return msg;

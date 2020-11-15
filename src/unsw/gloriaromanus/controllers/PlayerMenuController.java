@@ -61,7 +61,7 @@ public class PlayerMenuController extends MenuController{
         for( Region region : player.getAllRegions() ) {
             totalWealth += region.getWealth();
         }
-        wealthCondProg.setText(totalWealth + "/" + 10000);
+        wealthCondProg.setText(totalWealth + "/" + 400000);
     }
 
     public void initializeWinCond() {
