@@ -196,6 +196,7 @@ public class RegionMenuController extends MenuController {
 
     @FXML
     private void handleAttack() {
+        System.out.println("------------------attack--------------------");
         //Handles when no target is selected
         if(this.getParent().getCurrentlySelectedLeftProvince()==null) {
             showSummary("Please select a origin region");

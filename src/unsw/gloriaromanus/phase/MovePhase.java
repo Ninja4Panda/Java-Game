@@ -58,8 +58,10 @@ public class MovePhase implements GamePhase {
         //Convert string to regions
         List<String> path = findShortestPath(originRegion, targetRegion);
         List<Region> regions = new ArrayList<>();
+        System.out.println(path);
         if(path==null) return "No path found\n";
         for(String name: path) {
+            
             Region subRegion = game.getCurPlayer().getRegion(name);
             regions.add(subRegion);
         }
