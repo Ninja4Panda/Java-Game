@@ -55,12 +55,17 @@ public class PlayerMenuController extends MenuController{
      * the @param player is where the information will be taken from
      */
     public void updatePlayer(Player player) {
+
         Faction faction = player.getFaction();
         factionImage.setImage(new Image(faction.getFlagPath()));
         playerFaction.setText(faction.toString());
+
         playerGold.setText(Integer.toString(player.getGold()));
+
         treasuryCondProg.setText(player.getGold() + "/" + 100000 );
+        
         conquestCondProg.setText(player.getAllRegions().size() + "/" + 58);
+
         int totalWealth = 0;
         for( Region region : player.getAllRegions() ) {
             totalWealth += region.getWealth();
@@ -73,29 +78,38 @@ public class PlayerMenuController extends MenuController{
      * made by the game.
      */
     public void initializeWinCond() {
+
+        // get the game's win condition
         Check check = this.getParent().getCampaignWinCond();
+
+        // loop through the win condition
         while(check.getGoal() != null) {
+            // make a Text with the disjunction/conjunction
             Text conjunction = new Text( check.getCheckType().getName());
             conjunction.setFont(Font.font("", FontWeight.BOLD,20));
+
+            // get an image of the wincondition
             ImageView image = new ImageView(new Image(check.getGoal().getImage(),70,70,false,false));
+
+            // add it to the Hbox that will show the winconditions
             winCond.getChildren().add(image);
             if(check.getsubCheck().getGoal()!=null) winCond.getChildren().add(conjunction);
+
+            // move to next wincond
             check = check.getsubCheck();
         }
     }
 
     @FXML
     private void initialize() {
-        // double width = topBox.getWidth();
+        // Moves both grids away from the gold amount
         playerProgGrid.setTranslateX(500);
         winConGrid.setTranslateX(500);
+        
+        // make constraints
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setMaxWidth(200);
         col0.setPrefWidth(150);
-        // ColumnConstraints col1 = new ColumnConstraints();
-        // col1.setMaxWidth(1000);
-        // col1.setPrefWidth(1000);
         winConGrid.getColumnConstraints().add(col0);
-        // winConGrid.getColumnConstraints().add(col1);
     }
 }
