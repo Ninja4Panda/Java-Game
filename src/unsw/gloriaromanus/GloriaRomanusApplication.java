@@ -3,30 +3,35 @@ package unsw.gloriaromanus;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import unsw.gloriaromanus.game.Game;
+import unsw.gloriaromanus.scenes.*;
 
 public class GloriaRomanusApplication extends Application {
-
-  private static GloriaRomanusController controller;
+  private GloriaRomanusController controller;
 
   @Override
   public void start(Stage stage) throws IOException {
-    // set up the scene
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-    Parent root = loader.load();
-    controller = loader.getController();
-    Scene scene = new Scene(root);
+    //Set up all screens
+    StartScreen startScreen = new StartScreen(stage);
+    ConfigScreen configScreen = new ConfigScreen(stage);
+    LoadSaveScreen loadSaveScreen = new LoadSaveScreen(stage);
+    InfoScreen infoScreen = new InfoScreen(stage);
+    GameScreen gameScreen = new GameScreen(stage);
+    controller = gameScreen.getController();
 
-    // set up the stage
-    stage.setTitle("Gloria Romanus");
-    stage.setWidth(800);
-    stage.setHeight(700);
-    stage.setScene(scene);
-    stage.show();
+    //Set up the switching between screens
+    startScreen.getController().setConfigScreen(configScreen);
+    startScreen.getController().setLoadSaveScreen(loadSaveScreen);
+    startScreen.getController().setInfoScreen(infoScreen);
+    configScreen.getController().setStartScreen(startScreen);
+    configScreen.getController().setGameScreen(gameScreen);
+    loadSaveScreen.getController().setStartScreen(startScreen);
+    loadSaveScreen.getController().setGameScreen(gameScreen);
+    infoScreen.getController().setStartScreen(startScreen);
 
+    //Start the app
+    startScreen.start();
   }
 
   /**
@@ -43,7 +48,6 @@ public class GloriaRomanusApplication extends Application {
    * @param args arguments passed to this application
    */
   public static void main(String[] args) {
-
     Application.launch(args);
   }
 }

@@ -4,30 +4,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import unsw.gloriaromanus.Game.BattleResolver;
-import unsw.gloriaromanus.Game.GameTurn;
+import unsw.gloriaromanus.game.BattleResolver;
+import unsw.gloriaromanus.game.GameTurn;
 import unsw.gloriaromanus.Observer;
 import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Objects;
 
 public class Region implements Observer {
     private String name;
-    private GameTurn gameTurn;
     private RegionTrainer trainer;
     private List<Unit> units;
     private int wealth;
     private int tax;
+    private List<String> recentlyTrained;
 
     public Region(String name, GameTurn gameTurn, int wealth, int tax) {
         this.name = name;
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
         trainer = new RegionTrainer(this);
         this.wealth = wealth;
         this.tax = tax;
+        recentlyTrained = new ArrayList<>();
         this.units = new ArrayList<>();
         this.units.add(new Archerman());
         this.units.add(new Cavalry());
@@ -46,11 +47,15 @@ public class Region implements Observer {
     }
 
     public Region(JSONObject regionData, GameTurn gameTurn) throws JSONException {
-        this.gameTurn = gameTurn;
         gameTurn.attach(this);
         name = regionData.getString("Id");
         wealth = regionData.getInt("Wealth");
         tax = regionData.getInt("Tax");
+        JSONArray trainedList = regionData.getJSONArray("RecentlyTrained");
+        recentlyTrained = new ArrayList<>();
+        for(int i = 0; i<trainedList.length(); i++) {
+            recentlyTrained.add(trainedList.getString(i));
+        }
 
         //Set up the units according to config
         units = new ArrayList<>();
@@ -84,6 +89,10 @@ public class Region implements Observer {
         //Set up region trainer
         JSONArray trainData = regionData.getJSONArray("Trainer");
         trainer = new RegionTrainer(trainData,this);
+    }
+
+    public List<String> getRecentlyTrained() {
+        return recentlyTrained;
     }
 
     public String getName() {
@@ -159,12 +168,14 @@ public class Region implements Observer {
      */
     public void moveTroops(Unit unit, Region end) {
         Unit target = end.findUnit(unit.getClassName());
+
         //Set the MP of the troop
         if(target.getCurMovementPoints() > unit.getCurMovementPoints()) {
             target.setCurMovementPoints(unit.getCurMovementPoints());
         }
-        target.addUnits(unit.getCurAmount());
-        unit.minusUnits(unit.getCurAmount());
+        int amt = unit.getCurAmount();
+        target.addUnits(amt);
+        unit.minusUnits(amt);
     }
 
     /**
@@ -175,26 +186,30 @@ public class Region implements Observer {
      * @return msg to display
      */
     public String move(List<Region> path, List<String> troops, Region target) {
-        //Loop through the path and remove
-        for (Region region: path) {
-            Iterator<String> it = troops.iterator();
-            while(it.hasNext()) {
-                Unit unit = findUnit(it.next());
-                unit.reduceMovementPoints(4);
-                //Stop when no more MP
-                if(unit.getCurMovementPoints() == 0) {
+        String msg = "";
+        for(String u : troops) {
+            Unit unit = findUnit(u);
+            for(Region region : path) {
+                if(unit.canReduceMovespeed(4)) {
+                    unit.reduceMovementPoints(4);
+                } else {
                     moveTroops(unit, region);
-                    it.remove();
+                    if(Objects.equals(region, path.get(0))) {
+                        msg += unit.getClassName() + " Does not have enough Movespeed\n" ;
+                    }  else {
+                        msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
+                    }
+                    break;
                 }
+                if(Objects.equals(region, path.get(path.size() - 1))) {
+                    moveTroops(unit, region);
+                    msg += unit.getClassName() + " has moved to " + region.getName();
+                }
+                
             }
         }
 
-        //Move the troops that has enough points to move there
-        for(String troop: troops) {
-            Unit unit = findUnit(troop);
-            moveTroops(unit,target);
-        }
-        return "Troops moved";
+        return msg;
     }
 
     /**
@@ -206,10 +221,19 @@ public class Region implements Observer {
      */
     public String invade(int movementPoints, List<String> troops, Region target) {
         List<Unit> attackers = new ArrayList<>();
-        for (Unit unit: units) {
-            if(troops.contains(unit.getClassName())) attackers.add(unit);
+        
+        //Check if every attackers has enough movement point
+        for (String name: troops) {
+            Unit unit = findUnit(name);
             if(unit.getCurMovementPoints()<movementPoints) return "Unsuccessful attack not enough movement Point";
+            attackers.add(unit);
         }
+
+        //Reduce the movement point
+        for (Unit unit:attackers) {
+            unit.reduceMovementPoints(movementPoints);
+        }
+
         return BattleResolver.resolve(attackers, target, this);
     }
 
@@ -241,13 +265,21 @@ public class Region implements Observer {
             troop.put("Amount",unit.getCurAmount());
             troops.put(unit.getClassName(), troop);
         }
-
+        JSONArray trainedJson = new JSONArray(recentlyTrained);
+        save.put("RecentlyTrained", trainedJson);
         save.put("Wealth", wealth);
         save.put("Tax",tax);
         save.put("Trainer", trainer.getSave());
         save.put("Troops", troops);
         save.put("Id", name);
         return save;
+    }
+
+    /**
+     * Reset the trainer on ownership change
+     */
+    public void resetTrainer() {
+        trainer.reset();
     }
 
     @Override
@@ -274,7 +306,7 @@ public class Region implements Observer {
         switch (tax) {
             case 10:
                 wealth += 10;
-                break;
+                break; 
             case 15:
                 break;
             case 20:
@@ -285,5 +317,9 @@ public class Region implements Observer {
             default:
                 break;
         }
+    }
+
+    public Hashtable<String, Integer> getUnitsTraining() {
+        return trainer.getTrainingUnits();
     }
 }

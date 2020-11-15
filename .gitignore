@@ -7,3 +7,12 @@ hs_err_pid*
 /.gradle/
 /resources/
 /jniLibs/
+/.idea/
+build.gradle
+gradlew*
+/gradle/
+/saves/
+/src/.idea/
+/saves/
+/src/unsw/gloriaromanus/initial_province_ownership.json
+

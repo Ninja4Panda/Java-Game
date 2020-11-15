@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Background?>
+<?import javafx.scene.layout.BackgroundFill?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxWidth="392.0" prefHeight="535.0" prefWidth="392.0" spacing="10" styleClass="panel-region" stylesheets="/unsw/gloriaromanus/style.css" translateY="55" StackPane.alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.gloriaromanus.controllers.RegionMenuController">
+    <padding>
+        <Insets topRightBottomLeft="10" />
+    </padding>
+    <background>
+        <Background>
+            <fills>
+                <BackgroundFill>
+                    <fill>
+                        <Color opacity="0.3" />
+                    </fill>
+                </BackgroundFill>
+            </fills>
+        </Background>
+    </background>
+    <HBox>
+        <VBox fx:id="headerVboxLeft">
+            <Label fx:id="leftProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="182.0" text="Select Province" textAlignment="CENTER" textFill="#ee27b2" wrapText="true">
+            <font>
+               <Font size="30.0" />
+            </font></Label>
+         <Pane fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" style="-fx-background-color: white;">
+            <children>
+               <Label layoutY="17.0" text="Wealth : " />
+               <Label fx:id="wealthMirror" layoutX="58.0" layoutY="17.0" text="???" />
+               <Label layoutX="91.0" layoutY="17.0" text="Tax :">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+               <Label fx:id="taxMirror" layoutX="123.0" layoutY="17.0" text="???">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+            </children>
+         </Pane>
+        </VBox>
+        <VBox fx:id="headerVboxRight">
+            <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Select Province" textAlignment="CENTER" textFill="#fafafa" wrapText="true">
+            <font>
+               <Font size="30.0" />
+            </font></Label>
+         <Pane fx:id="rightPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="191.0" style="-fx-background-color: white;">
+            <children>
+               <MenuButton fx:id="taxDropDown" layoutX="136.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="???">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#setFirstTaxBracket" text="10%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setSecondTaxBracket" text="15%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setThirdTaxBracket" text="20%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setFourthTaxBracket" text="25%" />
+                  </items>
+                  <font>
+                     <Font size="10.0" />
+                  </font>
+               </MenuButton>
+               <Label layoutY="17.0" text="Wealth : " />
+               <Label layoutX="86.0" layoutY="17.0" text="Tax :">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+               <Label fx:id="wealth" layoutX="55.0" layoutY="17.0" text="???" />
+            </children>
+         </Pane>
+        </VBox>
+    </HBox>
+    <VBox>
+      <HBox prefHeight="359.0" prefWidth="380.0">
+         <children>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="leftScrollVbox" prefHeight="627.0" prefWidth="167.0">
+                     <children>
+                        <Line endX="17.292892456054688" endY="-3.313709020614624" startX="-100.0" visible="false" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="rightScrollVbox" prefHeight="639.0" prefWidth="167.0">
+                     <children>
+                        <Line endX="14.292892456054688" endY="1.5497207641601562E-6" startX="-100.0" visible="false" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+    </VBox>
+   <AnchorPane prefHeight="0.0" prefWidth="268.0">
+      <children>
+          <Button fx:id="interactionButton" alignment="CENTER" layoutX="121.0" layoutY="-3.0" onAction="#handleTrain" prefHeight="26.0" prefWidth="117.0" text="Train" />
+      </children>
+   </AnchorPane>
+   <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <content>
+         <VBox fx:id="logBox" prefHeight="200.0" prefWidth="100.0" />
+      </content></ScrollPane>
+</VBox>

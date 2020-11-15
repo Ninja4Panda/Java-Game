@@ -38,6 +38,13 @@ public class RegionTrainer {
     }
 
     /**
+     * Reset the trainer on ownership change
+     */
+    public void reset() {
+        trainingUnits.clear();
+    }
+
+    /**
      * Adds the appropriate unit into the trainingUnits hashtable.
      * @param troops list of units
      * @return msg to display
@@ -50,7 +57,7 @@ public class RegionTrainer {
             //Check of the amount currently training unit & valid unit type
             if(newUnit != null) trainingUnits.put(unit, newUnit.getTrainTime());
         }
-        return "Success";
+        return "Success!";
     }
 
     /**
@@ -67,6 +74,7 @@ public class RegionTrainer {
             Map.Entry<String,Integer> entry = it.next();
             entry.setValue(entry.getValue()-1);
             if(entry.getValue() == 0) {
+                region.getRecentlyTrained().add(entry.getKey());
                 region.addUnits(entry.getKey());
                 it.remove();
             }
@@ -86,6 +94,10 @@ public class RegionTrainer {
             save.put(unitJson);
         }
         return save;
+    }
+
+    public Hashtable<String, Integer> getTrainingUnits() {
+        return trainingUnits;
     }
 
 }
