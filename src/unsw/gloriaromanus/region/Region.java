@@ -11,7 +11,6 @@ import unsw.gloriaromanus.units.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -196,7 +195,6 @@ public class Region implements Observer {
         System.out.println("========= inside move ============");
         //Loop through the path and remove
         String msg = "";
-        System.out.println(troops);
         for(String u : troops) {
             Unit unit = findUnit(u);
             for(Region region : path) {
@@ -210,6 +208,10 @@ public class Region implements Observer {
                         msg += unit.getClassName()+" was moved from "+this.getName()+" to "+region.getName()+"\n";
                     }
                     break;
+                }
+                if(Objects.equals(region, path.get(path.size() - 1))) {
+                    moveTroops(unit, region);
+                    msg += unit.getClassName() + " has moved to " + region.getName();
                 }
                 
             }

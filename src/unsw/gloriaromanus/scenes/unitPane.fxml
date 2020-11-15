@@ -36,7 +36,16 @@
                   <Label fx:id="unitArmour" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                   <Label fx:id="unitMoveSpeed" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                   <Label fx:id="unitTrainAmount" layoutX="10.0" layoutY="87.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
-                  <Label fx:id="unitTrainCost" layoutX="10.0" layoutY="75.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                  <HBox prefHeight="29.0" prefWidth="134.0">
+                     <children>
+                        <Label fx:id="unitTrainCost" prefHeight="30.0" prefWidth="122.0" text="Stats" />
+                        <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/gold_pile.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                   <Label fx:id="unitAmount" layoutX="10.0" layoutY="105.0" prefHeight="30.0" prefWidth="122.0" text="Stats" />
                </children>
             </VBox>
