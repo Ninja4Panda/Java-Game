@@ -38,57 +38,50 @@
             <font>
                <Font size="30.0" />
             </font></Label>
-         <HBox prefHeight="36.0" prefWidth="182.0">
+         <Pane fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" style="-fx-background-color: white;">
             <children>
-               <Pane fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" style="-fx-background-color: white;">
-                  <children>
-                     <Label fx:id="leftWealthLabel" layoutY="17.0" text="Wealth : " />
-                     <Label fx:id="wealthMirror" layoutX="58.0" layoutY="17.0" text="???" />
-                     <Label fx:id="leftTaxLabel" layoutX="91.0" layoutY="17.0" text="Tax :">
-                        <padding>
-                           <Insets left="10.0" />
-                        </padding>
-                     </Label>
-                     <Label fx:id="taxMirror" layoutX="123.0" layoutY="17.0" text="???">
-                        <padding>
-                           <Insets left="10.0" />
-                        </padding>
-                     </Label>
-                  </children>
-               </Pane>
+               <Label layoutY="17.0" text="Wealth : " />
+               <Label fx:id="wealthMirror" layoutX="58.0" layoutY="17.0" text="???" />
+               <Label layoutX="91.0" layoutY="17.0" text="Tax :">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+               <Label fx:id="taxMirror" layoutX="123.0" layoutY="17.0" text="???">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
             </children>
-         </HBox>
+         </Pane>
         </VBox>
         <VBox fx:id="headerVboxRight">
             <Label fx:id="rightProvinceLabel" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" text="Select Province" textAlignment="CENTER" textFill="#fafafa" wrapText="true">
             <font>
                <Font size="30.0" />
             </font></Label>
-         <HBox prefHeight="36.0" prefWidth="182.0">
+         <Pane fx:id="rightPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="191.0" style="-fx-background-color: white;">
             <children>
-               <Pane fx:id="rightPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="191.0" style="-fx-background-color: white;">
-                  <children>
-                     <MenuButton fx:id="taxDropDown" layoutX="136.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="???">
-                        <items>
-                           <MenuItem mnemonicParsing="false" onAction="#setFirstTaxBracket" text="10%" />
-                           <MenuItem mnemonicParsing="false" onAction="#setSecondTaxBracket" text="15%" />
-                           <MenuItem mnemonicParsing="false" onAction="#setThirdTaxBracket" text="20%" />
-                           <MenuItem mnemonicParsing="false" onAction="#setFourthTaxBracket" text="25%" />
-                        </items>
-                        <font>
-                           <Font size="10.0" />
-                        </font>
-                     </MenuButton>
-                     <Label fx:id="rightWealthLabel" layoutY="17.0" text="Wealth : " />
-                     <Label fx:id="rightTaxLabel" layoutX="86.0" layoutY="17.0" text="Tax :">
-                        <padding>
-                           <Insets left="10.0" />
-                        </padding></Label>
-                     <Label fx:id="wealth" layoutX="55.0" layoutY="17.0" text="???" />
-                  </children>
-               </Pane>
+               <MenuButton fx:id="taxDropDown" layoutX="136.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="???">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#setFirstTaxBracket" text="10%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setSecondTaxBracket" text="15%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setThirdTaxBracket" text="20%" />
+                     <MenuItem mnemonicParsing="false" onAction="#setFourthTaxBracket" text="25%" />
+                  </items>
+                  <font>
+                     <Font size="10.0" />
+                  </font>
+               </MenuButton>
+               <Label layoutY="17.0" text="Wealth : " />
+               <Label layoutX="86.0" layoutY="17.0" text="Tax :">
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+               <Label fx:id="wealth" layoutX="55.0" layoutY="17.0" text="???" />
             </children>
-         </HBox>
+         </Pane>
         </VBox>
     </HBox>
     <VBox>
