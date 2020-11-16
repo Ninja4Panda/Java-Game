@@ -50,7 +50,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Left mouse click on a region to select origin. ">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Left mouse click on a region to select origin.(Note that you can only select friendly regions)">
                      <font>
                         <Font size="15.0" />
                      </font>
