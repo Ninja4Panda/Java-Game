@@ -224,7 +224,7 @@ public class Game implements Observer {
     private String checkPlayerStatus() {
         if(curPlayer.getAllRegions().size()==0) {
             removePlayer();
-            return "You have no regions left! You lost the game!";
+            return "You lost the game! You have no regions left!";
         } else if(campaignWinCond.getGoal()!=null && campaignWinCond.player(getCurPlayer())) {
             //Advance the turn
             curPhase.endPhase();
