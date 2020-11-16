@@ -213,20 +213,17 @@ public class GloriaRomanusController{
     popupStage.setScene(new Scene(row, width*0.5, height*0.5));
     popupStage.show();
 
-    if(!msg.startsWith("You won the game!")) {
+    if(msg.startsWith("You won the game!") || msg.startsWith("You lost the game!")) {
+      //Cancel Btn
+      Button finish = new Button("Great Game");
+      finish.setPrefSize(143,45);
+      finish.setOnAction(e->popupStage.hide());
+      row.getChildren().add(finish);
+    } else {
       //Auto close after 1sec
       PauseTransition delay = new PauseTransition(Duration.seconds(1));
       delay.setOnFinished(e->popupStage.hide());
       delay.play();
-    } else {
-      //Cancel Btn
-      Button cancel = new Button("ok");
-      cancel.setPrefSize(143,45);
-      cancel.setOnAction(e-> {
-          popupStage.hide();
-      });
-      row.getChildren().add(cancel);
-    
     }
   }
 
